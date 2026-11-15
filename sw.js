@@ -1,4 +1,4 @@
-const CACHE = "rose-line-v5";
+const CACHE = "rose-line-v6";
 const ASSETS = [
   "./",
   "./index.html",
@@ -135,4 +135,28 @@ self.addEventListener("fetch", (event) => {
       }
     })()
   );
+});
+
+self.addEventListener("message", (event) => {
+  const data = event.data;
+  if (!data || data.type !== "precache") return;
+  const port = event.ports && event.ports[0];
+  (async () => {
+    let saved = 0;
+    const failed = [];
+    try {
+      const cache = await caches.open(CACHE);
+      for (const asset of ASSETS) {
+        try {
+          await cache.add(new Request(asset, { cache: "reload" }));
+          saved++;
+        } catch (e) {
+          failed.push(asset + ": " + ((e && e.message) || "error"));
+        }
+      }
+    } catch (e) {
+      failed.push("open: " + ((e && e.message) || "error"));
+    }
+    if (port) port.postMessage({ saved: saved, total: ASSETS.length, failed: failed.slice(0, 3) });
+  })();
 });

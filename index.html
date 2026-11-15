@@ -201,6 +201,7 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .mark{width:100%;border:1px solid #F0C7D6;background:#fff;color:var(--accent);font:inherit;font-size:12.5px;font-weight:600;padding:7px 8px;border-radius:10px;cursor:pointer;transition:background .16s,color .16s,border-color .16s}
 .mark:hover:not([disabled]){background:var(--soft)}
 .mark[disabled]{opacity:.45;cursor:default}
+.mark--rest{border-style:dashed;font-weight:500}
 .day--done .mark{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
 .link-btn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--accent);text-decoration:underline;cursor:pointer}
 
@@ -246,6 +247,31 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .wrong li{position:relative;padding-left:20px;font-size:14.5px;color:#6E515C}
 .wrong li::before{content:"—";position:absolute;left:0;color:#C98BA1}
 .breath{font-size:14.5px;color:#6E515C;max-width:60ch;margin:0;padding:12px 16px;background:var(--soft);border-radius:12px}
+
+/* session */
+.start-card{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:#fff;border:1px solid #F3D3DF;border-radius:20px;padding:18px 20px;margin-top:20px;box-shadow:0 20px 40px -34px rgba(150,60,90,.5)}
+.start-card__eyebrow{font-size:12px;color:#A4697F}
+.start-card__title{font-family:Georgia,serif;font-size:21px;font-weight:400;margin:4px 0 4px;letter-spacing:-.01em}
+.start-card__meta{font-size:13px;color:var(--muted);margin:0}
+.session__card{width:min(460px,100%);max-height:94vh;overflow:auto;background:#fff;border:1px solid #F6DDE7;border-radius:26px;padding:20px 20px 18px;position:relative;text-align:center;box-shadow:0 40px 70px -34px rgba(120,40,70,.5)}
+.session__meta{font-size:12.5px;color:#A4697F;margin:0;padding-right:34px}
+.session__title{font-family:Georgia,serif;font-size:23px;font-weight:400;margin:6px 0 8px;letter-spacing:-.015em}
+.session__stage{display:grid;place-items:center;min-height:170px}
+.session__stage .fig{height:180px;width:auto}
+.session__stage .player__bar{display:none}
+.session__phase{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.session__phase--rest{color:#A0692B}
+.session__time{font-family:Georgia,serif;font-size:46px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.session__bar{height:6px;border-radius:99px;background:#FBDFE8;overflow:hidden;margin:8px 0 10px}
+.session__bar i{display:block;height:100%;width:0;background:var(--rose-deep);border-radius:99px;transition:width .2s linear}
+.session__hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.session__row{display:flex;gap:8px}
+.session__row .tbtn{flex:1;padding:12px 8px}
+.session__row .tbtn--main{flex:1.2}
+.sess-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #FBE7EE;font-size:13.5px;flex-wrap:wrap}
+.sess-row:last-child{border-bottom:0}
+.sess-row span{color:var(--muted);font-size:12.5px}
+.sess-row b{margin-left:auto;font-weight:600;white-space:nowrap}
 
 /* programs */
 .net-bar{background:#FFF3D8;border-bottom:1px solid #F0DFAF;color:#7A5B1E;font-size:13px}
@@ -362,6 +388,17 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .vplay video{width:100%;max-height:68vh;border-radius:12px;display:block;background:#000}
 .vplay .timer__close{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff}
 .vplay .timer__close:hover{background:rgba(255,255,255,.26);color:#fff}
+.editor{width:min(460px,100%);max-height:94vh;overflow:auto;background:#fff;border:1px solid #F6DDE7;border-radius:24px;padding:20px;position:relative;box-shadow:0 40px 70px -34px rgba(120,40,70,.5)}
+.editor__cover{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(160deg,#FFE9F1,#FFD6E6);background-size:cover;background-position:center;display:grid;place-items:center;font-size:12.5px;color:#A4697F;text-align:center;padding:10px;margin-bottom:14px;overflow:hidden}
+.editor__label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.editor__label input{font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:100%;background:#fff;color:var(--plum)}
+.editor__row{display:flex;gap:8px;flex-wrap:wrap}
+.editor__row .tbtn{flex:1;min-width:118px;padding:10px 8px;font-size:13px}
+.vcard__cover{position:absolute;inset:0;background-size:cover;background-position:center}
+.vcard__play{position:relative;z-index:1;display:grid;place-items:center;width:42px;height:42px}
+.vcard__tile{position:relative;overflow:hidden}
+.vcard__row{flex-wrap:wrap}
+.vbtn{min-width:86px}
 
 /* footer */
 .site-foot{border-top:1px solid var(--line);margin-top:clamp(36px,5vw,64px);padding:22px 0 34px;font-size:12.5px;color:var(--muted)}
@@ -370,6 +407,7 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .foot-ver b{font-weight:600;color:#6E515C}
 .ver-btn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .ver-btn:hover{color:#8E2F4C}
+.ver-btn[disabled]{opacity:.5;cursor:default}
 .offline-state{font-size:12.5px;color:var(--muted)}
 .offline-state.is-ready{color:#3F7A55}
 .offline-state.is-warn{color:#A0692B}
@@ -476,6 +514,7 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
         </div>
       </div>
 
+      <div id="startBlock"></div>
       <div class="stats" id="overviewStats"></div>
 
       <section class="block">
@@ -620,6 +659,10 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
         <h2>Отмеченные дни</h2>
         <ul class="log" id="logList"></ul>
       </div>
+      <div class="panel" style="margin-top:16px">
+        <h2>Тренировки по таймеру</h2>
+        <div id="sessionList"></div>
+      </div>
     </div>
   </section>
 
@@ -655,6 +698,31 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
 </div>
 <!--/pwa:bar-->
 
+<div class="overlay session" id="sessionOverlay" hidden>
+  <div class="session__card" role="dialog" aria-modal="true" aria-labelledby="sessionTitle">
+    <button class="timer__close" id="sessionClose" type="button" aria-label="Закрыть тренировку">×</button>
+    <div id="sessionLive">
+      <p class="session__meta" id="sessionMeta">программа · день</p>
+      <h2 class="session__title" id="sessionTitle">Упражнение</h2>
+      <div class="session__stage" id="sessionStage"></div>
+      <div class="session__phase" id="sessionPhase">работа</div>
+      <div class="session__time" id="sessionTime">0:45</div>
+      <div class="session__bar"><i id="sessionFill"></i></div>
+      <p class="session__hint" id="sessionHint"></p>
+      <div class="session__row">
+        <button class="tbtn" id="sessionPause" type="button">Пауза</button>
+        <button class="tbtn tbtn--main" id="sessionNext" type="button">Дальше</button>
+        <button class="tbtn" id="sessionSkip" type="button">Пропустить</button>
+      </div>
+    </div>
+    <div id="sessionDone" hidden>
+      <h2 class="session__title" style="margin-top:18px">Тренировка завершена</h2>
+      <p class="session__meta" id="sessionDoneText"></p>
+      <button class="btn btn--primary" id="sessionFinish" type="button" style="margin-top:18px">Закрыть</button>
+    </div>
+  </div>
+</div>
+
 <div class="overlay" id="timerOverlay" hidden>
   <div class="timer-card" id="timerCard" role="dialog" aria-modal="true" aria-labelledby="timerTitle">
     <button class="timer__close" id="timerClose" type="button" aria-label="Закрыть таймер">×</button>
@@ -674,6 +742,25 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
       <button class="tbtn" id="timerPlus" type="button">+15 с</button>
     </div>
     <button class="link-btn timer__reset" id="timerReset" type="button">Сбросить</button>
+  </div>
+</div>
+
+<div class="overlay" id="editorOverlay" hidden>
+  <div class="editor" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+    <button class="timer__close" id="editorClose" type="button" aria-label="Закрыть редактор">×</button>
+    <p class="session__meta">видео</p>
+    <h2 class="session__title" id="editorTitle">Редактор</h2>
+    <div class="editor__cover" id="editorCover">Обложка не выбрана</div>
+    <label class="editor__label">Название
+      <input id="editorName" type="text" maxlength="80" placeholder="Например: Круговая 20 минут">
+    </label>
+    <div class="editor__row">
+      <button class="tbtn" id="editorFrame" type="button">Кадр из видео</button>
+      <button class="tbtn" id="editorUpload" type="button">Загрузить обложку</button>
+      <button class="tbtn" id="editorClear" type="button">Убрать</button>
+    </div>
+    <input type="file" id="editorFile" accept="image/*" aria-label="Файл обложки" hidden>
+    <button class="btn btn--primary" id="editorSave" type="button" style="margin-top:14px;width:100%">Сохранить</button>
   </div>
 </div>
 
@@ -2381,21 +2468,20 @@ var EXERCISES = [
   }
 ];
 
-var TIMER_SECONDS = {
-  squat: 45, bridge: 40, plank: 40, crunch: 40, lunge: 50, pushup: 45, row: 45, fold: 60,
-  boat: 30, legraise: 40, bicycle: 30, climber: 30, catcow: 45, birddog: 40, superman: 40, downdog: 45,
-  squat_pause: 60, lunge_knee: 50, bridge_1leg: 40, dips: 45, pushup_knee: 40, pushup_close: 45,
-  side_plank: 30, reverse_crunch: 40, deadbug: 40, hollow: 20, vup: 40, cobra: 30, childpose: 45,
-  quad_stretch: 30, seated_fold: 45, goodmorning: 45, calfraise: 30, bearhold: 30, stepup: 45,
-  wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30,
-  situp: 45, plank_tap: 40, donkey: 40, pushup_wide: 45,
-  wall_calf: 30, march: 40, pigeon: 40,
-  jump_squat: 45, squat_hold: 40, split_squat: 30, swimmer: 40, balance: 30, fold_one: 30,
-  lunge_front: 50, plank_leg: 40
-};
-EXERCISES.forEach(function (e) { e.timer = TIMER_SECONDS[e.id] || 45; });
+function timerFor(ex) {
+  var reps = String(ex.reps || "10");
+  var num = parseInt(reps, 10) || 10;
+  if (/\u0441\s*$/.test(reps)) return Math.min(150, num + 10);
+  var sides = /\u043d\u0430 (\u043d\u043e\u0433\u0443|\u0441\u0442\u043e\u0440\u043e\u043d\u0443|\u0440\u0443\u043a\u0443)/.test(reps) ? 2 : 1;
+  return Math.max(30, Math.min(150, num * 4 * sides));
+}
+function restFor(ex) {
+  var m = String(ex.rest || "").match(/(\d+)/);
+  return m ? +m[1] : 40;
+}
+EXERCISES.forEach(function (e) { e.timer = timerFor(e); e.restSec = restFor(e); });
 
-var APP_VERSION = "1.4.0";
+var APP_VERSION = "1.5";
 var APP_BUILD = "15.11.2026";
 
 var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
@@ -3124,6 +3210,7 @@ function renderOverview() {
   for (var j = 0; j < featured.length; j++) html += cardMarkup(EXMAP[featured[j]]);
   byId("featuredGrid").innerHTML = html;
   paintThumbs(byId("featuredGrid"));
+  renderStartBlock();
 }
 
 /* workouts list */
@@ -3419,17 +3506,18 @@ function renderSchedule() {
   for (var i = 0; i < 7; i++) {
     var date = days[i], plan = plan7[i], iso = isoDay(date), key = doneKey(prog.id, iso);
     var isToday = iso === TODAY, future = iso > TODAY, isDone = done.has(key);
-    if (!plan.rest) { totalCnt++; totalMins += plan.minutes; }
-    if (isDone) { cnt++; doneMins += plan.minutes; }
+    if (!plan.rest) {
+      totalCnt++; totalMins += plan.minutes;
+      if (isDone) { cnt++; doneMins += plan.minutes; }
+    }
 
     var exHTML = "";
     for (var j = 0; j < plan.ex.length; j++) {
       exHTML += '<button class="mini" type="button" data-ex="' + plan.ex[j] + '">' + (EXMAP[plan.ex[j]] ? EXMAP[plan.ex[j]].name : plan.ex[j]) + '</button>';
     }
     var cls = "day" + (isToday ? " day--today" : "") + (isDone ? " day--done" : "") + (future ? " day--future" : "");
-    var btn = plan.rest
-      ? '<span class="day__meta">день восстановления</span>'
-      : '<button class="mark" type="button" data-key="' + key + '"' + (future ? " disabled" : "") + '>' + (isDone ? "✓ Готово" : "Отметить") + '</button>';
+    var btn = '<button class="mark' + (plan.rest ? " mark--rest" : "") + '" type="button" data-key="' + key + '"' +
+      (future ? " disabled" : "") + '>' + (isDone ? "✓ Готово" : "Отметить") + '</button>';
 
     html += '<div class="' + cls + '">' +
       '<span class="day__wd">' + WD[i] + (isToday ? " · сегодня" : "") + '</span>' +
@@ -3437,7 +3525,7 @@ function renderSchedule() {
       '<span class="day__title">' + plan.title + '</span>' +
       '<span class="day__meta">' + (plan.rest ? "0 мин · " + plan.tag : plan.minutes + " мин · " + plan.tag) + '</span>' +
       (exHTML ? '<div class="day__ex">' + exHTML + '</div>' : '<span class="day__meta">' + plan.note + '</span>') +
-      '<div class="day__foot">' + btn + '</div>' +
+      '<div class="day__foot">' + (plan.rest && !isDone ? '<span class="day__meta" style="display:block;margin-bottom:6px">день восстановления</span>' : "") + btn + '</div>' +
       '</div>';
   }
   byId("weekGrid").innerHTML = html;
@@ -3486,8 +3574,7 @@ function renderArchive() {
     var plan7 = weekPlan(prog.id, weekIndexFor(days[0]));
     var doneCnt = 0, totalCnt = 0;
     for (var i = 0; i < 7; i++) {
-      if (!plan7[i].rest) totalCnt++;
-      if (done.has(doneKey(prog.id, isoDay(days[i])))) doneCnt++;
+      if (!plan7[i].rest) { totalCnt++; if (done.has(doneKey(prog.id, isoDay(days[i])))) doneCnt++; }
     }
     var mark = doneCnt ? (doneCnt === totalCnt ? "всё закрыто" : doneCnt + " из " + totalCnt) : "без отметок";
     html += '<div class="arch__row"><span class="arch__date">' + weekLabelText(days) + "</span>" +
@@ -3573,6 +3660,7 @@ function renderProgress() {
       '<b style="font-weight:600">' + pd.title + '</b><span>' + prg.name + ' · ' + pd.minutes + ' мин</span></li>';
   }
   byId("logList").innerHTML = recent.length ? log : '<li><span class="empty">Ещё нет закрытых дней. График ждёт первую отметку.</span></li>';
+  renderSessions();
 }
 
 /* detail */
@@ -3847,13 +3935,17 @@ function renderVideos() {
     for (var i = 0; i < videoItems.length; i++) {
       var v = videoItems[i];
       var armed = deleteArmed === v.id;
+      var tile = v.cover
+        ? '<span class="vcard__cover" style="background-image:url(' + "'" + v.cover + "'" + ')"></span><span class="vcard__play">' + PLAY_ICON + '</span>'
+        : PLAY_ICON;
       html += '<article class="vcard">' +
-        '<button class="vcard__tile" type="button" data-play="' + v.id + '" aria-label="Смотреть: ' + escHtml(v.name) + '">' + PLAY_ICON + '</button>' +
+        '<button class="vcard__tile" type="button" data-play="' + v.id + '" aria-label="Смотреть: ' + escHtml(v.name) + '">' + tile + '</button>' +
         '<div class="vcard__body">' +
         '<div class="vcard__name">' + escHtml(v.name) + '</div>' +
         '<div class="vcard__meta">' + fmtSize(v.size) + ' · ' + fmtDay(v.added) + '</div>' +
         '<div class="vcard__row">' +
         '<button class="vbtn" type="button" data-play="' + v.id + '">Смотреть</button>' +
+        '<button class="vbtn" type="button" data-edit="' + v.id + '">Изменить</button>' +
         '<button class="vbtn vbtn--del" type="button" data-del="' + v.id + '">' + (armed ? "Точно?" : "Удалить") + '</button>' +
         '</div></div></article>';
     }
@@ -3969,6 +4061,8 @@ if (byId("pickVideos")) {
       }
       return;
     }
+    var ed = e.target.closest("[data-edit]");
+    if (ed) { openEditor(ed.getAttribute("data-edit")); return; }
     var play = e.target.closest("[data-play]");
     if (play) playVideoById(play.getAttribute("data-play"));
   });
@@ -3979,6 +4073,355 @@ if (byId("pickVideos")) {
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !byId("videoOverlay").hidden) closeVideo();
   });
+}
+
+/* session */
+/* video editor */
+var editId = null, draftCover = "";
+
+function paintEditorCover() {
+  var box = byId("editorCover");
+  if (!box) return;
+  if (draftCover) {
+    box.style.backgroundImage = "url('" + draftCover + "')";
+    box.textContent = "";
+  } else {
+    box.style.backgroundImage = "";
+    box.textContent = "Обложка не выбрана";
+  }
+}
+function openEditor(id) {
+  var v = null;
+  for (var i = 0; i < videoItems.length; i++) if (videoItems[i].id === id) v = videoItems[i];
+  if (!v) return;
+  editId = id;
+  draftCover = v.cover || "";
+  byId("editorName").value = v.name || "";
+  byId("editorTitle").textContent = "Редактор видео";
+  paintEditorCover();
+  byId("editorOverlay").hidden = false;
+  document.body.style.overflow = "hidden";
+  byId("editorName").focus();
+}
+function closeEditor() {
+  byId("editorOverlay").hidden = true;
+  document.body.style.overflow = "";
+  editId = null;
+  draftCover = "";
+}
+function readImageFile(file) {
+  return new Promise(function (resolve) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var w = 640, h = Math.round(w * (img.height / img.width)) || 360;
+          var c = document.createElement("canvas");
+          c.width = w;
+          c.height = h;
+          c.getContext("2d").drawImage(img, 0, 0, w, h);
+          resolve(c.toDataURL("image/jpeg", 0.75));
+        } catch (e) { resolve(null); }
+      };
+      img.onerror = function () { resolve(null); };
+      img.src = reader.result;
+    };
+    reader.onerror = function () { resolve(null); };
+    reader.readAsDataURL(file);
+  });
+}
+function captureCover(blob) {
+  return new Promise(function (resolve) {
+    var url = URL.createObjectURL(blob);
+    var video = document.createElement("video");
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    var done = false;
+    function finish(res) {
+      if (done) return;
+      done = true;
+      try { URL.revokeObjectURL(url); } catch (e) {}
+      resolve(res);
+    }
+    var timer = setTimeout(function () { finish(null); }, 6000);
+    video.addEventListener("loadeddata", function () {
+      try {
+        var d = video.duration;
+        video.currentTime = Math.min(isFinite(d) && d > 0 ? d * 0.25 : 1, 3);
+      } catch (e) { finish(null); }
+    });
+    video.addEventListener("seeked", function () {
+      try {
+        var w = 480, h = Math.round(w * (video.videoHeight / video.videoWidth)) || 270;
+        var c = document.createElement("canvas");
+        c.width = w;
+        c.height = h;
+        c.getContext("2d").drawImage(video, 0, 0, w, h);
+        clearTimeout(timer);
+        finish(c.toDataURL("image/jpeg", 0.7));
+      } catch (e) { finish(null); }
+    });
+    video.addEventListener("error", function () { finish(null); });
+    video.src = url;
+  });
+}
+function saveVideoEdit() {
+  var v = null;
+  for (var i = 0; i < videoItems.length; i++) if (videoItems[i].id === editId) v = videoItems[i];
+  if (!v) { closeEditor(); return; }
+  var name = (byId("editorName").value || "").trim().slice(0, 80);
+  v.name = name || v.name;
+  v.cover = draftCover || null;
+  putVideo(v).then(getAllVideos).then(function (list) {
+    videoItems = list.sort(function (a, b) { return b.added - a.added; });
+    renderVideos();
+    closeEditor();
+  }).catch(function () {});
+}
+if (byId("editorSave")) {
+  byId("editorClose").addEventListener("click", closeEditor);
+  byId("editorSave").addEventListener("click", saveVideoEdit);
+  byId("editorClear").addEventListener("click", function () { draftCover = ""; paintEditorCover(); });
+  byId("editorUpload").addEventListener("click", function () { byId("editorFile").click(); });
+  byId("editorFile").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    readImageFile(f).then(function (cover) {
+      if (cover) { draftCover = cover; paintEditorCover(); }
+      else { byId("editorCover").textContent = "Не удалось прочитать картинку"; }
+    });
+  });
+  byId("editorFrame").addEventListener("click", function () {
+    var v = null;
+    for (var i = 0; i < videoItems.length; i++) if (videoItems[i].id === editId) v = videoItems[i];
+    if (!v) return;
+    byId("editorFrame").disabled = true;
+    byId("editorCover").textContent = "Беру кадр…";
+    captureCover(v.blob).then(function (cover) {
+      byId("editorFrame").disabled = false;
+      if (cover) { draftCover = cover; paintEditorCover(); }
+      else { paintEditorCover(); byId("editorCover").textContent = "Кадр не получился — загрузите картинку"; }
+    });
+  });
+  byId("editorOverlay").addEventListener("pointerdown", function (e) {
+    if (e.target === byId("editorOverlay")) closeEditor();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !byId("editorOverlay").hidden) closeEditor();
+  });
+}
+
+var SESS_STORE = "rose-line-sessions-v1";
+var sessions = [];
+try { var rawSess = localStorage.getItem(SESS_STORE); if (rawSess) sessions = JSON.parse(rawSess) || []; } catch (e) { sessions = []; }
+function saveSessions() { try { localStorage.setItem(SESS_STORE, JSON.stringify(sessions)); } catch (e) {} }
+
+var sess = { on: false, prog: null, day: null, items: [], idx: 0, phase: "work", left: 0, running: false, last: 0, tid: null, started: 0 };
+var sessPlayer = null;
+
+function plannedSeconds(items) {
+  var s = 0;
+  for (var i = 0; i < items.length; i++) s += items[i].work + (i < items.length - 1 ? items[i].rest : 0);
+  return s;
+}
+function fmtClock(sec) {
+  sec = Math.max(0, Math.ceil(sec));
+  var m = Math.floor(sec / 60), r = sec % 60;
+  return m + ":" + (r < 10 ? "0" : "") + r;
+}
+function openSession(dayIndex) {
+  var prog = currentProgram();
+  var idx = typeof dayIndex === "number" ? dayIndex : (new Date().getDay() + 6) % 7;
+  var day = prog.days[idx];
+  if (!day || day.rest || !day.ex.length) {
+    for (var i = 1; i <= 7; i++) {
+      var d = prog.days[(idx + i) % 7];
+      if (!d.rest && d.ex.length) { day = d; idx = (idx + i) % 7; break; }
+    }
+  }
+  if (!day || !day.ex.length) return;
+  var items = [], exTotal = 0;
+  for (var j = 0; j < day.ex.length; j++) {
+    var e = EXMAP[day.ex[j]];
+    if (!e) continue;
+    exTotal++;
+    var sets = Math.max(1, Math.min(5, parseInt(e.sets, 10) || 1));
+    for (var k = 0; k < sets; k++) {
+      items.push({ id: e.id, work: e.timer, rest: e.restSec || 40, set: k + 1, sets: sets, ex: exTotal });
+    }
+  }
+  for (var q = 0; q < items.length; q++) { items[q].exTotal = exTotal; }
+  if (!items.length) return;
+  sess.on = true; sess.prog = prog; sess.day = day;
+  sess.items = items; sess.idx = 0; sess.phase = "work";
+  sess.left = items[0].work; sess.running = true;
+  sess.started = Date.now(); sess.last = Date.now();
+  byId("sessionOverlay").hidden = false;
+  byId("sessionLive").hidden = false;
+  byId("sessionDone").hidden = true;
+  byId("sessionMeta").textContent = prog.name + " · " + day.title;
+  document.body.style.overflow = "hidden";
+  mountSessionFigure(items[0].id);
+  renderSession();
+  if (sess.tid) clearInterval(sess.tid);
+  sess.tid = setInterval(sessionTick, 200);
+  getAudio();
+}
+function mountSessionFigure(id) {
+  var ex = EXMAP[id];
+  if (!ex) return;
+  if (sessPlayer) sessPlayer.destroy();
+  sessPlayer = new Player(byId("sessionStage"), ex, { autoplay: true });
+}
+function renderSession() {
+  var it = sess.items[sess.idx];
+  if (!it) return;
+  var ex = EXMAP[it.id];
+  byId("sessionTitle").textContent = ex ? ex.name : "Упражнение";
+  byId("sessionPhase").textContent = sess.phase === "work" ? "работа" : "отдых";
+  byId("sessionPhase").className = "session__phase" + (sess.phase === "rest" ? " session__phase--rest" : "");
+  byId("sessionTime").textContent = fmtClock(sess.left);
+  var total = sess.phase === "work" ? it.work : it.rest;
+  var pct = total ? Math.max(0, Math.min(100, (1 - sess.left / total) * 100)) : 0;
+  byId("sessionFill").style.width = pct.toFixed(1) + "%";
+  var elapsed = (Date.now() - sess.started) / 1000;
+  byId("sessionHint").textContent = "упр. " + it.ex + " из " + it.exTotal + " · подход " + it.set + " из " + it.sets +
+    " · всего ~" + Math.round(plannedSeconds(sess.items) / 60) + " мин · прошло " + fmtClock(elapsed);
+  byId("sessionPause").textContent = sess.running ? "Пауза" : "Продолжить";
+}
+function sessionTick() {
+  if (!sess.on) return;
+  var now = Date.now(), dt = (now - sess.last) / 1000;
+  sess.last = now;
+  if (sess.running) {
+    sess.left -= dt;
+    if (sess.left <= 0) { sessionAdvance(); return; }
+  }
+  renderSession();
+}
+function sessionAdvance() {
+  if (sess.phase === "work") {
+    if (sess.idx < sess.items.length - 1 && sess.items[sess.idx].rest > 0) {
+      sess.phase = "rest";
+      sess.left = sess.items[sess.idx].rest;
+      beep(760, 0, 0.16, 0.14);
+      sess.last = Date.now();
+      renderSession();
+      return;
+    }
+    nextExercise();
+    return;
+  }
+  nextExercise();
+}
+function nextExercise() {
+  if (sess.idx >= sess.items.length - 1) { finishSession(); return; }
+  sess.idx++;
+  sess.phase = "work";
+  sess.left = sess.items[sess.idx].work;
+  sess.last = Date.now();
+  mountSessionFigure(sess.items[sess.idx].id);
+  beep(980, 0, 0.14, 0.13);
+  renderSession();
+}
+function finishSession() {
+  if (sess.tid) { clearInterval(sess.tid); sess.tid = null; }
+  sess.running = false;
+  if (sessPlayer) { sessPlayer.destroy(); sessPlayer = null; }
+  var minutes = Math.max(1, Math.round((Date.now() - sess.started) / 60000));
+  var rec = {
+    id: "s" + Date.now(), date: isoDay(new Date()), program: sess.prog.id, programName: sess.prog.name,
+    title: sess.day.title, minutes: minutes, exercises: sess.items.length, ts: Date.now()
+  };
+  sessions.push(rec);
+  saveSessions();
+  done.add(doneKey(sess.prog.id, rec.date));
+  saveDone();
+  sess.on = false;
+  byId("sessionLive").hidden = true;
+  byId("sessionDone").hidden = false;
+  var uniq = {}, exCount = 0;
+  for (var u = 0; u < sess.items.length; u++) if (!uniq[sess.items[u].id]) { uniq[sess.items[u].id] = 1; exCount++; }
+  byId("sessionDoneText").textContent = sess.day.title + " · " + minutes + " " +
+    plural(minutes, "минута", "минуты", "минут") + " · " + exCount + " " +
+    plural(exCount, "упражнение", "упражнения", "упражнений") + ". День отмечен в графике.";
+  beep(880, 0, 0.2, 0.16);
+  renderOverview(); renderSchedule(); renderProgress();
+}
+function closeSession() {
+  if (sess.tid) { clearInterval(sess.tid); sess.tid = null; }
+  sess.on = false; sess.running = false;
+  if (sessPlayer) { sessPlayer.destroy(); sessPlayer = null; }
+  byId("sessionOverlay").hidden = true;
+  document.body.style.overflow = "";
+}
+if (byId("sessionClose")) {
+  byId("sessionClose").addEventListener("click", closeSession);
+  byId("sessionFinish").addEventListener("click", closeSession);
+  byId("sessionPause").addEventListener("click", function () {
+    if (!sess.on) return;
+    sess.running = !sess.running;
+    sess.last = Date.now();
+    renderSession();
+  });
+  byId("sessionNext").addEventListener("click", function () {
+    if (!sess.on) return;
+    sessionAdvance();
+  });
+  byId("sessionSkip").addEventListener("click", function () {
+    if (!sess.on) return;
+    nextExercise();
+  });
+  byId("sessionOverlay").addEventListener("pointerdown", function (e) {
+    if (e.target === byId("sessionOverlay")) closeSession();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !byId("sessionOverlay").hidden) closeSession();
+  });
+}
+
+function renderStartBlock() {
+  var host = byId("startBlock");
+  if (!host) return;
+  var prog = currentProgram();
+  var di = (new Date().getDay() + 6) % 7;
+  var day = prog.days[di];
+  var rest = !day || day.rest || !day.ex.length;
+  var title = rest ? "Сегодня отдых" : day.title;
+  var meta = rest
+    ? "По программе «" + prog.name + "» сегодня восстановление. Кнопка запустит ближайшую тренировку."
+    : day.ex.length + " упражнений · " + day.minutes + " мин · " + day.tag;
+  host.innerHTML = '<div class="start-card">' +
+    '<div><span class="start-card__eyebrow">' + (rest ? "отдых" : "тренировка дня") + '</span>' +
+    '<h2 class="start-card__title">' + title + '</h2>' +
+    '<p class="start-card__meta">' + meta + '</p></div>' +
+    '<button class="btn btn--primary" type="button" id="startWorkout">' + (rest ? "Начать ближайшую" : "Начать тренировку") + '</button>' +
+    '</div>';
+  byId("startWorkout").addEventListener("click", function () { openSession(); });
+}
+
+function renderSessions() {
+  var host = byId("sessionList");
+  if (!host) return;
+  if (!sessions.length) {
+    host.innerHTML = '<p class="empty">Пока нет тренировок по таймеру. Нажмите «Начать тренировку» на главной — сессии будут считаться здесь.</p>';
+    return;
+  }
+  var totalMin = 0;
+  for (var i = 0; i < sessions.length; i++) totalMin += sessions[i].minutes || 0;
+  var html = '<p class="diary__num" style="margin-top:0">Всего сессий: ' + sessions.length + " · " + totalMin + " " +
+    plural(totalMin, "минута", "минуты", "минут") + "</p>";
+  var recent = sessions.slice().reverse().slice(0, 10);
+  for (i = 0; i < recent.length; i++) {
+    var s = recent[i];
+    var d = dateOfIso(s.date);
+    html += '<div class="sess-row"><span>' + d.getDate() + " " + MONTHS[d.getMonth()] + '</span>' +
+      "<b>" + s.title + "</b><span>" + s.programName + "</span><span>" + s.minutes + " мин · " + s.exercises + " упр.</span></div>";
+  }
+  host.innerHTML = html;
 }
 
 /* routing */
@@ -4142,56 +4585,117 @@ window.addEventListener("offline", function () { netDismissed = false; updateNet
 byId("netContinue").addEventListener("click", function () { netDismissed = true; updateNetBar(); });
 updateNetBar();
 
-var APP_CACHE = "rose-line-v5";
+var APP_CACHE = "rose-line-v6";
 var APP_FILES = ["./", "./index.html", "./manifest.webmanifest",
   "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 var supportSW = "serviceWorker" in navigator;
 var offlineEl = byId("offlineState");
 var offlineBtn = byId("offlineBtn");
+var offlineBusy = false;
+
+var putErr = "";
 
 async function cacheReady() {
   try {
-    var cache = await caches.open(APP_CACHE);
-    return !!(await cache.match("./index.html"));
+    var keys = await caches.keys();
+    var name = keys.indexOf(APP_CACHE) > -1 ? APP_CACHE : (keys.filter(function (k) { return k.indexOf("rose-line") === 0; })[0] || APP_CACHE);
+    var cache = await caches.open(name);
+    return !!(await cache.match("./index.html")) || !!(await cache.match("./"));
   } catch (e) {
     return false;
   }
 }
-async function updateOfflineState() {
+function stamp() {
+  var d = new Date();
+  return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+}
+async function updateOfflineState(saved) {
   if (!offlineEl) return;
   var ready = await cacheReady();
+  var text = ready ? "офлайн: готов" : (supportSW ? "офлайн: не готов" : "офлайн: нет поддержки");
+  if (typeof saved === "number") {
+    text += saved ? " · сохранено " + saved + " из " + APP_FILES.length : " · сохранить не удалось";
+  }
+  if (ready) text += " · проверено " + stamp();
+  else if (putErr) text += " · " + String(putErr).slice(0, 60);
   offlineEl.hidden = false;
-  offlineEl.textContent = ready ? "офлайн: готов" : (supportSW ? "офлайн: не готов" : "офлайн: нет поддержки");
+  offlineEl.textContent = text;
   offlineEl.className = "offline-state " + (ready ? "is-ready" : "is-warn");
 }
-async function prepareOffline() {
-  if (!offlineEl) return;
-  offlineEl.hidden = false;
-  offlineEl.textContent = "офлайн: сохраняю…";
-  offlineEl.className = "offline-state is-warn";
-  try {
-    if (supportSW) {
-      try {
-        var reg = await navigator.serviceWorker.getRegistration();
-        if (!reg) reg = await navigator.serviceWorker.register("sw.js", { updateViaCache: "none" });
-        else if (reg.update) await reg.update();
-        await navigator.serviceWorker.ready;
-      } catch (e) {}
-    }
-    var cache = await caches.open(APP_CACHE);
-    for (var i = 0; i < APP_FILES.length; i++) {
-      try { await cache.add(new Request(APP_FILES[i], { cache: "reload" })); } catch (e) {}
-    }
-    if (navigator.storage && navigator.storage.persist) {
-      try { await navigator.storage.persist(); } catch (e) {}
-    }
-  } catch (e) {}
-  updateOfflineState();
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise(function (resolve) { setTimeout(function () { resolve(null); }, ms); })
+  ]);
 }
-if (supportSW && offlineBtn) {
+async function askSWPrecache() {
+  if (!supportSW) return 0;
+  try {
+    var reg = await withTimeout(navigator.serviceWorker.getRegistration(), 2500);
+    if (!reg) reg = await withTimeout(navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }), 5000);
+    var worker = reg && (reg.active || navigator.serviceWorker.controller);
+    if (!worker) return 0;
+    return await new Promise(function (resolve) {
+      var ch = new MessageChannel(), done = false;
+      ch.port1.onmessage = function (ev) { if (!done) { done = true; resolve((ev.data && ev.data.saved) || 0); } };
+      try { worker.postMessage({ type: "precache" }, [ch.port2]); } catch (err) { resolve(0); }
+      setTimeout(function () { if (!done) { done = true; resolve(0); } }, 20000);
+    });
+  } catch (e) {
+    return 0;
+  }
+}
+async function prepareOffline() {
+  if (!offlineEl || offlineBusy) return;
+  offlineBusy = true;
+  if (offlineBtn) offlineBtn.disabled = true;
+  offlineEl.hidden = false;
+  offlineEl.className = "offline-state is-warn";
+  offlineEl.textContent = "офлайн: начинаю…";
+  putErr = "";
+  var ok = 0, i;
+  try {
+    var cache = await caches.open(APP_CACHE);
+    for (i = 0; i < APP_FILES.length; i++) {
+      try {
+        await cache.add(new Request(APP_FILES[i], { cache: "reload" }));
+        ok++;
+      } catch (e) {
+        if (!putErr) putErr = (e && e.message) || "ошибка кэша";
+      }
+      offlineEl.textContent = "офлайн: сохраняю " + (i + 1) + "/" + APP_FILES.length + "…";
+    }
+  } catch (e) {
+    if (!putErr) putErr = (e && e.message) || "ошибка кэша";
+  }
+  if (ok === 0 && supportSW) {
+    offlineEl.textContent = "офлайн: пробую через service worker…";
+    var swOk = await askSWPrecache();
+    if (swOk > ok) ok = swOk;
+  }
+  if (navigator.storage && navigator.storage.persist) {
+    try { navigator.storage.persist(); } catch (e) {}
+  }
+  offlineBusy = false;
+  if (offlineBtn) offlineBtn.disabled = false;
+  await updateOfflineState(ok);
+}
+var offlineLocal = location.protocol === "file:";
+if (offlineLocal) {
+  if (offlineEl) {
+    offlineEl.hidden = false;
+    offlineEl.className = "offline-state is-ready";
+    offlineEl.textContent = "офлайн: файл на устройстве";
+  }
+  if (offlineBtn) offlineBtn.hidden = true;
+} else if (supportSW && offlineBtn) {
   offlineBtn.hidden = false;
   offlineBtn.addEventListener("click", prepareOffline);
   updateOfflineState();
+} else if (offlineEl) {
+  offlineEl.hidden = false;
+  offlineEl.className = "offline-state is-warn";
+  offlineEl.textContent = "офлайн: не поддерживается браузером";
 }
 loadVideos();
 route();
