@@ -283,6 +283,26 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .pday span{grid-column:2;color:var(--muted);font-size:12.5px}
 .pday em{font-style:normal;color:var(--accent);font-weight:600;font-size:13px;white-space:nowrap}
 .pday--rest b{color:var(--muted)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin:6px 0 16px}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--muted)}
+.calc input,.calc select{font:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--plum);width:100%}
+.calc button{justify-self:start}
+.calc__out{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:4px}
+.calc__tile{background:#FFF8FA;border:1px solid #F7E1EA;border-radius:14px;padding:12px 14px}
+.calc__tile b{display:block;font-family:Georgia,serif;font-size:22px;font-weight:400;color:var(--accent);line-height:1.1}
+.calc__tile span{font-size:12px;color:var(--muted)}
+.macros{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.macro-chip{background:#FFEDF3;border:1px solid #F6D5E1;border-radius:999px;padding:6px 12px;font-size:12.5px;color:#8E5568}
+.meal-form{display:grid;grid-template-columns:1fr 110px auto;gap:8px;margin:14px 0 6px;align-items:center}
+.meal-form input{font:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;width:100%;background:#fff;color:var(--plum)}
+.diary__row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #FBE7EE;font-size:13.5px}
+.diary__row:last-child{border-bottom:0}
+.diary__row b{margin-left:auto;font-weight:600;white-space:nowrap}
+.diary__row span{overflow-wrap:anywhere}
+.del{border:0;background:none;color:#B38A98;font-size:16px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:6px}
+.del:hover{background:var(--soft);color:var(--accent)}
+.diary__num{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+@media (max-width:560px){ .meal-form{grid-template-columns:1fr 1fr} .meal-form button{grid-column:1/-1} }
 @media (max-width:900px){ .prog-hero{grid-template-columns:1fr} }
 
 /* timer */
@@ -408,6 +428,7 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
       <button class="tab" id="tab-overview" role="tab" aria-selected="true" aria-controls="view-overview" data-route="overview">Обзор</button>
       <button class="tab" id="tab-workouts" role="tab" aria-selected="false" aria-controls="view-workouts" data-route="workouts">Тренировки</button>
       <button class="tab" id="tab-programs" role="tab" aria-selected="false" aria-controls="view-programs" data-route="programs">Программы</button>
+      <button class="tab" id="tab-nutrition" role="tab" aria-selected="false" aria-controls="view-nutrition" data-route="nutrition">Питание</button>
       <button class="tab" id="tab-videos" role="tab" aria-selected="false" aria-controls="view-videos" data-route="videos">Видео</button>
       <button class="tab" id="tab-schedule" role="tab" aria-selected="false" aria-controls="view-schedule" data-route="schedule">График</button>
       <button class="tab" id="tab-progress" role="tab" aria-selected="false" aria-controls="view-progress" data-route="progress">Прогресс</button>
@@ -492,6 +513,19 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
       <div class="prog-switch" data-program-switch role="group" aria-label="Выбор программы"></div>
       <div id="programDetail"></div>
       <p class="note">Программа — не приговор графику: пропущенный день просто остаётся неотмеченным. Смена программы не стирает историю — отметки хранятся отдельно для каждой.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-nutrition" role="tabpanel" aria-labelledby="tab-nutrition" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Питание</h1>
+        <p class="lead lead--small">Норма калорий по вашим данным, дневник и рационы программ. Всё считается и хранится на этом устройстве — без регистрации и отправки данных.</p>
+      </div>
+      <div id="calcBlock"></div>
+      <div id="diaryBlock"></div>
+      <div class="prog-switch" data-program-switch role="group" aria-label="Программа для рациона"></div>
+      <div id="nutritionPlan"></div>
     </div>
   </section>
 
@@ -2086,6 +2120,320 @@ var EXERCISES = [
       { t: 1.4, h: 0.7, p: { hip: [104, 262], torso: 2, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 292], [70, 286]], hands: [[148, 238], [152, 242]], elbowDir: "back", kneeDir: "front" } }
     ],
     back: 1.4
+  },
+  {
+    id: "situp",
+    name: "Подъём корпуса",
+    zone: "core",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "12",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.55,
+    summary: "Полная амплитуда: из положения лёжа корпус поднимается до вертикали. Работает весь пресс и сгибатели бедра, поэтому движение сильнее скручиваний.",
+    steps: [
+      "Лягте на спину, колени согнуты, стопы на полу.",
+      "Руки вытяните вперёд или скрестите на груди.",
+      "На выдохе поднимите корпус до вертикали, поясница округляется.",
+      "На вдохе опускайтесь медленно, по одному позвонку."
+    ],
+    mistakes: [
+      "Рывок за счёт инерции и маха руками.",
+      "Стопы отрываются от пола.",
+      "Шея тянется вперёд вместо корпуса."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [130, 278], torso: -93, arms: { a: 80, b: 20 }, farArms: { a: 76, b: 24 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } },
+      { t: 1.3, h: 0.3, p: { hip: [130, 272], torso: 5, arms: { a: 70, b: 10 }, farArms: { a: 66, b: 14 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "plank_tap",
+    name: "Планка с касанием плеча",
+    zone: "core",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "10 на сторону",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.5,
+    summary: "Планка на прямых руках, поочерёдно ладонь касается противоположного плеча. Таз должен оставаться неподвижным — иначе теряется весь смысл.",
+    steps: [
+      "Встаньте в планку на прямых руках, стопы чуть шире таза.",
+      "Подтяните живот и ягодицы, тело — прямая линия.",
+      "Оторвите одну ладонь и коснитесь ею противоположного плеча.",
+      "Верните руку и повторите другой стороной."
+    ],
+    mistakes: [
+      "Таз раскачивается в такт движению.",
+      "Плечи уходят вперёд за ладони.",
+      "Спешка: касание превращается в мах рукой."
+    ],
+    breathing: "Касание — короткий выдох, возврат — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [108, 278], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [176, 292]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 0.9, h: 0.25, p: { hip: [108, 278], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [176, 292]], hands: [[96, 262], [90, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 0.9
+  },
+  {
+    id: "donkey",
+    name: "Отведение ноги на четвереньках",
+    zone: "legs",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "12 на ногу",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.6,
+    summary: "На четвереньках одна нога поднимается назад и вверх, пятка тянется к потолку. Точечная нагрузка на ягодицы без осевой нагрузки на спину.",
+    steps: [
+      "Встаньте на четвереньки, ладони под плечами.",
+      "Поднимите одну ногу назад, согнутую в колене под 90°.",
+      "Тянитесь пяткой вверх, не прогибая поясницу.",
+      "Медленно опустите и повторите другой ногой."
+    ],
+    mistakes: [
+      "Прогиб в пояснице вместо работы ягодицы.",
+      "Таз разворачивается вслед за ногой.",
+      "Нога поднимается за счёт маха."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [122, 242], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 290], [164, 292]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.1, h: 0.35, p: { hip: [122, 242], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 290], [200, 250]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "goblet",
+    name: "Приседание с гантелью у груди",
+    zone: "legs",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "12",
+    rest: "60 с",
+    equipment: "Гантель",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.32,
+    summary: "Гантель у груди смещает вес вперёд и помогает держать спину прямой. Одно из самых удобных приседаний для дома.",
+    steps: [
+      "Возьмите гантель обеими руками и прижмите к груди.",
+      "Стопы на ширине плеч, носки чуть наружу.",
+      "На вдохе садитесь между пяток, локти внутри коленей.",
+      "На выдохе встаньте, не отпуская гантель."
+    ],
+    mistakes: [
+      "Локти уходят внутрь и давят на колени.",
+      "Пятки отрываются от пола.",
+      "Спина округляется внизу."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[118, 173], [124, 176]], elbowDir: "down", kneeDir: "front" } },
+      { t: 1.4, h: 0.35, p: { hip: [84, 255], torso: 32, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[130, 228], [136, 231]], elbowDir: "down", kneeDir: "front" } }
+    ],
+    back: 1.35
+  },
+  {
+    id: "db_lunge",
+    name: "Выпад с гантелями",
+    zone: "legs",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "50 с",
+    equipment: "Гантели",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.55,
+    summary: "Выпад назад с гантелями в опущенных руках. Дополнительный вес усиливает нагрузку на ягодицы и бёдра, корпус работает на равновесие.",
+    steps: [
+      "Встаньте прямо, гантели в опущенных руках.",
+      "Шагните назад и опуститесь в выпад.",
+      "Корпус держите вертикально, вес — на передней стопе.",
+      "Вернитесь в стойку, не наклоняясь вперёд."
+    ],
+    mistakes: [
+      "Корпус заваливается вперёд.",
+      "Переднее колено уходит за носок.",
+      "Гантели раскачиваются и тянут плечи вниз."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.4, p: { hip: [98, 247], torso: 24, arms: { a: 6, b: 4 }, farArms: { a: 10, b: 2 }, feet: [[120, 292], [52, 292]], kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "pushup_wide",
+    name: "Широкие отжимания",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "50 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.45,
+    summary: "Ладони шире плеч — акцент смещается на грудь, а не на трицепс. Амплитуда меньше, поэтому движение хорошо идёт после обычных отжиманий.",
+    steps: [
+      "Примите упор лёжа, ладони шире плеч на 10–15 см.",
+      "Подтяните живот и ягодицы, тело — прямая линия.",
+      "На вдохе опуститесь, локти под углом 45°.",
+      "На выдохе вытолкнитесь вверх, не прогибаясь."
+    ],
+    mistakes: [
+      "Локти разведены строго в стороны на 90°.",
+      "Таз провисает первым.",
+      "Кисти развёрнуты внутрь, болят запястья."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [122, 262], torso: -65, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[54, 290], [64, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.2, h: 0.25, p: { hip: [128, 266], torso: -78, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[54, 290], [64, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.15
+  },
+  {
+    id: "db_row2",
+    name: "Тяга двух гантелей",
+    zone: "back",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "12",
+    rest: "50 с",
+    equipment: "Гантели",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.6,
+    summary: "Тяга двумя руками в наклоне: симметричная нагрузка на спину и заднюю дельту. Спина прямая, лопатки сводятся одновременно.",
+    steps: [
+      "Возьмите гантели, наклонитесь с прямой спиной.",
+      "Колени мягкие, таз отведён назад, шея продолжает спину.",
+      "На выдохе подтяните оба локтя к поясу.",
+      "На вдохе медленно опустите гантели."
+    ],
+    mistakes: [
+      "Спина округляется, тянет поясницу.",
+      "Рывок корпусом вместо работы лопаток.",
+      "Плечи уходят к ушам."
+    ],
+    breathing: "Тяга — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[152, 274], [162, 276]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.1, h: 0.3, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[140, 242], [150, 246]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "wall_calf",
+    name: "Растяжка икр у стены",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Стена",
+    tag: "Гибкость",
+    prop: { x: 184, y: 110, w: 14, h: 184 },
+    cover: 0.6,
+    summary: "Задняя нога выпрямлена, пятка давит в пол — растягиваются икры и ахилл. Полезно, если много ходите или носите обувь на плоской подошве.",
+    steps: [
+      "Встаньте лицом к стене, ладони на уровне груди.",
+      "Отставьте одну ногу назад, стопа направлена вперёд.",
+      "Давите пяткой задней ноги в пол, колено прямое.",
+      "Держите 30 секунд и меняйте ногу."
+    ],
+    mistakes: [
+      "Пятка отрывается от пола.",
+      "Задняя стопа разворачивается наружу.",
+      "Спина округляется, таз уходит вверх."
+    ],
+    breathing: "Дышите ровно, на выдохе пятка давит чуть сильнее.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [100, 244], torso: 38, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[140, 292], [48, 292]], hands: [[176, 200], [182, 204]], elbowDir: "front", kneeDir: "front" } },
+      { t: 1.3, h: 0.7, p: { hip: [96, 248], torso: 40, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[140, 292], [48, 292]], hands: [[176, 202], [182, 206]], elbowDir: "front", kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "march",
+    name: "Ходьба на месте",
+    zone: "legs",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "40 с",
+    rest: "30 с",
+    equipment: "Без инвентаря",
+    tag: "Кардио",
+    cover: 0.5,
+    summary: "Колени поочерёдно поднимаются к груди, руки двигаются в такт. Мягкое кардио для разминки и дней без прыжков — соседи не пострадают.",
+    steps: [
+      "Встаньте прямо, руки согнуты в локтях.",
+      "Поднимите колено до уровня таза.",
+      "Опустите и сразу поднимите другое, как при ходьбе.",
+      "Держите корпус вертикально, не наклоняйтесь."
+    ],
+    mistakes: [
+      "Корпус наклоняется вперёд.",
+      "Колено поднимается за счёт наклона таза.",
+      "Слишком быстрый темп без контроля."
+    ],
+    breathing: "Дышите в ритме шагов: короткий выдох на подъёме колена.",
+    frames: [
+      { t: 0, h: 0.1, p: { hip: [100, 211], torso: 6, arms: { a: 20, b: 10 }, farArms: { a: -15, b: 5 }, feet: [[128, 240], [96, 292]], kneeDir: "front" } },
+      { t: 0.55, h: 0.1, p: { hip: [100, 211], torso: 6, arms: { a: -15, b: 5 }, farArms: { a: 20, b: 10 }, feet: [[104, 292], [70, 244]], kneeDir: "front" } }
+    ],
+    back: 0.55
+  },
+  {
+    id: "pigeon",
+    name: "Поза голубя",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "40 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.62,
+    summary: "Одна нога согнута перед собой, вторая вытянута назад — глубокое раскрытие таза. Хорошо снимает скованность после долгого сидения.",
+    steps: [
+      "Из положения на четвереньках заведите одну ногу вперёд и согните.",
+      "Вторую ногу вытяните назад, таз опускайте к полу.",
+      "Наклонитесь корпусом вперёд на руках.",
+      "Держите 30–40 секунд, дышите глубоко."
+    ],
+    mistakes: [
+      "Таз перекошен на одну сторону.",
+      "Колено согнутой ноги болит — подложите подушку.",
+      "Рывок в наклоне."
+    ],
+    breathing: "На выдохе опускайтесь чуть ниже, на вдохе оставайтесь.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [110, 250], torso: 60, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 288], [50, 286]], hands: [[170, 275], [178, 278]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.4, h: 0.8, p: { hip: [110, 254], torso: 64, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 288], [50, 286]], hands: [[168, 280], [176, 282]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.4
   }
 ];
 
@@ -2096,11 +2444,13 @@ var TIMER_SECONDS = {
   side_plank: 30, reverse_crunch: 40, deadbug: 40, hollow: 20, vup: 40, cobra: 30, childpose: 45,
   quad_stretch: 30, seated_fold: 45, goodmorning: 45, calfraise: 30, bearhold: 30, stepup: 45,
   dumbbell_press: 45, dumbbell_row_1arm: 45, dumbbell_rdl: 45, dumbbell_curl: 40, dumbbell_floor_press: 45,
-  band_row: 40, band_front: 40, wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30
+  band_row: 40, band_front: 40, wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30,
+  situp: 45, plank_tap: 40, donkey: 40, goblet: 45, db_lunge: 50, pushup_wide: 45, db_row2: 45,
+  wall_calf: 30, march: 40, pigeon: 40
 };
 EXERCISES.forEach(function (e) { e.timer = TIMER_SECONDS[e.id] || 45; });
 
-var APP_VERSION = "1.0.0";
+var APP_VERSION = "1.2.0";
 var APP_BUILD = "15.11.2026";
 
 var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
@@ -2232,8 +2582,8 @@ var PROGRAMS = [
     accent: "4 тренировки с весом",
     summary: "Программа для тех, у кого есть пара гантелей и резинка. Два силовых дня на всё тело, день верха и круговой блок с резинкой — 60–90 секунд отдыха между подходами.",
     days: [
-      { id: "mon", title: "Всё тело", tag: "Сила", minutes: 36, ex: ["squat", "dumbbell_press", "dumbbell_row_1arm", "plank"], note: "3×10, отдых 90 с" },
-      { id: "tue", title: "Низ и спина", tag: "Сила", minutes: 38, ex: ["dumbbell_rdl", "lunge", "bridge", "band_row"], note: "3×10–12 на ногу" },
+      { id: "mon", title: "Всё тело", tag: "Сила", minutes: 36, ex: ["goblet", "dumbbell_press", "db_row2", "plank"], note: "3×10, отдых 90 с" },
+      { id: "tue", title: "Низ и спина", tag: "Сила", minutes: 38, ex: ["dumbbell_rdl", "db_lunge", "bridge_1leg", "band_row"], note: "3×10–12 на ногу" },
       { id: "wed", title: "Мобильность", tag: "Лёгкий", minutes: 20, ex: ["catcow", "hipflexor", "downdog"], note: "Спокойно, без веса" },
       { id: "thu", title: "Верх тела", tag: "Сила", minutes: 36, ex: ["dumbbell_floor_press", "dumbbell_curl", "band_front", "side_plank"], note: "3×10–12, корпус в конце" },
       { id: "fri", title: "Круг с резинкой", tag: "Круг", minutes: 32, ex: ["band_row", "band_front", "squat", "wall_sit"], note: "3 круга, отдых 60 с" },
@@ -2260,6 +2610,84 @@ var PROGRAMS = [
         "Отдых между подходами 60–90 секунд, между упражнениями — 2 минуты.",
         "Белок 20–30 г в каждый приём, особенно после тренировки.",
         "Не тренируйте одну группу два дня подряд: мышцы растут в восстановлении."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "fit",
+    name: "Фитнес",
+    goal: "общий тонус и выносливость",
+    accent: "5 тренировок: сила и кардио",
+    summary: "Универсальный режим: силовое всё-тело, кардио-микс, функциональный день и две мягкие тренировки. Для тех, кто хочет просто быть в форме, без узкой цели.",
+    days: [
+      { id: "mon", title: "Всё тело", tag: "Сила", minutes: 34, ex: ["squat", "pushup", "row", "plank"], note: "3×12, отдых 60 с" },
+      { id: "tue", title: "Кардио-микс", tag: "Кардио", minutes: 26, ex: ["march", "climber", "bearhold", "calfraise"], note: "40 с работы / 20 с отдыха" },
+      { id: "wed", title: "Растяжка", tag: "Лёгкий", minutes: 18, ex: ["catcow", "fold", "downdog"], note: "Дыхание и подвижность" },
+      { id: "thu", title: "Функциональная", tag: "Сила", minutes: 32, ex: ["lunge", "stepup", "dips", "superman"], note: "3×10 на ногу" },
+      { id: "fri", title: "Мобильность", tag: "Лёгкий", minutes: 20, ex: ["cobra", "childpose", "pigeon"], note: "По 30–45 секунд" },
+      { id: "sat", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка 30–40 минут", rest: true },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон и вода", rest: true }
+    ],
+    nutrition: {
+      title: "Сбалансированный день",
+      kcal: "Вес × 30–32 ккал. При 70 кг — около 2100–2250 ккал.",
+      macros: [
+        { k: "Белок", v: "1,5–1,8 г/кг" },
+        { k: "Жиры", v: "0,8–1 г/кг" },
+        { k: "Углеводы", v: "3–4,5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Каша или омлет, фрукт, кофе без сахара." },
+        { time: "11:30", title: "Перекус", text: "Йогурт или горсть орехов." },
+        { time: "14:00", title: "Обед", text: "Крупа, белок 120–150 г, овощи." },
+        { time: "17:30", title: "Перекус", text: "Творог или цельнозерновой тост с сыром." },
+        { time: "20:00", title: "Ужин", text: "Белок и овощи, немного сложных углеводов." }
+      ],
+      rules: [
+        "Белок в каждом приёме — 20–30 г.",
+        "Половина тарелки овощей в обед и ужин.",
+        "Вода 1,5–2 л; на кардио-дне — больше.",
+        "Сон 7–8 часов важнее любого профицита и дефицита."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "mobility",
+    name: "Гибкость и осанка",
+    goal: "спина, таз и осанка",
+    accent: "5 мягких дней",
+    summary: "Спокойный режим без ударной нагрузки: раскрытие грудного отдела, подвижность таза и мягкая сила кора. Хорош после рабочего дня за компьютером.",
+    days: [
+      { id: "mon", title: "Спина и осанка", tag: "Мобильность", minutes: 22, ex: ["catcow", "cobra", "superman", "birddog"], note: "Медленно, по 8–10 повторов" },
+      { id: "tue", title: "Гибкость ног", tag: "Гибкость", minutes: 22, ex: ["fold", "seated_fold", "quad_stretch", "wall_calf"], note: "По 30–45 секунд" },
+      { id: "wed", title: "Мягкая сила", tag: "Кор", minutes: 20, ex: ["plank_tap", "bridge", "donkey"], note: "2–3 подхода" },
+      { id: "thu", title: "Расслабление", tag: "Восстановление", minutes: 15, ex: ["childpose", "pigeon"], note: "Дыхание, без спешки" },
+      { id: "fri", title: "Мобильность", tag: "Мобильность", minutes: 18, ex: ["downdog", "catcow", "hipflexor"], note: "По 30–40 секунд" },
+      { id: "sat", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка и растяжка по желанию", rest: true },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон и вода", rest: true }
+    ],
+    nutrition: {
+      title: "Белок и омега-3",
+      kcal: "Вес × 29–31 ккал. При 70 кг — около 2050–2170 ккал.",
+      macros: [
+        { k: "Белок", v: "1,5–1,8 г/кг" },
+        { k: "Жиры", v: "0,9–1,1 г/кг" },
+        { k: "Углеводы", v: "2,5–4 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Творог с ягодами и орехами, тост." },
+        { time: "11:00", title: "Перекус", text: "Яблоко и горсть миндаля." },
+        { time: "14:00", title: "Обед", text: "Рыба (желательно 2–3 раза в неделю), овощи, крупа." },
+        { time: "17:00", title: "Перекус", text: "Кефир или овощная нарезка с хумусом." },
+        { time: "20:00", title: "Ужин", text: "Белок и много овощей, оливковое масло." }
+      ],
+      rules: [
+        "Жирная рыба 2–3 раза в неделю — омега-3 для суставов.",
+        "Белок в каждый приём, чтобы поддерживать мышцы.",
+        "Овощи и зелень каждый день — 400–500 г.",
+        "Каждые 45 минут за компьютером — вставать и разминать шею."
       ],
       note: SAFETY_NOTE
     }
@@ -2762,18 +3190,6 @@ function renderPrograms() {
       '<span>' + (names.length ? names.join(' · ') : d.note) + '</span>' +
       '</div>';
   }
-  var macros = "";
-  for (i = 0; i < p.nutrition.macros.length; i++) {
-    macros += '<div class="macro-row"><span>' + p.nutrition.macros[i].k + '</span><em>' + p.nutrition.macros[i].v + '</em></div>';
-  }
-  var meals = "";
-  for (i = 0; i < p.nutrition.meals.length; i++) {
-    var m = p.nutrition.meals[i];
-    meals += '<div class="meal"><time>' + m.time + '</time><div><b>' + m.title + '</b></div><span>' + m.text + '</span></div>';
-  }
-  var rules = "";
-  for (i = 0; i < p.nutrition.rules.length; i++) rules += '<li>' + p.nutrition.rules[i] + '</li>';
-
   host.innerHTML =
     '<div class="prog-card">' +
       '<h2>' + p.name + ' — ' + p.goal + '</h2>' +
@@ -2786,20 +3202,217 @@ function renderPrograms() {
         '</dl>' +
       '</div>' +
       '<h2 style="margin-top:22px">Неделя</h2>' + dayRows +
-      '<div style="margin-top:16px"><a class="btn btn--primary btn--sm" href="#schedule">Открыть график</a></div>' +
-    '</div>' +
-    '<div class="prog-card">' +
-      '<h2>Питание · ' + p.nutrition.title + '</h2>' +
-      '<p style="margin:0 0 14px;font-size:14.5px;color:#6E515C">' + p.nutrition.kcal + '</p>' +
-      '<div class="prog-hero">' +
-        '<div>' + macros +
-          '<p style="margin:12px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55">Порции подбираются по весу и активности. Ориентир по белку — ладонь с горкой в каждый приём, овощи — половина тарелки.</p>' +
-        '</div>' +
-        '<div>' + meals + '</div>' +
+      '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">' +
+        '<a class="btn btn--primary btn--sm" href="#schedule">Открыть график</a>' +
+        '<a class="btn btn--ghost btn--sm" href="#nutrition">Питание и калории</a>' +
       '</div>' +
-      '<h2 style="margin-top:22px">Правила</h2><ul class="rules">' + rules + '</ul>' +
-      '<p class="note" style="margin-top:18px">' + p.nutrition.note + '</p>' +
+      '<p class="note" style="margin-top:18px">Рацион для этой программы — во вкладке «Питание»: там же калькулятор нормы калорий и дневник.</p>' +
     '</div>';
+}
+
+/* nutrition */
+var NUT_STORE = "rose-line-nutrition-v1";
+var nut = {
+  profile: { sex: "f", age: 30, height: 168, weight: 62, act: "1.375", goal: "keep" },
+  log: []
+};
+try {
+  var rawNut = localStorage.getItem(NUT_STORE);
+  if (rawNut) {
+    var parsedNut = JSON.parse(rawNut);
+    if (parsedNut && parsedNut.profile) nut.profile = parsedNut.profile;
+    if (parsedNut && parsedNut.log) nut.log = parsedNut.log;
+  }
+} catch (e) {}
+function saveNut() { try { localStorage.setItem(NUT_STORE, JSON.stringify(nut)); } catch (e) {} }
+
+function bmrOf(p) {
+  var base = 10 * (+p.weight) + 6.25 * (+p.height) - 5 * (+p.age);
+  return Math.round(p.sex === "m" ? base + 5 : base - 161);
+}
+function targetsOf() {
+  var p = nut.profile;
+  var b = bmrOf(p), act = parseFloat(p.act) || 1.375;
+  var tdee = Math.round(b * act);
+  var goal = p.goal;
+  var kcal = goal === "loss" ? Math.round(tdee * 0.8) : goal === "gain" ? Math.round(tdee * 1.15) : tdee;
+  var floor = p.sex === "m" ? 1800 : 1500;
+  var clamped = kcal < floor;
+  if (clamped) kcal = floor;
+  var protein = Math.round((+p.weight) * (goal === "loss" ? 2.0 : 1.8));
+  var fat = Math.round((+p.weight) * 0.9);
+  var carbs = Math.max(0, Math.round((kcal - protein * 4 - fat * 9) / 4));
+  return { bmr: b, tdee: tdee, kcal: kcal, protein: protein, fat: fat, carbs: carbs, clamped: clamped };
+}
+function dayKcal(iso) {
+  var sum = 0;
+  for (var i = 0; i < nut.log.length; i++) if (nut.log[i].date === iso) sum += nut.log[i].kcal;
+  return sum;
+}
+
+function renderCalc() {
+  var host = byId("calcBlock");
+  if (!host) return;
+  var p = nut.profile, t = targetsOf();
+  function opt(val, label, cur) {
+    return '<option value="' + val + '"' + (String(cur) === String(val) ? " selected" : "") + ">" + label + "</option>";
+  }
+  host.innerHTML =
+    '<div class="prog-card">' +
+      '<h2>Норма калорий</h2>' +
+      '<form class="calc" id="calcForm">' +
+        '<label>Пол<select name="sex">' + opt("f", "женский", p.sex) + opt("m", "мужской", p.sex) + '</select></label>' +
+        '<label>Возраст<input name="age" type="number" min="14" max="90" step="1" value="' + p.age + '"></label>' +
+        '<label>Рост, см<input name="height" type="number" min="120" max="220" step="1" value="' + p.height + '"></label>' +
+        '<label>Вес, кг<input name="weight" type="number" min="35" max="200" step="0.5" value="' + p.weight + '"></label>' +
+        '<label>Активность<select name="act">' +
+          opt("1.2", "сидячая, без тренировок", p.act) +
+          opt("1.375", "1–3 тренировки в неделю", p.act) +
+          opt("1.55", "3–5 тренировок", p.act) +
+          opt("1.725", "6–7 тренировок", p.act) +
+          opt("1.9", "физическая работа", p.act) +
+        '</select></label>' +
+        '<label>Цель<select name="goal">' +
+          opt("keep", "держать вес", p.goal) +
+          opt("loss", "похудение (−20 %)", p.goal) +
+          opt("gain", "набор (+15 %)", p.goal) +
+        '</select></label>' +
+        '<button class="btn btn--primary btn--sm" type="submit">Рассчитать</button>' +
+      '</form>' +
+      '<div class="calc__out">' +
+        '<div class="calc__tile"><b>' + t.bmr + "</b><span>базовый обмен, ккал</span></div>" +
+        '<div class="calc__tile"><b>' + t.tdee + "</b><span>расход с активностью</span></div>" +
+        '<div class="calc__tile"><b>' + t.kcal + "</b><span>ваша норма в день</span></div>" +
+      '</div>' +
+      '<div class="macros">' +
+        '<span class="macro-chip">Белок ' + t.protein + " г</span>" +
+        '<span class="macro-chip">Жиры ' + t.fat + " г</span>" +
+        '<span class="macro-chip">Углеводы ' + t.carbs + " г</span>" +
+      '</div>' +
+      (t.clamped ? '<p class="note" style="margin-top:14px">Норма поднята до безопасного минимума: ниже ' + (p.sex === "m" ? "1800" : "1500") + " ккал без наблюдения врача лучше не опускаться.</p>" : "") +
+      '<p class="note" style="margin-top:14px">Расчёт по формуле Миффлина–Сан Жеора — это оценка, а не медицинская рекомендация. Реальный расход зависит от сна, стресса и бытовой активности: смотрите на вес за 2–3 недели и корректируйте на 100–200 ккал.</p>' +
+    "</div>";
+}
+
+function renderDiary() {
+  var host = byId("diaryBlock");
+  if (!host) return;
+  var t = targetsOf(), iso = isoDay(new Date()), total = dayKcal(iso);
+  var left = t.kcal - total;
+  var pct = Math.min(100, Math.round(total / t.kcal * 100));
+  var rows = "", today = [];
+  for (var i = 0; i < nut.log.length; i++) if (nut.log[i].date === iso) today.push(nut.log[i]);
+  today.sort(function (a, b) { return b.ts - a.ts; });
+  for (i = 0; i < today.length; i++) {
+    rows += '<div class="diary__row"><span>' + escHtml(today[i].title) + "</span>" +
+      "<b>" + today[i].kcal + ' ккал</b>' +
+      '<button class="del" type="button" data-meal="' + today[i].id + '" aria-label="Удалить">×</button></div>';
+  }
+  var chart = "", maxVal = t.kcal, vals = [], labels = [];
+  for (var d = 6; d >= 0; d--) {
+    var day = addDays(new Date(), -d), iv = isoDay(day);
+    vals.push(dayKcal(iv));
+    labels.push(WD[(day.getDay() + 6) % 7]);
+  }
+  for (i = 0; i < vals.length; i++) if (vals[i] > maxVal) maxVal = vals[i];
+  for (i = 0; i < vals.length; i++) {
+    var h = Math.round(vals[i] / maxVal * 100);
+    chart += '<div class="bar"><span class="bar__val">' + (vals[i] ? vals[i] : "—") + "</span>" +
+      '<div class="bar__track"><i class="bar__col' + (vals[i] ? " has" : "") + '" style="height:' + (vals[i] ? Math.max(4, h) : 3) + '%"></i></div>' +
+      '<span class="bar__lab">' + labels[i] + "</span></div>";
+  }
+  host.innerHTML =
+    '<div class="prog-card">' +
+      '<h2>Дневник калорий</h2>' +
+      '<div class="ws__top"><span>Сегодня: <b>' + total + " из " + t.kcal + " ккал</b></span><span>" +
+        (left >= 0 ? "осталось " + left + " ккал" : "перебор " + Math.abs(left) + " ккал") + "</span></div>" +
+      '<div class="ws__bar"><i style="width:' + pct + '%"></i></div>' +
+      '<form class="meal-form" id="mealForm">' +
+        '<input name="title" type="text" placeholder="Что съели (необязательно)" maxlength="60" aria-label="Название приёма пищи">' +
+        '<input name="kcal" type="number" min="1" max="4000" step="1" placeholder="ккал" required aria-label="Калории">' +
+        '<button class="btn btn--primary btn--sm" type="submit">Добавить</button>' +
+      "</form>" +
+      '<p class="diary__num">Записей за сегодня: ' + today.length + "</p>" +
+      (today.length ? '<div class="diary__list">' + rows + "</div>" : '<p class="empty" style="margin-top:6px">Пока пусто. Добавьте первый приём пищи — история сохранится на этом устройстве.</p>') +
+      '<h2 style="margin-top:22px">Последние 7 дней</h2><div class="chart">' + chart + "</div>" +
+      '<p class="note" style="margin-top:16px">Дневник — это ориентир, а не отчёт. Пропущенный день ничего не ломает: важно не «идеально», а в среднем.</p>' +
+    "</div>";
+}
+
+function renderNutritionPlan() {
+  var host = byId("nutritionPlan");
+  if (!host) return;
+  var p = currentProgram();
+  var n = p.nutrition;
+  var macros = "", meals = "", rules = "";
+  for (var i = 0; i < n.macros.length; i++) {
+    macros += '<div class="macro-row"><span>' + n.macros[i].k + "</span><em>" + n.macros[i].v + "</em></div>";
+  }
+  for (i = 0; i < n.meals.length; i++) {
+    var m = n.meals[i];
+    meals += '<div class="meal"><time>' + m.time + "</time><div><b>" + m.title + "</b></div><span>" + m.text + "</span></div>";
+  }
+  for (i = 0; i < n.rules.length; i++) rules += "<li>" + n.rules[i] + "</li>";
+  host.innerHTML =
+    '<div class="prog-card">' +
+      "<h2>Рацион по программе «" + p.name + "»</h2>" +
+      '<p style="margin:0 0 14px;font-size:14.5px;color:#6E515C">' + n.title + " · " + n.kcal + "</p>" +
+      '<div class="prog-hero">' +
+        "<div>" + macros +
+          '<p style="margin:12px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55">Порции подбираются по весу и активности. Ориентир: белок — ладонь с горкой в каждый приём, овощи — половина тарелки.</p>' +
+        "</div>" +
+        "<div>" + meals + "</div>" +
+      "</div>" +
+      '<h2 style="margin-top:22px">Правила</h2><ul class="rules">' + rules + "</ul>" +
+      '<p class="note" style="margin-top:18px">' + n.note + "</p>" +
+    "</div>";
+}
+
+function renderNutrition() {
+  renderCalc();
+  renderDiary();
+  renderNutritionPlan();
+}
+
+function onCalcSubmit(e) {
+  e.preventDefault();
+  var f = e.target;
+  var sex = f.sex.value === "m" ? "m" : "f";
+  var age = Math.max(14, Math.min(90, Math.round(+f.age.value || 30)));
+  var height = Math.max(120, Math.min(220, Math.round(+f.height.value || 170)));
+  var weight = Math.max(35, Math.min(200, Math.round((+f.weight.value || 65) * 10) / 10));
+  nut.profile = { sex: sex, age: age, height: height, weight: weight, act: f.act.value, goal: f.goal.value };
+  saveNut();
+  renderCalc();
+  renderDiary();
+}
+function onMealSubmit(e) {
+  e.preventDefault();
+  var f = e.target;
+  var kcal = Math.round(+f.kcal.value);
+  if (!kcal || kcal < 1 || kcal > 4000) return;
+  nut.log.push({
+    id: "m" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
+    date: isoDay(new Date()),
+    title: (f.title.value || "Приём пищи").trim().slice(0, 60),
+    kcal: kcal,
+    ts: Date.now()
+  });
+  saveNut();
+  renderDiary();
+}
+function onMealClick(e) {
+  var b = e.target.closest("[data-meal]");
+  if (!b) return;
+  var id = b.getAttribute("data-meal");
+  nut.log = nut.log.filter(function (x) { return x.id !== id; });
+  saveNut();
+  renderDiary();
+}
+if (byId("calcBlock")) {
+  byId("calcBlock").addEventListener("submit", onCalcSubmit);
+  byId("diaryBlock").addEventListener("submit", onMealSubmit);
+  byId("diaryBlock").addEventListener("click", onMealClick);
 }
 
 function renderSchedule() {
@@ -3022,9 +3635,15 @@ function beep(freq, delay, dur, vol) {
   } catch (e) {}
 }
 function chime() {
-  beep(880, 0, 0.2, 0.18);
-  beep(1174.7, 0.27, 0.2, 0.18);
-  beep(1568, 0.54, 0.45, 0.2);
+  var motif = [[0, 880, 0.2], [0.27, 1174.7, 0.2], [0.54, 1568, 0.42]];
+  var starts = [0, 2.2, 4.4];
+  for (var i = 0; i < starts.length; i++) {
+    for (var j = 0; j < motif.length; j++) {
+      beep(motif[j][1], starts[i] + motif[j][0], motif[j][2], 0.16);
+    }
+  }
+  beep(880, 6.25, 0.5, 0.18);
+  beep(1174.7, 6.5, 0.5, 0.16);
 }
 
 var tEl = {
@@ -3369,7 +3988,7 @@ if (byId("pickVideos")) {
 }
 
 /* routing */
-var VIEWS = ["overview", "workouts", "programs", "videos", "schedule", "progress"];
+var VIEWS = ["overview", "workouts", "programs", "nutrition", "videos", "schedule", "progress"];
 function setTabs(name) {
   var tabs = document.querySelectorAll(".tab");
   for (var i = 0; i < tabs.length; i++) {
@@ -3384,6 +4003,7 @@ function showView(name) {
   if (typeof heroPlayer !== "undefined" && heroPlayer) heroPlayer.setPlaying(name === "overview");
   if (name === "videos") renderVideos();
   if (name === "programs") renderPrograms();
+  if (name === "nutrition") renderNutrition();
   renderOverview();
   renderSchedule();
   renderProgress();
@@ -3442,6 +4062,7 @@ document.addEventListener("click", function (e) {
   renderProgress();
   renderOverview();
   renderPrograms();
+  renderNutritionPlan();
 });
 
 byId("prevWeek").addEventListener("click", function () {
@@ -3506,6 +4127,7 @@ resetBtn.addEventListener("click", function () {
 renderOverview();
 renderWorkouts();
 renderPrograms();
+renderNutrition();
 renderSchedule();
 renderProgress();
 var heroPlayer = new Player(byId("heroPlayer"), EXMAP["squat"], { autoplay: true });
