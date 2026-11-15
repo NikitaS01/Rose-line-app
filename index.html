@@ -1,0 +1,3381 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Розовая линия — тренировки дома</title>
+<meta name="description" content="Шестнадцать домашних упражнений с анимированной демонстрацией, техникой по шагам, таймером и графиком недели.">
+<meta name="theme-color" content="#FFF8FA">
+<!--pwa:head-->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Розовая линия">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<!--/pwa:head-->
+<style>
+:root{
+  --bg:#FFF8FA;
+  --surface:#FFFFFF;
+  --line:#F2D8E1;
+  --plum:#3E2A33;
+  --muted:#8A6C77;
+  --rose:#EE9DB2;
+  --rose-deep:#CB5C7D;
+  --accent:#A93F60;
+  --soft:#FFEDF3;
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--plum);
+  font:16px/1.62 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  background:
+    radial-gradient(120% 55% at 78% -12%, #FFE4EE 0%, rgba(255,248,250,0) 62%),
+    var(--bg);
+  background-repeat:no-repeat;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{letter-spacing:-.015em}
+a{color:var(--accent)}
+img,svg{max-width:100%}
+.shell{width:min(1160px,100% - 40px);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* header */
+.site-head{position:sticky;top:0;z-index:40;background:rgba(255,248,250,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.site-head .shell{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:72px;padding:10px 0}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--plum);font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.1}
+.brand b{font-weight:400}
+.brand small{display:block;font-family:"Segoe UI",system-ui,sans-serif;font-size:11px;letter-spacing:.09em;color:var(--muted);margin-top:2px}
+.brand__mark{width:34px;height:34px;flex:0 0 auto}
+.tabs{display:flex;gap:2px;padding:4px;background:#FFEAF1;border-radius:999px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;border:0;background:transparent;font:inherit;font-size:14.5px;font-weight:500;color:var(--muted);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s}
+.tab:hover{color:var(--accent)}
+.tab[aria-selected="true"]{background:#fff;color:var(--accent);box-shadow:0 2px 8px -3px rgba(160,70,100,.3)}
+
+/* views */
+.view{display:block;padding-bottom:8px}
+.view[hidden]{display:none!important}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(26px,4.6vw,54px) 0 clamp(22px,3.4vw,34px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.02em;color:#9C4A66;background:#FFEAF1;border:1px solid #F8D7E3;padding:6px 12px;border-radius:99px;margin:0}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--rose-deep);display:block}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(30px,4.5vw,52px);line-height:1.03;letter-spacing:-.025em;margin:16px 0 0}
+.lead{font-size:clamp(15px,1.5vw,17px);color:#6E515C;max-width:52ch;margin:16px 0 0}
+.lead--small{font-size:15px;max-width:64ch;margin-top:10px}
+.hero__actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s,transform .18s}
+.btn--primary{background:var(--rose-deep);color:#fff}
+.btn--primary:hover{background:#B94E6F;transform:translateY(-1px)}
+.btn--ghost{background:#fff;border-color:#F0CBD8;color:var(--plum)}
+.btn--ghost:hover{border-color:#E5A7BE;color:var(--accent)}
+.facts-inline{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:22px 0 0;padding:0;font-size:13.5px;color:var(--muted)}
+.facts-inline li{display:flex;align-items:center;gap:7px}
+.facts-inline li::before{content:"";width:5px;height:5px;border-radius:50%;background:#E9A7BC}
+
+/* player */
+.player-card{background:linear-gradient(168deg,#FFF3F7 0%,#FFE5EE 56%,#FFD9E7 100%);border:1px solid #F9DCE7;border-radius:28px;padding:14px 14px 10px;box-shadow:0 34px 60px -44px rgba(150,60,90,.6)}
+.player__stage{position:relative;border-radius:20px;overflow:hidden;background:radial-gradient(125% 85% at 50% 8%,#FFFBFD 0%,#FFF0F6 55%,#FFE4EE 100%);display:flex;justify-content:center;align-items:flex-end}
+.fig{display:block;width:100%;height:auto}
+.hero__media .fig{max-height:min(52vh,420px)}
+.player__badge{position:absolute;top:10px;left:10px;font-size:11px;letter-spacing:.03em;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.8);color:#9C4A66;border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(4px)}
+.player__bar{display:flex;align-items:center;gap:12px;padding:11px 3px 3px}
+.player__toggle{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:1px solid #F3CBDB;background:#fff;color:var(--accent);display:grid;place-items:center;cursor:pointer;font-size:11px;line-height:1;letter-spacing:0;transition:background .18s,color .18s}
+.player__toggle:hover{background:#FFF3F7}
+.player__track{flex:1;height:22px;display:flex;align-items:center;cursor:pointer;touch-action:none}
+.player__rail{position:relative;width:100%;height:6px;border-radius:99px;background:#F7D7E3;overflow:hidden}
+.player__fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:99px;background:var(--rose-deep)}
+.player__time{font:12px/1 ui-monospace,"Consolas",monospace;color:#96707D;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hero__caption{font-size:12.5px;color:var(--muted);margin:12px 2px 0;text-align:center}
+.fig-ground{stroke:#EFCBD8;stroke-width:2;stroke-linecap:round}
+.fig-limb{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:11}
+.fig-limb.near{stroke:#BC5478}
+.fig-limb.far{stroke:#F0BACB}
+.fig-torso{fill:#D87694;stroke:#D87694;stroke-width:2.5;stroke-linejoin:round}
+.fig-neck{stroke:#D87694;stroke-width:9;stroke-linecap:round}
+.fig-head{fill:#D87694}
+.fig-prop{fill:#F1D6E2;stroke:#E4BCD0;stroke-width:1.4}
+.fig-dumbbell .db-handle{stroke:#8C4A60;stroke-width:2.8;stroke-linecap:round}
+.fig-dumbbell .db-weight{fill:#8C4A60}
+.fig-band{fill:none;stroke:#C9557A;stroke-width:2.4;stroke-linecap:round;opacity:.8}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:clamp(20px,3vw,34px) 0 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.stat__num{display:block;font-family:Georgia,serif;font-size:clamp(24px,2.6vw,32px);line-height:1.1;letter-spacing:-.02em;color:var(--accent)}
+.stat__cap{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.4}
+
+/* blocks */
+.block{margin-top:clamp(34px,4.6vw,58px)}
+h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);margin:0 0 16px;letter-spacing:-.02em}
+.block__head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.block__head h2{margin-bottom:12px}
+.link{font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.link:hover{text-decoration:underline}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:h}
+.how > div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px 20px;position:relative}
+.how > div::before{counter-increment:h;content:counter(h);font-family:Georgia,serif;font-size:13px;color:var(--accent);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--soft);margin-bottom:12px}
+.how h3{font-size:16px;font-weight:600;margin:0 0 6px}
+.how p{margin:0;font-size:14px;color:#6E515C}
+
+/* cards */
+.grid{display:grid;gap:16px}
+.grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid--cards{grid-template-columns:repeat(auto-fill,minmax(248px,1fr));margin-top:18px}
+.xcard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+.xcard:hover{transform:translateY(-3px);box-shadow:0 28px 44px -34px rgba(150,60,90,.5);border-color:#EFC4D4}
+.xcard__link{display:block;color:inherit;text-decoration:none;flex:1}
+.xcard__link:focus-visible{outline-offset:-3px}
+.xcard__stage{background:linear-gradient(160deg,#FFF4F8,#FFE7F0);display:grid;place-items:center;padding-top:8px}
+.xcard__stage .fig{max-height:180px}
+.xcard__body{padding:13px 16px 16px;border-top:1px solid #FBE7EE}
+.zone{font-size:12px;color:#A4697F;letter-spacing:.02em}
+.xcard h3{font-family:Georgia,serif;font-size:19.5px;font-weight:400;margin:3px 0 5px;letter-spacing:-.012em}
+.xcard__meta{font-size:13px;color:var(--muted);margin:0 0 10px}
+.xcard__cta{font-size:13.5px;color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+.note{font-size:12.5px;color:var(--muted);line-height:1.6;max-width:78ch;margin:clamp(28px,4vw,44px) 0 0;padding-top:16px;border-top:1px solid var(--line)}
+
+/* page head */
+.page-head{padding:clamp(24px,3.4vw,40px) 0 0}
+.page-head h1{font-size:clamp(27px,3.4vw,40px);margin:0}
+.page-head--row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.chip{border:1px solid var(--line);background:#fff;color:var(--muted);font:inherit;font-size:13.5px;padding:8px 14px;border-radius:99px;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.chip:hover{border-color:#E9B3C6;color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--soft);border-color:#EBB4C8;color:var(--accent);font-weight:600}
+.count{font-size:13px;color:var(--muted);margin:14px 0 0}
+
+/* schedule */
+.weekctl{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--plum)}
+.icon-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);cursor:pointer;font-size:15px;line-height:1;display:grid;place-items:center}
+.icon-btn:hover:not([disabled]){background:var(--soft)}
+.icon-btn[disabled]{opacity:.4;cursor:default}
+.week-summary{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.ws__top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:14px;align-items:baseline}
+.ws__top b{font-weight:600}
+.ws__bar{height:8px;border-radius:99px;background:#FAE2EA;margin-top:12px;overflow:hidden}
+.ws__bar i{display:block;height:100%;background:linear-gradient(90deg,#EE9DB7,#CB5C7D);border-radius:99px;transition:width .3s}
+.week{display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));gap:12px;margin-top:18px}
+.day{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 13px;display:flex;flex-direction:column;gap:6px;min-height:224px}
+.day--today{border-color:#E79CB5;box-shadow:inset 0 0 0 3px #FFE6EF}
+.day--done{background:#FFF7FA}
+.day--future{background:#FFFCFD;color:#8B7078}
+.day__wd{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.day__date{font-family:Georgia,serif;font-size:22px;line-height:1}
+.day__title{font-size:13.5px;font-weight:600;line-height:1.28;margin-top:2px}
+.day__meta{font-size:11.5px;color:var(--muted)}
+.day__ex{display:flex;flex-direction:column;gap:1px;margin-top:2px}
+.mini{text-align:left;border:0;background:transparent;padding:2px 0;font:inherit;font-size:12.5px;color:#8E5568;cursor:pointer;border-bottom:1px dotted #E7B6C7;align-self:flex-start}
+.mini:hover{color:var(--accent)}
+.day__foot{margin-top:auto;padding-top:8px}
+.mark{width:100%;border:1px solid #F0C7D6;background:#fff;color:var(--accent);font:inherit;font-size:12.5px;font-weight:600;padding:7px 8px;border-radius:10px;cursor:pointer;transition:background .16s,color .16s,border-color .16s}
+.mark:hover:not([disabled]){background:var(--soft)}
+.mark[disabled]{opacity:.45;cursor:default}
+.day--done .mark{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+.link-btn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--accent);text-decoration:underline;cursor:pointer}
+
+/* progress */
+.two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px 20px 20px}
+.panel h2{font-size:17px;font-family:"Segoe UI",system-ui,sans-serif;font-weight:600;letter-spacing:0;margin:0 0 14px}
+.chart{display:flex;align-items:flex-end;gap:10px;height:190px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;min-width:0}
+.bar__val{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar__track{flex:1;width:100%;max-width:52px;display:flex;justify-content:center;align-items:flex-end}
+.bar__col{width:100%;border-radius:8px;background:#F6CBD9;min-height:3px;transition:height .35s}
+.bar__col.has{background:linear-gradient(180deg,#F2A9C0,#CB5C7D)}
+.bar__lab{font-size:11px;color:var(--muted);white-space:nowrap}
+.zone-row{display:grid;grid-template-columns:1fr auto;gap:5px 10px;margin-bottom:13px;font-size:13.5px}
+.zone-row:last-child{margin-bottom:0}
+.zone-row i{grid-column:1/-1;display:block;height:8px;background:#FAE4EC;border-radius:99px;overflow:hidden}
+.zone-row i b{display:block;height:100%;background:linear-gradient(90deg,#F0AFC3,#CB5C7D);border-radius:99px;transition:width .3s}
+.zone-row em{font-style:normal;color:var(--muted);font-size:12.5px}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.log li{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid #FBE7EE;font-size:14px;flex-wrap:wrap;min-width:0}
+.log li:last-child{border-bottom:0}
+.log span{color:var(--muted);font-size:13px}
+.log .empty{white-space:normal;overflow-wrap:anywhere}
+.empty{font-size:14px;color:var(--muted);margin:0}
+
+/* detail */
+.back{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;text-decoration:none;margin-top:26px}
+.back:hover{text-decoration:underline}
+.detail{display:grid;grid-template-columns:minmax(0,398px) minmax(0,1fr);gap:clamp(20px,3vw,44px);align-items:start;margin-top:16px}
+.detail__media{position:sticky;top:96px}
+.detail h1{font-size:clamp(26px,3.2vw,38px);margin:8px 0 0}
+.detail__lead{font-size:15.5px;color:#6E515C;margin:14px 0 0;max-width:56ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:10px;margin:20px 0 0;padding:0}
+.fact{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 13px;margin:0}
+.fact dt{font-size:11.5px;color:var(--muted)}
+.fact dd{margin:3px 0 0;font-size:15px;font-weight:600}
+.detail h2{font-size:16px;font-family:"Segoe UI",system-ui,sans-serif;font-weight:600;letter-spacing:0;margin:26px 0 10px}
+.steps-2{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px;max-width:60ch}
+.steps-2 li{position:relative;padding-left:34px;font-size:14.5px}
+.steps-2 li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:2px;width:23px;height:23px;border-radius:50%;background:var(--soft);color:var(--accent);font-size:11.5px;font-weight:600;display:grid;place-items:center}
+.wrong{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:60ch}
+.wrong li{position:relative;padding-left:20px;font-size:14.5px;color:#6E515C}
+.wrong li::before{content:"—";position:absolute;left:0;color:#C98BA1}
+.breath{font-size:14.5px;color:#6E515C;max-width:60ch;margin:0;padding:12px 16px;background:var(--soft);border-radius:12px}
+
+/* programs */
+.prog-switch{display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:10px;margin-top:22px}
+.pchip{text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px 14px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:2px;transition:background .16s,border-color .16s}
+.pchip b{font-size:14.5px;font-weight:600;color:var(--plum)}
+.pchip span{font-size:12px;color:var(--muted)}
+.pchip:hover{border-color:#E8B4C7}
+.pchip[aria-pressed="true"]{background:#FFF0F5;border-color:#E79CB5}
+.pchip[aria-pressed="true"] b{color:var(--accent)}
+.prog-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 22px;margin-top:16px}
+.prog-card h2{font-size:17px;font-family:"Segoe UI",system-ui,sans-serif;font-weight:600;letter-spacing:0;margin:0 0 12px}
+.prog-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
+.prog-hero p{margin:0;font-size:14.5px;color:#6E515C}
+.prog-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.prog-facts div{background:#FFF8FA;border:1px solid #F7E1EA;border-radius:12px;padding:9px 12px}
+.prog-facts dt{font-size:11.5px;color:var(--muted)}
+.prog-facts dd{margin:2px 0 0;font-size:14px;font-weight:600}
+.meal{display:grid;grid-template-columns:52px 1fr;gap:4px 12px;padding:11px 0;border-bottom:1px solid #FBE7EE;font-size:14px}
+.meal:last-child{border-bottom:0}
+.meal time{color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums;font-size:13px}
+.meal b{font-weight:600;display:block;font-size:13.5px}
+.meal span{grid-column:2;color:#6E515C;font-size:13.5px}
+.rules{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.rules li{position:relative;padding-left:20px;font-size:14px;color:#6E515C}
+.rules li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:#E79CB5}
+.macro-row{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:13.5px;padding:7px 0;border-bottom:1px dashed #F7DFE8}
+.macro-row:last-child{border-bottom:0}
+.macro-row em{font-style:normal;color:var(--muted);font-size:12.5px}
+.pday{display:grid;grid-template-columns:40px 1fr auto;gap:3px 10px;padding:10px 0;border-bottom:1px solid #FBE7EE;font-size:14px;align-items:baseline}
+.pday:last-child{border-bottom:0}
+.pday b{font-weight:600}
+.pday span{grid-column:2;color:var(--muted);font-size:12.5px}
+.pday em{font-style:normal;color:var(--accent);font-weight:600;font-size:13px;white-space:nowrap}
+.pday--rest b{color:var(--muted)}
+@media (max-width:900px){ .prog-hero{grid-template-columns:1fr} }
+
+/* timer */
+.xcard__foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px 15px}
+.timer-btn{border:1px solid #F0C7D6;background:#FFF7FA;color:var(--accent);font:inherit;font-size:13px;font-weight:600;padding:7px 12px;border-radius:10px;cursor:pointer;transition:background .16s,border-color .16s}
+.timer-btn:hover{background:var(--soft);border-color:#E3A5BC}
+.overlay{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:20px;background:rgba(62,42,51,.38);backdrop-filter:blur(3px)}
+.overlay[hidden]{display:none}
+.timer-card{width:min(392px,100%);background:#fff;border:1px solid #F6DDE7;border-radius:26px;padding:22px 22px 18px;text-align:center;box-shadow:0 40px 70px -34px rgba(120,40,70,.5);position:relative}
+.timer__close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:17px;line-height:1;cursor:pointer}
+.timer__close:hover{background:var(--soft);color:var(--accent)}
+.timer__zone{font-size:12px;color:#A4697F}
+.timer__title{font-family:Georgia,serif;font-size:23px;font-weight:400;margin:6px 0 2px;letter-spacing:-.015em}
+.timer__dial{position:relative;width:186px;height:186px;margin:14px auto 6px}
+.timer__dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:#FBDFE8;stroke-width:9}
+.ring-fg{fill:none;stroke:var(--rose-deep);stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset .12s linear}
+.timer__time{position:absolute;inset:0;display:grid;place-items:center;font-family:Georgia,serif;font-size:44px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--plum)}
+.timer__time small{font-size:15px;color:var(--muted);margin-left:3px}
+.timer__hint{font-size:12.5px;color:var(--muted);margin:2px 0 16px;min-height:18px}
+.timer__row{display:flex;gap:8px;justify-content:center;align-items:stretch}
+.tbtn{flex:0 0 auto;border:1px solid #F0C7D6;background:#fff;color:var(--accent);font:inherit;font-size:13.5px;font-weight:600;padding:11px 14px;border-radius:12px;cursor:pointer}
+.tbtn:hover{background:var(--soft)}
+.tbtn--main{flex:1;background:var(--rose-deep);border-color:var(--rose-deep);color:#fff;font-size:15px}
+.tbtn--main:hover{background:#B94E6F}
+.timer__reset{margin-top:12px}
+.timer-card--done .ring-fg{stroke:#9CC5A8}
+.timer-card--done .timer__time{color:#3F7A55}
+.detail__timer{margin-top:16px}
+.btn--sm{padding:10px 18px;font-size:14px}
+
+/* video */
+.drop{border:1.5px dashed #EFC4D4;background:#FFF9FB;border-radius:20px;padding:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:22px;transition:background .16s,border-color .16s}
+.drop--over{background:#FFEFF5;border-color:#E19FB8}
+.drop p{margin:0;flex:1;min-width:220px;font-size:13.5px;color:var(--muted);line-height:1.5}
+.drop b{display:block;font-size:15px;color:var(--plum);font-weight:600;margin-bottom:3px}
+.storage{font-size:12.5px;color:var(--muted);margin:12px 0 0}
+.videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:14px;margin-top:20px}
+.vcard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.vcard__tile{position:relative;display:grid;place-items:center;width:100%;padding:0;border:0;aspect-ratio:16/9;background:linear-gradient(160deg,#FFE9F1,#FFD6E6);cursor:pointer}
+.vcard__tile:hover{filter:saturate(1.05) brightness(1.02)}
+.vcard__tile svg{width:42px;height:42px}
+.vcard__body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.vcard__name{font-size:14px;font-weight:600;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vcard__meta{font-size:12px;color:var(--muted)}
+.vcard__row{display:flex;gap:8px;margin-top:auto}
+.vbtn{flex:1;border:1px solid #F0C7D6;background:#fff;color:var(--accent);font:inherit;font-size:12.5px;font-weight:600;padding:8px 10px;border-radius:9px;cursor:pointer}
+.vbtn:hover{background:var(--soft)}
+.vbtn--del{flex:0 0 auto}
+.vempty{border:1px solid var(--line);border-radius:18px;padding:28px 22px;background:#fff;text-align:center;font-size:14px;color:var(--muted);margin-top:20px;line-height:1.55}
+.vplay{width:min(880px,100%);background:#241a1f;border-radius:20px;padding:14px;position:relative;box-shadow:0 40px 70px -30px rgba(50,15,30,.6)}
+.vplay__title{color:#fff;font-size:14px;margin:0 40px 10px 2px;overflow-wrap:anywhere}
+.vplay video{width:100%;max-height:68vh;border-radius:12px;display:block;background:#000}
+.vplay .timer__close{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff}
+.vplay .timer__close:hover{background:rgba(255,255,255,.26);color:#fff}
+
+/* footer */
+.site-foot{border-top:1px solid var(--line);margin-top:clamp(36px,5vw,64px);padding:22px 0 34px;font-size:12.5px;color:var(--muted)}
+.site-foot .shell{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr}
+  .hero__media{order:-1}
+  .hero__media .fig{max-height:min(40vh,340px)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .how{grid-template-columns:1fr}
+  .grid--3{grid-template-columns:1fr}
+  .detail{grid-template-columns:1fr}
+  .detail__media{position:static}
+  .detail__media .fig{max-height:min(52vh,400px)}
+  .two-col{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .shell{width:calc(100% - 32px)}
+  .site-head .shell{flex-direction:column;align-items:stretch;gap:10px;padding:12px 0}
+  .brand{font-size:17px}
+  .tabs{padding:5px}
+  .tab{padding:12px 14px;font-size:14px}
+  .timer-btn{padding:11px 13px;font-size:13px}
+  .mark{padding:10px 8px}
+  .mini{padding:5px 0}
+  .week{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .xcard__stage .fig{max-height:160px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+
+/* app shell */
+body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
+.site-head{padding-top:env(safe-area-inset-top)}
+.site-foot{padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+/*pwa:css*/
+.install-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #F3D3DF;border-radius:18px;padding:12px 14px;box-shadow:0 22px 40px -26px rgba(120,40,70,.55);font-size:13.5px}
+.install-bar[hidden]{display:none}
+.install-bar p{margin:0;flex:1;line-height:1.45}
+.install-bar b{font-weight:600}
+.install-bar button[data-install]{flex:0 0 auto;border:0;background:var(--rose-deep);color:#fff;font:inherit;font-size:13px;font-weight:600;padding:9px 14px;border-radius:10px;cursor:pointer}
+.install-bar__close{border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:2px 4px}
+@media (min-width:780px){ .install-bar{left:auto;right:20px;bottom:20px;max-width:400px} }
+@media (display-mode:standalone){ .install-bar{display:none!important} }
+/*/pwa:css*/
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="shell">
+    <a class="brand" href="#overview">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" fill="#FFE5EE"/>
+        <path d="M12 25c0-6 4-11 8-13 4 2 8 7 8 13" fill="none" stroke="#CB5C7D" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="20" cy="26.5" r="3.2" fill="#CB5C7D"/>
+      </svg>
+      <span><b>Розовая линия</b><small>тренировки дома</small></span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Разделы сайта">
+      <button class="tab" id="tab-overview" role="tab" aria-selected="true" aria-controls="view-overview" data-route="overview">Обзор</button>
+      <button class="tab" id="tab-workouts" role="tab" aria-selected="false" aria-controls="view-workouts" data-route="workouts">Тренировки</button>
+      <button class="tab" id="tab-programs" role="tab" aria-selected="false" aria-controls="view-programs" data-route="programs">Программы</button>
+      <button class="tab" id="tab-videos" role="tab" aria-selected="false" aria-controls="view-videos" data-route="videos">Видео</button>
+      <button class="tab" id="tab-schedule" role="tab" aria-selected="false" aria-controls="view-schedule" data-route="schedule">График</button>
+      <button class="tab" id="tab-progress" role="tab" aria-selected="false" aria-controls="view-progress" data-route="progress">Прогресс</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="view" id="view-overview" role="tabpanel" aria-labelledby="tab-overview">
+    <div class="shell">
+      <div class="hero">
+        <div class="hero__text">
+          <p class="eyebrow"><i></i>программа на неделю · 5 тренировок</p>
+          <h1>Тренировки дома — мягко, понятно и по графику</h1>
+          <p class="lead">Шестнадцать движений с анимированной демонстрацией и техникой по шагам. Отметьте занятие после тренировки — сайт посчитает минуты и покажет, что уже сделано.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#workouts">Смотреть тренировки</a>
+            <a class="btn btn--ghost" href="#schedule">График недели</a>
+          </div>
+          <ul class="facts-inline">
+            <li>25–35 минут</li>
+            <li>без инвентаря</li>
+            <li>любой уровень</li>
+          </ul>
+        </div>
+        <div class="hero__media">
+          <div class="player-card" id="heroPlayer"></div>
+          <p class="hero__caption">Приседания · 3 × 15 · цикл повторяется</p>
+        </div>
+      </div>
+
+      <div class="stats" id="overviewStats"></div>
+
+      <section class="block">
+        <h2>Как это работает</h2>
+        <div class="how">
+          <div>
+            <h3>Выберите тренировку</h3>
+            <p>В карточке — демонстрация в движении, техника по шагам и частые ошибки. Фильтр помогает найти нужную группу мышц.</p>
+          </div>
+          <div>
+            <h3>Отметьте в графике</h3>
+            <p>После занятия нажмите «Готово». День закрасится, а минуты уйдут в статистику недели.</p>
+          </div>
+          <div>
+            <h3>Смотрите прогресс</h3>
+            <p>Серия дней, минуты за последнюю неделю и распределение по группам мышц — на отдельной вкладке.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="block__head">
+          <h2>Начните с этих движений</h2>
+          <a class="link" href="#workouts">Все шестнадцать упражнений →</a>
+        </div>
+        <div class="grid grid--3" id="featuredGrid"></div>
+      </section>
+
+      <p class="note">Перед занятием сделайте 5 минут разминки — суставы и мышцы должны проснуться. Дыхание ровное, без задержек и резкой боли: если движение отзывается болью, остановитесь. После травмы или при хронической боли сначала обсудите нагрузку с врачом. История отметок хранится локально в этом браузере.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-workouts" role="tabpanel" aria-labelledby="tab-workouts" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Тренировки</h1>
+        <p class="lead lead--small">Шестнадцать базовых движений: сила, кор и гибкость. Откройте карточку, чтобы увидеть полную демонстрацию и разбор техники.</p>
+      </div>
+      <div class="chips" id="filters" role="group" aria-label="Фильтр по группе мышц"></div>
+      <p class="count" id="workoutCount"></p>
+      <div class="grid grid--cards" id="workoutGrid"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-programs" role="tabpanel" aria-labelledby="tab-programs" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Программы</h1>
+        <p class="lead lead--small">Три режима под разные цели: спокойная база, набор массы и похудение. У каждого свой график недели, нагрузка и рацион.</p>
+      </div>
+      <div class="prog-switch" data-program-switch role="group" aria-label="Выбор программы"></div>
+      <div id="programDetail"></div>
+      <p class="note">Программа — не приговор графику: пропущенный день просто остаётся неотмеченным. Смена программы не стирает историю — отметки хранятся отдельно для каждой.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-videos" role="tabpanel" aria-labelledby="tab-videos" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Видео</h1>
+        <p class="lead lead--small">Здесь будут ваши записи тренировок. Добавьте файл — он сохранится в этом браузере и откроется даже без интернета.</p>
+      </div>
+      <div class="drop" id="dropzone">
+        <p>
+          <b>Перетащите видео сюда или выберите файл</b>
+          <span>MP4, MOV, WebM. Файлы остаются на этом устройстве — на сервер ничего не уходит.</span>
+        </p>
+        <button class="btn btn--primary btn--sm" type="button" id="pickVideos">Добавить видео</button>
+        <input type="file" id="videoInput" accept="video/*" multiple aria-label="Выбрать видеофайлы" hidden>
+      </div>
+      <p class="storage" id="storageInfo"></p>
+      <div class="videos" id="videoList"></div>
+      <p class="note">Записи хранятся локально: в этом браузере, на этом устройстве. При очистке данных сайта или удалении приложения они пропадут, поэтому оригиналы держите в галерее или облаке. Видео занимают много места: на iPhone разумно хранить 3–5 роликов, а длинные тренировки лучше держать в облаке и смотреть оттуда.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden>
+    <div class="shell">
+      <div class="page-head page-head--row">
+        <div>
+          <h1>График</h1>
+          <p class="lead lead--small">Отмечайте тренировку после занятия. Пропущенный день ничего не сбрасывает — график подстраивается под реальность.</p>
+        </div>
+        <div class="weekctl">
+          <button class="icon-btn" id="prevWeek" type="button" aria-label="Предыдущая неделя">←</button>
+          <span id="weekLabel">—</span>
+          <button class="icon-btn" id="nextWeek" type="button" aria-label="Следующая неделя">→</button>
+        </div>
+      </div>
+      <div class="prog-switch" data-program-switch role="group" aria-label="Программа тренировок"></div>
+      <div class="week-summary" id="weekSummary"></div>
+      <div class="week" id="weekGrid"></div>
+      <p class="note">Будущие дни отметить нельзя — только сегодняшний и прошедшие. <button class="link-btn" id="resetBtn" type="button">Очистить историю</button></p>
+    </div>
+  </section>
+
+  <section class="view" id="view-progress" role="tabpanel" aria-labelledby="tab-progress" hidden>
+    <div class="shell">
+      <div class="page-head">
+        <h1>Прогресс</h1>
+        <p class="lead lead--small">Только ваши отметки: сколько занятий закрыто, сколько минут набралось и какие группы мышц получают больше нагрузки.</p>
+      </div>
+      <div class="stats" id="progressStats"></div>
+      <div class="two-col">
+        <div class="panel">
+          <h2>Последние 7 дней</h2>
+          <div class="chart" id="weekChart"></div>
+        </div>
+        <div class="panel">
+          <h2>Что тренируем</h2>
+          <div id="zoneBars"></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:16px">
+        <h2>Отмеченные дни</h2>
+        <ul class="log" id="logList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-detail" hidden>
+    <div class="shell">
+      <a class="back" id="backLink" href="#workouts">← Все тренировки</a>
+      <div class="detail">
+        <div class="detail__media">
+          <div class="player-card" id="detailPlayer"></div>
+        </div>
+        <div class="detail__body" id="detailBody"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <span>Розовая линия — домашняя программа из шестнадцати движений.</span>
+    <span>Демонстрации нарисованы в SVG и работают офлайн.</span>
+  </div>
+</footer>
+
+<!--pwa:bar-->
+<div class="install-bar" id="installBar" hidden>
+  <p id="installText"><b>Установить приложение:</b> «Поделиться» → «На экран „Домой“». Дальше открывается как обычное приложение.</p>
+  <button type="button" data-install id="installGo" hidden>Установить</button>
+  <button type="button" class="install-bar__close" id="installClose" aria-label="Скрыть подсказку">×</button>
+</div>
+<!--/pwa:bar-->
+
+<div class="overlay" id="timerOverlay" hidden>
+  <div class="timer-card" id="timerCard" role="dialog" aria-modal="true" aria-labelledby="timerTitle">
+    <button class="timer__close" id="timerClose" type="button" aria-label="Закрыть таймер">×</button>
+    <p class="timer__zone" id="timerZone">упражнение</p>
+    <h2 class="timer__title" id="timerTitle">Таймер</h2>
+    <div class="timer__dial">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+        <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"></circle>
+      </svg>
+      <span class="timer__time" id="timerTime">0:45</span>
+    </div>
+    <p class="timer__hint" id="timerHint" role="status">Сигнал прозвучит по окончании</p>
+    <div class="timer__row">
+      <button class="tbtn" id="timerMinus" type="button">−15 с</button>
+      <button class="tbtn tbtn--main" id="timerStart" type="button">Старт</button>
+      <button class="tbtn" id="timerPlus" type="button">+15 с</button>
+    </div>
+    <button class="link-btn timer__reset" id="timerReset" type="button">Сбросить</button>
+  </div>
+</div>
+
+<div class="overlay" id="videoOverlay" hidden>
+  <div class="vplay" role="dialog" aria-modal="true" aria-labelledby="videoTitle">
+    <button class="timer__close" id="videoClose" type="button" aria-label="Закрыть видео">×</button>
+    <p class="vplay__title" id="videoTitle"></p>
+    <video id="videoPlayer" controls playsinline preload="metadata"></video>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* DATA */
+var ZONES = {
+  legs: "Ноги и ягодицы",
+  core: "Пресс и кор",
+  arms: "Руки и грудь",
+  back: "Спина",
+  flex: "Гибкость"
+};
+
+var EXERCISES = [
+  {
+    id: "squat",
+    name: "Приседания",
+    zone: "legs",
+    level: "База",
+    minutes: 6,
+    sets: 3,
+    reps: "15",
+    rest: "45 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.3,
+    summary: "Самое ёмкое движение программы. Таз уходит назад и вниз, колени идут в сторону носков, корпус наклоняется вперёд — работают ягодицы и бёдра, а мышцы живота держат равновесие.",
+    steps: [
+      "Встаньте прямо, стопы на ширине плеч, носки слегка наружу.",
+      "На вдохе отведите таз назад и начните садиться, вес — на всю стопу.",
+      "Опускайтесь, пока бёдра не станут почти параллельны полу.",
+      "На выдохе встаньте, толкаясь пятками, и мягко выпрямите колени."
+    ],
+    mistakes: [
+      "Пятки отрываются от пола — вес уходит на носки.",
+      "Колени заваливаются внутрь, к центру.",
+      "Поясница округляется в нижней точке."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох. Дышите ровно, без задержек: на 3 × 15 дыхание успевает сбиться, и это нормально.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } },
+      { t: 1.35, h: 0.35, p: { hip: [84, 255], torso: 32, arms: { a: 62, b: 12 }, farArms: { a: 70, b: 8 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } }
+    ],
+    back: 1.25
+  },
+  {
+    id: "bridge",
+    name: "Ягодичный мостик",
+    zone: "legs",
+    level: "База",
+    minutes: 4,
+    sets: 3,
+    reps: "20",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.55,
+    summary: "Мягкое движение для ягодиц и задней поверхности бедра. Лопатки и стопы остаются на полу, вверх поднимается только таз — без прогиба в пояснице.",
+    steps: [
+      "Лягте на спину, стопы на полу на ширине таза, руки вдоль тела.",
+      "На выдохе поднимите таз, пока колени, бёдра и плечи не выстроятся в линию.",
+      "Задержитесь на секунду и сожмите ягодицы.",
+      "На вдохе опустите таз почти до пола и повторите."
+    ],
+    mistakes: [
+      "Таз уходит вверх за счёт прогиба в пояснице.",
+      "Колени разъезжаются в стороны.",
+      "Толчок идёт от носков, а не от пяток."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох. В верхней точке дышать ровно, не задерживать.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [98, 278], torso: -95, arms: { a: 92, b: 2 }, farArms: { a: 88, b: 0 }, feet: [[142, 290], [132, 290]], kneeDir: "up" } },
+      { t: 1.2, h: 0.6, p: { hip: [98, 238], torso: -116, arms: { a: 92, b: 2 }, farArms: { a: 88, b: 0 }, feet: [[142, 290], [132, 290]], kneeDir: "up" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "plank",
+    name: "Планка",
+    zone: "core",
+    level: "База",
+    minutes: 5,
+    sets: 3,
+    reps: "40 с",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.5,
+    summary: "Статическое удержание, которое собирает корпус в одну линию. Работают пресс, поясница, ягодицы и плечи — задача не двигаться, а держать форму.",
+    steps: [
+      "Поставьте предплечья на пол, локти строго под плечами.",
+      "Вытяните ноги назад и встаньте на носки.",
+      "Подтяните живот и ягодицы: от макушки до пяток одна линия.",
+      "Смотрите в пол перед ладонями, шея продолжает спину."
+    ],
+    mistakes: [
+      "Таз провисает, поясница прогибается.",
+      "Таз слишком высоко — поза «домика».",
+      "Голова запрокинута вверх, шея напряжена."
+    ],
+    breathing: "Дышите спокойно и неглубоко: вдох на 3 счёта, выдох на 4. Задержка дыхания — признак, что пора опуститься.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [108, 278], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [176, 292]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.6, h: 0.4, p: { hip: [108, 273], torso: -47, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [176, 292]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.6
+  },
+  {
+    id: "crunch",
+    name: "Скручивания",
+    zone: "core",
+    level: "База",
+    minutes: 5,
+    sets: 3,
+    reps: "20",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.65,
+    summary: "Короткое движение пресса: поясница остаётся на полу, вверх поднимаются лопатки. Не тяните себя руками за голову — работает только живот.",
+    steps: [
+      "Лягте на спину, колени согнуты, стопы на полу.",
+      "Руки вытяните вдоль корпуса или положите на живот.",
+      "На выдохе приподнимите лопатки, тянитесь рёбрами к тазу.",
+      "На вдохе медленно вернитесь, не роняя голову назад."
+    ],
+    mistakes: [
+      "Рывок корпусом вместо плавного скручивания.",
+      "Поясница отрывается от пола.",
+      "Подбородок прижат к груди, шея устаёт первой."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох. Темп медленный: одно движение — один спокойный выдох.",
+    frames: [
+      { t: 0, h: 0.15, p: { hip: [96, 278], torso: -96, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[140, 290], [130, 290]], kneeDir: "up" } },
+      { t: 1.0, h: 0.3, p: { hip: [96, 276], torso: -64, arms: { a: 70, b: 0 }, farArms: { a: 66, b: 0 }, feet: [[140, 290], [130, 290]], kneeDir: "up" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "lunge",
+    name: "Выпад назад",
+    zone: "legs",
+    level: "Средне",
+    minutes: 7,
+    sets: 3,
+    reps: "12 на ногу",
+    rest: "50 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.55,
+    summary: "Одностороннее движение: одна нога работает, вторая держит равновесие. Шаг назад безопаснее для колена, чем вперёд, и хорошо включает ягодицы.",
+    steps: [
+      "Встаньте прямо, стопы на ширине таза, руки перед грудью.",
+      "Шагните назад и опустите колено почти до пола.",
+      "Переднее колено остаётся над стопой, корпус чуть наклонён вперёд.",
+      "Оттолкнитесь передней стопой и вернитесь в стойку."
+    ],
+    mistakes: [
+      "Переднее колено уезжает за носок.",
+      "Корпус заваливается в сторону.",
+      "Короткий шаг — колено задней ноги бьётся о пол."
+    ],
+    breathing: "Шаг вниз — вдох, возврат вверх — выдох. На 12 повторах дышите в своём ритме, без спешки.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.45, p: { hip: [98, 247], torso: 24, arms: { a: 52, b: 18 }, farArms: { a: 58, b: 14 }, feet: [[120, 292], [52, 292]], kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "pushup",
+    name: "Отжимания",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "50 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.45,
+    summary: "Классика для груди, плеч и трицепса. Корпус держится одной линией, локти уходят назад под углом — так нагрузка остаётся в мышцах, а не в суставах.",
+    steps: [
+      "Упор лёжа: ладони чуть шире плеч, под плечевыми суставами.",
+      "Подтяните живот и ягодицы, тело — прямая линия.",
+      "На вдохе опуститесь, пока грудь не окажется в ладони от пола.",
+      "На выдохе вытолкните себя вверх, не прогибая поясницу."
+    ],
+    mistakes: [
+      "Таз провисает или поднимается выше плеч.",
+      "Локти разведены строго в стороны на 90°.",
+      "Голова клюёт вниз первой."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох. Если тяжело, начните с варианта от колен и сохраните ту же линию корпуса.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [122, 262], torso: -65, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[66, 290], [76, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.25, h: 0.25, p: { hip: [130, 266], torso: -78, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[66, 290], [76, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "row",
+    name: "Тяга в наклоне",
+    zone: "back",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "12",
+    rest: "45 с",
+    equipment: "Бутылки с водой",
+    tag: "Сила",
+    cover: 0.6,
+    summary: "Движение для спины, которое компенсирует сидячий день. Корпус наклонён, спина прямая, лопатки сводятся к позвоночнику — тянут мышцы спины, а не руки.",
+    steps: [
+      "Возьмите бутылки с водой, наклонитесь вперёд, спина прямая.",
+      "Колени мягко согнуты, таз отведён назад, шея продолжает спину.",
+      "На выдохе подтяните локти к поясу и сведите лопатки.",
+      "На вдохе медленно опустите руки, не округляя спину."
+    ],
+    mistakes: [
+      "Спина округляется — нагрузка уходит в поясницу.",
+      "Рывок корпусом вместо работы лопатками.",
+      "Плечи поднимаются к ушам."
+    ],
+    breathing: "Тяга — выдох, опускание — вдох. На пике движения задержитесь на полсекунды.",
+    frames: [
+      { t: 0, h: 0.15, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[158, 280], [150, 282]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.1, h: 0.3, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[146, 258], [138, 260]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.15
+  },
+  {
+    id: "fold",
+    name: "Наклон вперёд",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 2,
+    reps: "60 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.6,
+    summary: "Спокойное вытяжение задней поверхности тела: бёдра, икры, спина. Колени можно согнуть — важна не глубина, а расслабленная шея и ровное дыхание.",
+    steps: [
+      "Встаньте прямо, стопы на ширине таза.",
+      "На выдохе наклонитесь вперёд, начиная с таза, а не с поясницы.",
+      "Дайте голове и рукам свободно повиснуть, колени мягкие.",
+      "Оставайтесь 30–60 секунд и поднимайтесь медленно, позвонок за позвонком."
+    ],
+    mistakes: [
+      "Рывок вниз вместо мягкого наклона.",
+      "Колени жёстко зафиксированы, поясница тянет.",
+      "Задержка дыхания и напряжённая шея."
+    ],
+    breathing: "Дышите медленно и глубоко: на выдохе тело опускается чуть ниже само, без усилия.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [100, 211], torso: 8, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[110, 214], [102, 216]], elbowDir: "front", kneeDir: "front" } },
+      { t: 1.6, h: 0.7, p: { hip: [100, 214], torso: 112, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[168, 284], [158, 288]], elbowDir: "front", kneeDir: "front" } }
+    ],
+    back: 1.6
+  },
+  {
+    id: "boat",
+    name: "Лодка",
+    zone: "core",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "30 с",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.78,
+    summary: "Баланс на ягодицах: корпус и ноги поднимаются одновременно и держатся на весу. Работает весь кор, особенно прямая мышца живота и сгибатели бедра.",
+    steps: [
+      "Сядьте на коврик, колени согнуты, стопы на полу.",
+      "Отклонитесь назад до прямого угла между корпусом и ногами.",
+      "Оторвите стопы от пола и выпрямите ноги, руки тянутся к коленям.",
+      "Держите спину прямой, не заваливайтесь назад."
+    ],
+    mistakes: [
+      "Спина округляется, поясница «складывается».",
+      "Колени разъезжаются в стороны.",
+      "Задержка дыхания на удержании."
+    ],
+    breathing: "Дышите ровно и неглубоко: вдох на 3 счёта, выдох на 4. Держите 20–30 секунд и опускайтесь.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [96, 280], torso: -95, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[140, 290], [130, 290]], kneeDir: "up" } },
+      { t: 1.3, h: 0.9, p: { hip: [110, 270], torso: -40, arms: { a: 60, b: 0 }, farArms: { a: 56, b: 0 }, feet: [[187, 242], [180, 246]], kneeDir: "up" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "legraise",
+    name: "Подъём ног лёжа",
+    zone: "core",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "12",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.62,
+    summary: "Ноги поднимаются прямыми от пола до вертикали — низ живота работает без рывка. Поясница прижата к коврику на всём пути.",
+    steps: [
+      "Лягте на спину, руки вдоль тела, ладони на полу.",
+      "Прижмите поясницу к коврику и напрягите живот.",
+      "На выдохе поднимите прямые ноги до вертикали.",
+      "На вдохе опускайте медленно, не касаясь пятками пола."
+    ],
+    mistakes: [
+      "Поясница отрывается и прогибается — болит спина.",
+      "Ноги падают вниз рывком.",
+      "Носки тянутся к потолку, колени болтаются."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох. Чем медленнее опускаете, тем больше пользы.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [96, 280], torso: -93, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[176, 284], [168, 288]], kneeDir: "up" } },
+      { t: 1.15, h: 0.55, p: { hip: [96, 280], torso: -93, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[112, 202], [120, 206]], kneeDir: "up" } }
+    ],
+    back: 1.15
+  },
+  {
+    id: "bicycle",
+    name: "Велосипед",
+    zone: "core",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "30 с",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.5,
+    summary: "Динамика для косых мышц живота: ноги поочерёдно тянутся к груди, корпус чуть скручен. Движение идёт из живота, а не из шеи.",
+    steps: [
+      "Лягте на спину, поясница на полу, руки у головы или на груди.",
+      "Поднимите лопатки и согните колени под прямым углом.",
+      "Поочерёдно подтягивайте колено к груди, вторая нога выпрямляется.",
+      "Темп спокойный, корпус не раскачивается."
+    ],
+    mistakes: [
+      "Тянуть себя руками за голову.",
+      "Поясница отрывается от пола.",
+      "Слишком быстрый темп без контроля."
+    ],
+    breathing: "На каждом подтягивании колена — короткий выдох, на выпрямлении — вдох.",
+    frames: [
+      { t: 0, h: 0.1, p: { hip: [100, 278], torso: -70, arms: { a: 55, b: 125 }, farArms: { a: 50, b: 120 }, feet: [[150, 232], [178, 272]], kneeDir: "up" } },
+      { t: 0.85, h: 0.1, p: { hip: [100, 278], torso: -70, arms: { a: 55, b: 125 }, farArms: { a: 50, b: 120 }, feet: [[178, 272], [150, 234]], kneeDir: "up" } }
+    ],
+    back: 0.85
+  },
+  {
+    id: "climber",
+    name: "Альпинист",
+    zone: "core",
+    level: "Продвинутый",
+    minutes: 5,
+    sets: 3,
+    reps: "30 с",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кардио",
+    cover: 0.55,
+    summary: "Планка с попеременным подтягиванием колена к груди. Держит кор в напряжении и заметно поднимает пульс — хорошая замена бегу на месте.",
+    steps: [
+      "Встаньте в планку на прямых руках, ладони под плечами.",
+      "Подтяните правое колено к груди, не поднимая таз.",
+      "Верните ногу назад и сразу подтяните левую.",
+      "Плечи остаются над ладонями, спина ровная."
+    ],
+    mistakes: [
+      "Таз подпрыгивает вверх на каждом движении.",
+      "Колено идёт в сторону, а не к груди.",
+      "Плечи уезжают вперёд за ладони."
+    ],
+    breathing: "Короткий выдох на каждом подтягивании колена, вдох — на возврате. Дышите в ритме шагов.",
+    frames: [
+      { t: 0, h: 0.12, p: { hip: [108, 276], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[132, 286], [186, 292]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 0.7, h: 0.12, p: { hip: [108, 276], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [150, 288]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 0.7
+  },
+  {
+    id: "catcow",
+    name: "Кошка-корова",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "10",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Мобильность",
+    cover: 0.55,
+    summary: "Мягкая волна позвоночника на четвереньках: округление и прогиб. Снимает скованность после сидячего дня и готовит спину к нагрузке.",
+    steps: [
+      "Встаньте на четвереньки: ладони под плечами, колени под тазом.",
+      "На выдохе округлите спину и опустите голову — «кошка».",
+      "На вдохе прогнитесь, грудь вперёд, взгляд чуть вверх — «корова».",
+      "Двигайтесь медленно, по одному позвонку."
+    ],
+    mistakes: [
+      "Работают только поясница и шея, середина спины стоит.",
+      "Локти согнуты, плечи уходят к ушам.",
+      "Движение слишком быстрое, без дыхания."
+    ],
+    breathing: "Округление — выдох, прогиб — вдох. Дыхание задаёт темп движению.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [122, 242], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 290], [164, 292]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.1, h: 0.3, p: { hip: [120, 236], torso: -100, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 290], [164, 292]], hands: [[62, 290], [72, 292]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "birddog",
+    name: "Птица-собака",
+    zone: "back",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "10 на сторону",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Стабильность",
+    cover: 0.72,
+    summary: "На четвереньках одновременно вытягиваются противоположные рука и нога. Тренирует равновесие и глубокие мышцы спины, не нагружая поясницу.",
+    steps: [
+      "Встаньте на четвереньки, спина ровная, живот подтянут.",
+      "Вытяните правую руку вперёд и левую ногу назад.",
+      "Держите таз неподвижным, не разворачивайте его.",
+      "Вернитесь и повторите на другую сторону."
+    ],
+    mistakes: [
+      "Таз поворачивается вместе с ногой.",
+      "Поясница прогибается, нога уходит выше линии спины.",
+      "Спешка: движение без паузы в верхней точке."
+    ],
+    breathing: "Вытяжение — выдох, возврат — вдох. В крайней точке дышите ровно, не задерживайте.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [122, 242], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 290], [164, 292]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.0, h: 0.5, p: { hip: [122, 242], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[170, 290], [200, 252]], hands: [[10, 240], [74, 292]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.0
+  },
+  {
+    id: "superman",
+    name: "Супермен",
+    zone: "back",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "12",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.6,
+    summary: "Лёжа на животе поднимаются руки и ноги — работает вся задняя поверхность тела. Движение небольшое по амплитуде, но хорошо укрепляет поясницу.",
+    steps: [
+      "Лягте на живот, руки вытянуты вперёд, лоб на коврике.",
+      "На выдохе поднимите руки и ноги от пола.",
+      "Тянитесь макушкой вперёд, а пятками назад.",
+      "Задержитесь на секунду и плавно опуститесь."
+    ],
+    mistakes: [
+      "Слишком высокий подъём за счёт прогиба в шее.",
+      "Задержка дыхания в верхней точке.",
+      "Носки разведены, колени разъезжаются."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох. Шея продолжает линию спины, подбородок не задирается.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [135, 282], torso: -92, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[210, 284], [202, 288]], hands: [[19, 282], [30, 284]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.1, h: 0.5, p: { hip: [140, 272], torso: -70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[218, 262], [210, 266]], hands: [[27, 240], [36, 244]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "downdog",
+    name: "Собака мордой вниз",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 2,
+    reps: "45 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.72,
+    summary: "Перевёрнутая V: таз вверх, ладони и стопы на полу. Вытягивает спину, заднюю поверхность бедра и икры, заодно разгружает плечи.",
+    steps: [
+      "Встаньте на четвереньки, ладони под плечами.",
+      "Поднимите таз вверх, выпрямляя ноги насколько комфортно.",
+      "Толкайте ладонями пол, тяните копчик вверх.",
+      "Пятки тянутся к полу, колени можно оставить мягкими."
+    ],
+    mistakes: [
+      "Спина округляется, плечи уходят к ушам.",
+      "Колени жёстко зафиксированы, поясница тянет.",
+      "Вес переносится на руки, ладони проскальзывают."
+    ],
+    breathing: "Дышите глубоко и медленно. На выдохе пятки сами тянутся чуть ближе к полу.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [150, 215], torso: -132, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[176, 292], [184, 292]], hands: [[62, 292], [72, 292]], elbowDir: "front", kneeDir: "front" } },
+      { t: 1.5, h: 0.8, p: { hip: [146, 222], torso: -128, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[176, 292], [184, 292]], hands: [[62, 292], [72, 292]], elbowDir: "front", kneeDir: "front" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "squat_pause",
+    name: "Приседания с паузой",
+    zone: "legs",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "12",
+    rest: "60 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.3,
+    summary: "Обычное приседание, но в нижней точке — пауза на два счёта. Мышцы работают дольше под нагрузкой, поэтому вес тела ощущается тяжелее.",
+    steps: [
+      "Поставьте стопы на ширине плеч, носки чуть наружу.",
+      "Опуститесь в приседание до параллели бёдер с полом.",
+      "Задержитесь внизу на два счёта, сохраняя спину прямой.",
+      "Медленно встаньте, толкаясь пятками."
+    ],
+    mistakes: [
+      "Пауза превращается в «провисание» с округлённой спиной.",
+      "Колени уходят внутрь, когда тяжело.",
+      "Рывок вверх после паузы."
+    ],
+    breathing: "Вниз — вдох, на паузе дышите ровно, вверх — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } },
+      { t: 1.4, h: 2.0, p: { hip: [84, 255], torso: 32, arms: { a: 62, b: 12 }, farArms: { a: 70, b: 8 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "lunge_knee",
+    name: "Выпад с подъёмом колена",
+    zone: "legs",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "50 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.5,
+    summary: "Выпад назад, а на подъёме колено передней ноги идёт вверх к груди. Движение тренирует ноги и равновесие, заодно поднимает пульс.",
+    steps: [
+      "Встаньте прямо, руки перед грудью.",
+      "Шагните назад и опуститесь в выпад.",
+      "Оттолкнитесь передней стопой и поднимите колено второй ноги к груди.",
+      "Держите паузу на одной ноге и вернитесь в стойку."
+    ],
+    mistakes: [
+      "Потеря равновесия из-за быстрого темпа.",
+      "Переднее колено уходит за носок.",
+      "Корпус заваливается в сторону."
+    ],
+    breathing: "Выпад — вдох, подъём колена — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.2, h: 0.3, p: { hip: [98, 247], torso: 24, arms: { a: 52, b: 18 }, farArms: { a: 58, b: 14 }, feet: [[120, 292], [52, 292]], kneeDir: "front" } },
+      { t: 1.2, h: 0.35, p: { hip: [100, 208], torso: 6, arms: { a: 10, b: 6 }, farArms: { a: 14, b: 4 }, feet: [[138, 232], [96, 292]], kneeDir: "front" } }
+    ],
+    back: 1.0
+  },
+  {
+    id: "bridge_1leg",
+    name: "Мостик на одной ноге",
+    zone: "legs",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "12 на ногу",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.55,
+    summary: "Усложнённый мостик: одна нога вытянута, весь вес на другой. Ягодицы работают вдвое интенсивнее, а таз учится держать ровно.",
+    steps: [
+      "Лягте на спину, одна стопа на полу, вторая нога вытянута.",
+      "На выдохе поднимите таз, упираясь в пол одной стопой.",
+      "Таз остаётся ровным, не заваливается на сторону.",
+      "Опуститесь и повторите, затем смените ногу."
+    ],
+    mistakes: [
+      "Таз перекашивается на сторону опоры.",
+      "Прогиб в пояснице вместо работы ягодиц.",
+      "Вытянутая нога опускается на пол."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [98, 278], torso: -95, arms: { a: 92, b: 2 }, farArms: { a: 88, b: 0 }, feet: [[142, 290], [178, 262]], kneeDir: "up" } },
+      { t: 1.2, h: 0.5, p: { hip: [98, 238], torso: -116, arms: { a: 92, b: 2 }, farArms: { a: 88, b: 0 }, feet: [[142, 290], [178, 262]], kneeDir: "up" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "dips",
+    name: "Обратные отжимания",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "50 с",
+    equipment: "Стул или диван",
+    tag: "Сила",
+    prop: { x: 148, y: 262, w: 50, h: 32 },
+    cover: 0.5,
+    summary: "Отжимания спиной к опоре: работают трицепс, грудь и передние пучки плеч. Ладони на краю стула, локти уходят строго назад.",
+    steps: [
+      "Сядьте на край стула, ладони рядом с бёдрами, пальцы вперёд.",
+      "Сдвиньте таз вперёд, опираясь на руки, ноги на полу.",
+      "На вдохе опуститесь, сгибая локти назад до прямого угла.",
+      "На выдохе вытолкните себя вверх, не разводя локти в стороны."
+    ],
+    mistakes: [
+      "Локти разъезжаются в стороны.",
+      "Плечи поднимаются к ушам.",
+      "Таз уходит слишком далеко от опоры."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [138, 270], torso: -25, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[70, 292], [62, 290]], hands: [[150, 262], [158, 264]], elbowDir: "front", kneeDir: "front" } },
+      { t: 1.2, h: 0.25, p: { hip: [138, 282], torso: -18, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[70, 292], [62, 290]], hands: [[150, 262], [158, 264]], elbowDir: "front", kneeDir: "front" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "pushup_knee",
+    name: "Отжимания с колен",
+    zone: "arms",
+    level: "Лёгкий",
+    minutes: 5,
+    sets: 3,
+    reps: "12",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.5,
+    summary: "Облегчённый вариант отжиманий: колени на полу, тело от колен до макушки — одна линия. Хороший вход в движение, если полные отжимания пока тяжелы.",
+    steps: [
+      "Встаньте на колени, ладони чуть шире плеч.",
+      "Опустите таз так, чтобы корпус от колен до головы был прямым.",
+      "На вдохе опустите грудь к полу, локти назад.",
+      "На выдохе вытолкните себя вверх."
+    ],
+    mistakes: [
+      "Таз поднимается — получается «домик».",
+      "Голова опускается первой.",
+      "Локти разведены в стороны."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [118, 262], torso: -58, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 288], [164, 290]], hands: [[74, 290], [84, 290]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.1, h: 0.2, p: { hip: [122, 268], torso: -70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[172, 288], [164, 290]], hands: [[74, 290], [84, 290]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "pushup_close",
+    name: "Узкие отжимания",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "50 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.45,
+    summary: "Ладони уже плеч, локти идут вдоль корпуса — акцент смещается на трицепс. Держите корпус одной линией, как в обычных отжиманиях.",
+    steps: [
+      "Примите упор лёжа, ладони под грудью, чуть уже плеч.",
+      "Подтяните живот и ягодицы, тело — прямая линия.",
+      "На вдохе опуститесь, прижимая локти к бокам.",
+      "На выдохе вытолкнитесь вверх."
+    ],
+    mistakes: [
+      "Локти разворачиваются в стороны.",
+      "Таз провисает.",
+      "Кисти сходятся слишком близко, болят запястья."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [122, 262], torso: -65, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[60, 290], [68, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.2, h: 0.25, p: { hip: [128, 266], torso: -78, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[60, 290], [68, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.15
+  },
+  {
+    id: "side_plank",
+    name: "Планка на боку",
+    zone: "core",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "30 с",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.6,
+    summary: "Опора на одно предплечье и внешнюю сторону стопы, вторая рука вверх. Включаются косые мышцы живота и боковая линия корпуса.",
+    steps: [
+      "Лягте на бок, локоть строго под плечом.",
+      "Поднимите таз, опираясь на предплечье и ребро стопы.",
+      "Свободную руку вытяните вверх, шея продолжает линию тела.",
+      "Держите таз высоко, не провисайте в пояснице."
+    ],
+    mistakes: [
+      "Таз опускается к полу.",
+      "Локоть уезжает вперёд из-под плеча.",
+      "Корпус поворачивается лицом вниз."
+    ],
+    breathing: "Дышите ровно: вдох на 3 счёта, выдох на 4.",
+    frames: [
+      { t: 0, h: 0.5, p: { hip: [128, 266], torso: -61.6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[198, 290], [192, 292]], hands: [[86, 290], [40, 196]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.4, h: 0.5, p: { hip: [128, 262], torso: -63, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[198, 290], [192, 292]], hands: [[86, 290], [40, 196]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "reverse_crunch",
+    name: "Обратное скручивание",
+    zone: "core",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "15",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.62,
+    summary: "Колени подтягиваются к груди, а таз слегка отрывается от пола — работает низ живота. Поясница остаётся на коврике.",
+    steps: [
+      "Лягте на спину, колени согнуты, стопы на полу.",
+      "Руки положите вдоль тела ладонями вниз.",
+      "На выдохе подтяните колени к груди и приподнимите таз.",
+      "Медленно вернитесь, не бросая ноги."
+    ],
+    mistakes: [
+      "Рывок ногами вместо работы живота.",
+      "Отталкивание руками от пола.",
+      "Шея напрягается и тянется вперёд."
+    ],
+    breathing: "Подтягивание — выдох, возврат — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [96, 280], torso: -95, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[140, 290], [130, 292]], kneeDir: "up" } },
+      { t: 1.0, h: 0.3, p: { hip: [96, 268], torso: -100, arms: { a: 95, b: 0 }, farArms: { a: 92, b: 0 }, feet: [[126, 246], [136, 250]], kneeDir: "up" } }
+    ],
+    back: 1.0
+  },
+  {
+    id: "deadbug",
+    name: "Мёртвый жук",
+    zone: "core",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "10 на сторону",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.5,
+    summary: "Лёжа на спине руки и ноги вверх, затем противоположные рука и нога опускаются. Учит держать поясницу прижатой, пока двигаются конечности.",
+    steps: [
+      "Лягте на спину, руки вверх, колени над тазом.",
+      "Прижмите поясницу к полу и напрягите живот.",
+      "Опустите противоположные руку и ногу, не отрывая поясницу.",
+      "Вернитесь и повторите на другую сторону."
+    ],
+    mistakes: [
+      "Поясница отрывается от пола.",
+      "Движение слишком быстрое, теряется контроль.",
+      "Рука и нога двигаются «с одной стороны»."
+    ],
+    breathing: "Опускание — выдох, возврат — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [116, 278], torso: -93, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[140, 240], [150, 244]], hands: [[56, 230], [66, 232]], elbowDir: "back", kneeDir: "up" } },
+      { t: 1.1, h: 0.3, p: { hip: [116, 278], torso: -93, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[140, 240], [196, 270]], hands: [[16, 262], [66, 232]], elbowDir: "back", kneeDir: "up" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "hollow",
+    name: "Полое удержание",
+    zone: "core",
+    level: "Продвинутый",
+    minutes: 4,
+    sets: 3,
+    reps: "20 с",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.7,
+    summary: "Тело вытянуто «бананом»: лопатки и ноги на весу, поясница прижата. Одно из самых сильных статических упражнений для пресса.",
+    steps: [
+      "Лягте на спину, руки за голову или вытянуты вперёд.",
+      "Прижмите поясницу к полу и поднимите лопатки.",
+      "Вытяните ноги под углом и держите тело в форме банана.",
+      "Если тяжело, согните колени — поясница важнее высоты ног."
+    ],
+    mistakes: [
+      "Поясница прогибается, появляется боль в спине.",
+      "Ноги подняты слишком высоко — нагрузка уходит.",
+      "Задержка дыхания."
+    ],
+    breathing: "Дышите коротко и ровно, не задерживайте воздух.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [124, 278], torso: -80, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[200, 250], [192, 254]], hands: [[10, 244], [20, 248]], elbowDir: "back", kneeDir: "up" } },
+      { t: 1.3, h: 0.4, p: { hip: [124, 276], torso: -75, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[196, 246], [188, 250]], hands: [[16, 240], [26, 244]], elbowDir: "back", kneeDir: "up" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "vup",
+    name: "V-складка",
+    zone: "core",
+    level: "Продвинутый",
+    minutes: 4,
+    sets: 3,
+    reps: "10",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.6,
+    summary: "Из положения лёжа одновременный подъём корпуса и ног — тело складывается в букву V. Сильное динамическое движение для всего пресса.",
+    steps: [
+      "Лягте на спину, руки вытянуты за головой, ноги прямые.",
+      "На выдохе поднимите корпус и ноги одновременно.",
+      "Тянитесь руками к стопам, поясница остаётся округлой.",
+      "На вдохе медленно вернитесь, не роняя ноги на пол."
+    ],
+    mistakes: [
+      "Рывок за счёт инерции.",
+      "Спина прогибается, когда ноги опускаются.",
+      "Колени сгибаются, движение становится махом."
+    ],
+    breathing: "Складка — выдох, возврат — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [135, 282], torso: -92, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[210, 284], [202, 288]], hands: [[19, 282], [30, 284]], elbowDir: "back", kneeDir: "up" } },
+      { t: 1.2, h: 0.25, p: { hip: [124, 272], torso: -50, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[196, 238], [188, 242]], hands: [[130, 250], [138, 254]], elbowDir: "back", kneeDir: "up" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "cobra",
+    name: "Поза кобры",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.7,
+    summary: "Лёжа на животе, грудь поднимается на руках, таз остаётся на полу. Раскрывает грудной отдел и переднюю поверхность тела после сидячего дня.",
+    steps: [
+      "Лягте на живот, ладони под плечами, локти прижаты.",
+      "На вдохе поднимите грудь, опираясь на руки.",
+      "Плечи опущены, шея тянется вверх, а не назад.",
+      "Таз и ноги остаются на коврике."
+    ],
+    mistakes: [
+      "Прогиб идёт в пояснице, а не в груди.",
+      "Плечи подняты к ушам.",
+      "Голова запрокинута назад."
+    ],
+    breathing: "Подъём — вдох, опускание — выдох. Дышите в самом положении.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [110, 284], torso: -34, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[188, 290], [180, 292]], hands: [[60, 290], [70, 292]], elbowDir: "front", kneeDir: "back" } },
+      { t: 1.3, h: 0.7, p: { hip: [110, 284], torso: -28, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[188, 290], [180, 292]], hands: [[60, 290], [70, 292]], elbowDir: "front", kneeDir: "back" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "childpose",
+    name: "Поза ребёнка",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "45 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.7,
+    summary: "Стоя на коленях, корпус опускается вперёд, руки вытянуты. Расслабляет поясницу и плечи, хорошо завершает тренировку.",
+    steps: [
+      "Встаньте на колени, большие пальцы стоп вместе.",
+      "Опустите таз на пятки, корпус наклоните вперёд.",
+      "Вытяните руки вперёд, лоб опустите на коврик.",
+      "Дышите животом, плечи расслаблены."
+    ],
+    mistakes: [
+      "Плечи подняты, шея зажата.",
+      "Таз отрывается от пяток.",
+      "Задержка дыхания."
+    ],
+    breathing: "Медленный вдох животом, длинный выдох. Чем спокойнее выдох, тем глубже расслабление.",
+    frames: [
+      { t: 0, h: 0.5, p: { hip: [120, 262], torso: -105, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[160, 288], [152, 290]], hands: [[26, 292], [36, 292]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.5, h: 0.8, p: { hip: [120, 266], torso: -103, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[160, 288], [152, 290]], hands: [[26, 292], [36, 292]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.5
+  },
+  {
+    id: "quad_stretch",
+    name: "Растяжка квадрицепса",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Без инвентаря",
+    tag: "Гибкость",
+    cover: 0.6,
+    summary: "Стоя на одной ноге, вторая согнута, пятка тянется к ягодице. Растягивает переднюю поверхность бедра, помогает после приседаний и выпадов.",
+    steps: [
+      "Встаньте прямо, при необходимости держитесь за стену.",
+      "Согните ногу и подтяните пятку к ягодице рукой.",
+      "Колени держите вместе, таз подкручен.",
+      "Стоите 30 секунд и меняете ногу."
+    ],
+    mistakes: [
+      "Поясница прогибается, таз уходит вперёд.",
+      "Колено согнутой ноги уходит в сторону.",
+      "Задержка дыхания."
+    ],
+    breathing: "Дышите ровно, на выдохе чуть сильнее притягивайте пятку.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[104, 292], [96, 292]], hands: [[106, 208], [112, 212]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.3, h: 0.7, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[94, 214], [96, 292]], hands: [[88, 210], [92, 214]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "seated_fold",
+    name: "Наклон сидя",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 2,
+    reps: "45 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.6,
+    summary: "Сидя с прямыми ногами, корпус наклоняется к стопам. Тянет заднюю поверхность бедра и поясницу, спина при этом остаётся длинной.",
+    steps: [
+      "Сядьте, ноги вытянуты вместе, стопы на себя.",
+      "На выдохе наклонитесь вперёд от таза, а не от шеи.",
+      "Тянитесь руками к стопам, сколько получается.",
+      "Держите 30–60 секунд, дышите медленно."
+    ],
+    mistakes: [
+      "Спина округляется, тянут только руки.",
+      "Колени сгибаются в «замок».",
+      "Рывок в наклоне."
+    ],
+    breathing: "На выдохе наклоняйтесь чуть глубже, на вдохе оставайтесь.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [96, 278], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[178, 284], [170, 288]], hands: [[178, 282], [168, 284]], elbowDir: "back", kneeDir: "up" } },
+      { t: 1.4, h: 0.9, p: { hip: [96, 278], torso: 82, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[178, 284], [170, 288]], hands: [[186, 288], [176, 290]], elbowDir: "back", kneeDir: "up" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "goodmorning",
+    name: "Наклон со спиной прямой",
+    zone: "back",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "12",
+    rest: "50 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.65,
+    summary: "«Доброе утро» без веса: таз уходит назад, корпус наклоняется с прямой спиной. Учит движению в тазобедренном суставе и укрепляет поясницу.",
+    steps: [
+      "Встаньте прямо, стопы на ширине таза, колени чуть мягкие.",
+      "Отведите таз назад, наклоняя корпус вперёд.",
+      "Спина остаётся прямой, шея продолжает линию.",
+      "Опуститесь почти до горизонтали и вернитесь, толкаясь тазом."
+    ],
+    mistakes: [
+      "Спина округляется — движение идёт из поясницы.",
+      "Колени сгибаются слишком сильно.",
+      "Корпус поднимается рывком."
+    ],
+    breathing: "Наклон — вдох, возврат — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.4, p: { hip: [92, 225], torso: 78, arms: { a: 0, b: 0 }, farArms: { a: 4, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "calfraise",
+    name: "Подъём на носки",
+    zone: "legs",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 3,
+    reps: "20",
+    rest: "30 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.62,
+    summary: "Простое движение для икр и стоп: тело поднимается на носки и медленно опускается. Полезно для стоп, если много ходите или стоите.",
+    steps: [
+      "Встаньте прямо, стопы на ширине таза.",
+      "Поднимитесь на носки как можно выше.",
+      "Задержитесь на секунду в верхней точке.",
+      "Медленно опустите пятки, не падая на них."
+    ],
+    mistakes: [
+      "Подъём рывком, пятки падают.",
+      "Корпус наклоняется вперёд для баланса.",
+      "Колени выпрямлены до замка."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох.",
+    frames: [
+      { t: 0, h: 0.15, p: { hip: [100, 211], torso: 6, arms: { a: 6, b: 4 }, farArms: { a: 10, b: 2 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 0.9, h: 0.3, p: { hip: [100, 203], torso: 6, arms: { a: 4, b: 4 }, farArms: { a: 8, b: 2 }, feet: [[105, 284], [95, 286]], kneeDir: "front" } }
+    ],
+    back: 1.0
+  },
+  {
+    id: "bearhold",
+    name: "Медвежья стойка",
+    zone: "core",
+    level: "Продвинутый",
+    minutes: 4,
+    sets: 3,
+    reps: "30 с",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.55,
+    summary: "Четвереньки, но колени висят в паре сантиметров над полом. Кор держит вес тела, плечи и таз остаются на одной высоте.",
+    steps: [
+      "Встаньте на четвереньки, ладони под плечами.",
+      "Оттолкнитесь ладонями и поднимите колени на пару сантиметров.",
+      "Спина ровная, таз не поднимается выше плеч.",
+      "Держите 20–30 секунд, колени не касаются пола."
+    ],
+    mistakes: [
+      "Таз уходит вверх, как в планке.",
+      "Колени опускаются на пол.",
+      "Спина провисает в пояснице."
+    ],
+    breathing: "Дышите ровно и коротко, не задерживайте воздух.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [118, 238], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 282], [142, 286]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } },
+      { t: 1.4, h: 0.4, p: { hip: [120, 234], torso: -90, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 282], [142, 286]], hands: [[64, 290], [74, 292]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "stepup",
+    name: "Зашагивание на опору",
+    zone: "legs",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "45 с",
+    equipment: "Стул или ступенька",
+    tag: "Сила",
+    prop: { x: 148, y: 262, w: 50, h: 32 },
+    cover: 0.5,
+    summary: "Шаг на невысокую опору с подъёмом тела одной ногой. Похоже на подъём по лестнице, хорошо нагружает ягодицы и учит равновесию.",
+    steps: [
+      "Встаньте перед устойчивой опорой высотой до колена.",
+      "Поставьте на неё всю стопу ведущей ноги.",
+      "Поднимитесь, толкаясь этой ногой, корпус чуть вперёд.",
+      "Медленно опуститесь той же ногой и повторите."
+    ],
+    mistakes: [
+      "Отталкивание задней ногой вместо работы передней.",
+      "Колено заваливается внутрь.",
+      "Опора шатается — выберите устойчивый стул у стены."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, p: { hip: [96, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[100, 292], [92, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.5, p: { hip: [104, 203], torso: 10, arms: { a: 10, b: 6 }, farArms: { a: 14, b: 4 }, feet: [[160, 262], [96, 292]], kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "dumbbell_press",
+    name: "Жим гантелей стоя",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "60 с",
+    equipment: "Гантели",
+    tag: "Сила",
+    equip: "dumbbell",
+    view: "0 92 220 216",
+    cover: 0.5,
+    summary: "Гантели поднимаются над головой, локти идут вдоль корпуса. Работают плечи и трицепс, корпус держит ребро над тазом и не прогибается.",
+    steps: [
+      "Встаньте прямо, гантели на уровне плеч, ладони вперёд.",
+      "Напрягите живот и ягодицы, чтобы не прогибать поясницу.",
+      "На выдохе выжмите гантели вверх, почти выпрямляя руки.",
+      "На вдохе медленно вернитесь к плечам."
+    ],
+    mistakes: [
+      "Прогиб в пояснице и подъём рёбер.",
+      "Локти разъезжаются в стороны.",
+      "Рывок вверх за счёт инерции."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 20, b: 130 }, farArms: { a: 24, b: 126 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 150, b: 20 }, farArms: { a: 146, b: 24 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
+    ],
+    back: 1.25
+  },
+  {
+    id: "dumbbell_row_1arm",
+    name: "Тяга гантели в наклоне",
+    zone: "back",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "12 на руку",
+    rest: "50 с",
+    equipment: "Гантель",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.6,
+    summary: "Одна рука тянет гантель к поясу, вторая свободно висит. Спина остаётся прямой, лопатка сводится к позвоночнику — работает середина спины.",
+    steps: [
+      "Наклонитесь вперёд, спина прямая, колени мягкие.",
+      "Возьмите гантель в одну руку, вторая свободно висит.",
+      "На выдохе подтяните локоть к поясу, лопатку — к центру.",
+      "На вдохе медленно опустите гантель, не округляя спину."
+    ],
+    mistakes: [
+      "Спина округляется, тянет поясницу.",
+      "Корпус разворачивается вместе с рукой.",
+      "Плечо поднимается к уху."
+    ],
+    breathing: "Тяга — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [96, 236], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[104, 292], [88, 292]], hands: [[140, 250], [152, 272]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.1, h: 0.3, p: { hip: [96, 236], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[104, 292], [88, 292]], hands: [[154, 276], [152, 272]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "dumbbell_rdl",
+    name: "Румынская тяга",
+    zone: "legs",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "60 с",
+    equipment: "Гантели",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.66,
+    summary: "Наклон с гантелями при почти прямых ногах: таз уходит назад, гантели скользят вдоль бедра. Тянет заднюю поверхность бедра и учит держать спину.",
+    steps: [
+      "Встаньте прямо, гантели перед бёдрами, колени мягкие.",
+      "Отведите таз назад и наклонитесь, спина прямая.",
+      "Опускайтесь, пока гантели не дойдут до середины голени.",
+      "Вернитесь, толкаясь тазом вперёд."
+    ],
+    mistakes: [
+      "Округление спины внизу.",
+      "Гантели уходят далеко от ног.",
+      "Колени сгибаются, движение превращается в присед."
+    ],
+    breathing: "Наклон — вдох, подъём — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 215], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 4, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.4, h: 0.35, p: { hip: [92, 228], torso: 76, arms: { a: 0, b: 0 }, farArms: { a: 4, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
+    ],
+    back: 1.35
+  },
+  {
+    id: "dumbbell_curl",
+    name: "Сгибание на бицепс",
+    zone: "arms",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "12",
+    rest: "45 с",
+    equipment: "Гантели",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.55,
+    summary: "Классическое движение на бицепс: локти прижаты к корпусу, гантели поднимаются к плечам. Спина не помогает, работает только рука.",
+    steps: [
+      "Встаньте прямо, гантели в опущенных руках, ладони вперёд.",
+      "Прижмите локти к бокам и зафиксируйте их.",
+      "На выдохе поднимите гантели к плечам.",
+      "На вдохе медленно опустите, не разгибая руки рывком."
+    ],
+    mistakes: [
+      "Локти уезжают вперёд и вверх.",
+      "Корпус раскачивается в такт движению.",
+      "Гантели падают вниз без контроля."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [100, 211], torso: 6, arms: { a: 8, b: 0 }, farArms: { a: 12, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.2, h: 0.2, p: { hip: [100, 211], torso: 6, arms: { a: 20, b: 130 }, farArms: { a: 24, b: 126 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "dumbbell_floor_press",
+    name: "Жим гантелей лёжа",
+    zone: "arms",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10",
+    rest: "60 с",
+    equipment: "Гантели, коврик",
+    tag: "Сила",
+    equip: "dumbbell",
+    cover: 0.5,
+    summary: "Жим с пола: локти опускаются до пола, гантели выжимаются вверх. Работают грудь, трицепс и плечи, а пол безопасно ограничивает амплитуду.",
+    steps: [
+      "Лягте на спину, гантели у плеч, локти под углом 45°.",
+      "Стопы на полу, поясница прижата.",
+      "На выдохе выжмите гантели вверх над грудью.",
+      "На вдохе опустите, пока локти почти не коснутся пола."
+    ],
+    mistakes: [
+      "Локти уходят строго в стороны на 90°.",
+      "Прогиб в пояснице и подъём таза.",
+      "Гантели стукаются друг о друга."
+    ],
+    breathing: "Вверх — выдох, вниз — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [130, 278], torso: -93, arms: { a: 130, b: 50 }, farArms: { a: 126, b: 54 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } },
+      { t: 1.2, h: 0.25, p: { hip: [130, 278], torso: -93, arms: { a: 170, b: 10 }, farArms: { a: 166, b: 14 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "band_row",
+    name: "Тяга резинки к поясу",
+    zone: "back",
+    level: "Лёгкий",
+    minutes: 5,
+    sets: 3,
+    reps: "15",
+    rest: "40 с",
+    equipment: "Резинка",
+    tag: "Сила",
+    equip: "band",
+    bandAnchor: [104, 291],
+    cover: 0.55,
+    summary: "Резинка под стопами, руки тянут её к поясу. Мягкая и безопасная нагрузка на спину: работают лопатки, а не поясница.",
+    steps: [
+      "Встаньте на середину резинки, стопы на ширине таза.",
+      "Возьмите концы в руки, выпрямите спину.",
+      "На выдохе подтяните локти к поясу и сведите лопатки.",
+      "На вдохе медленно верните руки вперёд."
+    ],
+    mistakes: [
+      "Корпус отклоняется назад, чтобы помочь руками.",
+      "Плечи поднимаются к ушам.",
+      "Резинка слетает со стоп — держите её середину."
+    ],
+    breathing: "Тяга — выдох, возврат — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[150, 190], [158, 194]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.1, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[118, 190], [126, 194]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.1
+  },
+  {
+    id: "band_front",
+    name: "Подъём рук с резинкой",
+    zone: "arms",
+    level: "Лёгкий",
+    minutes: 5,
+    sets: 3,
+    reps: "12",
+    rest: "40 с",
+    equipment: "Резинка",
+    tag: "Сила",
+    equip: "band",
+    bandAnchor: [104, 291],
+    cover: 0.55,
+    summary: "Руки поднимаются вперёд до уровня плеч, резинка сопротивляется. Мягкая нагрузка на передние пучки плеч и корпус.",
+    steps: [
+      "Встаньте на резинку, концы в опущенных руках.",
+      "Спина прямая, живот подтянут.",
+      "На выдохе поднимите руки вперёд до уровня плеч.",
+      "На вдохе медленно опустите, не теряя натяжения."
+    ],
+    mistakes: [
+      "Рывок и раскачивание корпусом.",
+      "Руки поднимаются выше плеч.",
+      "Плечи ползут к ушам."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[112, 214], [122, 218]], elbowDir: "front", kneeDir: "front" } },
+      { t: 1.2, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[164, 158], [172, 162]], elbowDir: "front", kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "wall_pushup",
+    name: "Отжимания от стены",
+    zone: "arms",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "15",
+    rest: "40 с",
+    equipment: "Стена",
+    tag: "Сила",
+    prop: { x: 184, y: 110, w: 14, h: 184 },
+    cover: 0.5,
+    summary: "Самый доступный вариант отжиманий: руки на стене, тело прямое. Подходит для разминки и для тех, кому пока тяжело опускаться на пол.",
+    steps: [
+      "Встаньте на расстоянии шага от стены, ладони на уровне плеч.",
+      "Отойдите стопами назад, тело — прямая линия.",
+      "На вдохе согните руки, приближая грудь к стене.",
+      "На выдохе оттолкнитесь, не прогибая поясницу."
+    ],
+    mistakes: [
+      "Таз провисает или уходит назад.",
+      "Локти разведены строго в стороны.",
+      "Стопы стоят слишком близко — мало амплитуды."
+    ],
+    breathing: "К стене — вдох, отталкивание — выдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [98, 218], torso: 25.4, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[64, 292], [58, 292]], hands: [[181, 168], [176, 172]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.2, h: 0.25, p: { hip: [103, 226], torso: 33, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[64, 292], [58, 292]], hands: [[181, 168], [176, 172]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.2
+  },
+  {
+    id: "wall_sit",
+    name: "Приседание у стены",
+    zone: "legs",
+    level: "Средне",
+    minutes: 5,
+    sets: 3,
+    reps: "30 с",
+    rest: "40 с",
+    equipment: "Стена",
+    tag: "Сила",
+    prop: { x: 60, y: 110, w: 16, h: 184 },
+    cover: 0.6,
+    summary: "Статическое удержание: спина прижата к стене, бёдра параллельны полу. Ноги горят уже на 30-й секунде, а колени остаются в безопасности.",
+    steps: [
+      "Прижмите спину к стене и отойдите стопами на шаг.",
+      "Скользите вниз, пока бёдра не станут параллельны полу.",
+      "Колени над стопами, поясница прижата к стене.",
+      "Держите 20–40 секунд и медленно поднимитесь."
+    ],
+    mistakes: [
+      "Колени уходят за носки.",
+      "Поясница отрывается от стены.",
+      "Задержка дыхания на удержании."
+    ],
+    breathing: "Дышите ровно и неглубоко, не задерживайте воздух.",
+    frames: [
+      { t: 0, h: 0.5, p: { hip: [102, 262], torso: -12, arms: { a: 50, b: 20 }, farArms: { a: 56, b: 16 }, feet: [[124, 292], [114, 292]], kneeDir: "front" } },
+      { t: 1.4, h: 0.5, p: { hip: [102, 266], torso: -12, arms: { a: 50, b: 20 }, farArms: { a: 56, b: 16 }, feet: [[124, 292], [114, 292]], kneeDir: "front" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "bulgarian",
+    name: "Болгарский выпад",
+    zone: "legs",
+    level: "Продвинутый",
+    minutes: 6,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "50 с",
+    equipment: "Стул",
+    tag: "Сила",
+    prop: { x: 44, y: 250, w: 36, h: 26 },
+    cover: 0.55,
+    summary: "Задняя нога на опоре, вес на передней. Одно из самых сильных движений для ягодиц и бёдер — и самое требовательное к равновесию.",
+    steps: [
+      "Поставьте стопу задней ноги на невысокий стул.",
+      "Сделайте шаг вперёд опорной ногой.",
+      "Опускайтесь, пока бедро передней ноги не станет параллельно полу.",
+      "Поднимайтесь за счёт передней ноги, корпус чуть вперёд."
+    ],
+    mistakes: [
+      "Опора слишком высокая — тянет колено.",
+      "Переднее колено заваливается внутрь.",
+      "Корпус заваливается в сторону."
+    ],
+    breathing: "Вниз — вдох, вверх — выдох.",
+    frames: [
+      { t: 0, p: { hip: [112, 238], torso: 8, arms: { a: 10, b: 6 }, farArms: { a: 14, b: 4 }, feet: [[150, 292], [58, 250]], kneeDir: "front" } },
+      { t: 1.3, h: 0.4, p: { hip: [110, 246], torso: 10, arms: { a: 6, b: 6 }, farArms: { a: 10, b: 4 }, feet: [[150, 292], [58, 250]], kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "hipflexor",
+    name: "Растяжка сгибателя бедра",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.6,
+    summary: "Низкий выпад на колене: таз подаётся вперёд, растягивается передняя поверхность бедра. Хорошо после долгого сидения.",
+    steps: [
+      "Встаньте в выпад, заднее колено на коврике.",
+      "Подайте таз вперёд, спина прямая.",
+      "Руки на переднем бедре, плечи опущены.",
+      "Держите 30 секунд и меняйте сторону."
+    ],
+    mistakes: [
+      "Поясница прогибается вместо работы таза.",
+      "Переднее колено заходит за носок.",
+      "Задержка дыхания."
+    ],
+    breathing: "На выдохе подавайте таз чуть вперёд, на вдохе оставайтесь.",
+    frames: [
+      { t: 0, h: 0.3, p: { hip: [104, 258], torso: 4, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 292], [70, 286]], hands: [[148, 238], [152, 242]], elbowDir: "back", kneeDir: "front" } },
+      { t: 1.4, h: 0.7, p: { hip: [104, 262], torso: 2, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 292], [70, 286]], hands: [[148, 238], [152, 242]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 1.4
+  }
+];
+
+var TIMER_SECONDS = {
+  squat: 45, bridge: 40, plank: 40, crunch: 40, lunge: 50, pushup: 45, row: 45, fold: 60,
+  boat: 30, legraise: 40, bicycle: 30, climber: 30, catcow: 45, birddog: 40, superman: 40, downdog: 45,
+  squat_pause: 60, lunge_knee: 50, bridge_1leg: 40, dips: 45, pushup_knee: 40, pushup_close: 45,
+  side_plank: 30, reverse_crunch: 40, deadbug: 40, hollow: 20, vup: 40, cobra: 30, childpose: 45,
+  quad_stretch: 30, seated_fold: 45, goodmorning: 45, calfraise: 30, bearhold: 30, stepup: 45,
+  dumbbell_press: 45, dumbbell_row_1arm: 45, dumbbell_rdl: 45, dumbbell_curl: 40, dumbbell_floor_press: 45,
+  band_row: 40, band_front: 40, wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30
+};
+EXERCISES.forEach(function (e) { e.timer = TIMER_SECONDS[e.id] || 45; });
+
+var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
+
+var PROGRAMS = [
+  {
+    id: "base",
+    name: "База",
+    goal: "вернуться в форму",
+    accent: "5 тренировок в неделю",
+    summary: "Мягкий вход: 5 коротких тренировок по 16–32 минуты, силовой блок без инвентаря и два дня мобильности. Подходит, если вы возвращаетесь к движению после паузы.",
+    days: [
+      { id: "mon", title: "Сила низа", tag: "Сила", minutes: 32, ex: ["squat", "bridge", "lunge"], note: "Приседания, мостик, выпады" },
+      { id: "tue", title: "Кор и спина", tag: "Сила", minutes: 26, ex: ["plank", "boat", "superman"], note: "Планка, лодка, супермен" },
+      { id: "wed", title: "Мобильность", tag: "Лёгкий", minutes: 24, ex: ["catcow", "fold", "downdog"], note: "Спина, наклон, собака мордой вниз" },
+      { id: "thu", title: "Верх тела", tag: "Сила", minutes: 30, ex: ["pushup", "row", "birddog"], note: "Отжимания, тяга, птица-собака" },
+      { id: "fri", title: "Круговая", tag: "Круг", minutes: 28, ex: ["squat", "pushup", "climber", "crunch"], note: "Четыре движения по кругу" },
+      { id: "sat", title: "Растяжка", tag: "Восстановление", minutes: 16, ex: ["fold", "catcow"], note: "Наклон и кошка-корова" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка 20–30 минут и вода", rest: true }
+    ],
+    nutrition: {
+      title: "Сбалансированный день",
+      kcal: "Поддержание веса: примерно вес × 30 ккал. При 70 кг — около 2100 ккал.",
+      macros: [
+        { k: "Белок", v: "1,4–1,8 г/кг" },
+        { k: "Жиры", v: "0,8–1 г/кг" },
+        { k: "Углеводы", v: "3–5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Овсянка на молоке, горсть ягод, ложка орехов." },
+        { time: "11:00", title: "Перекус", text: "Яблоко и йогурт или горсть орехов." },
+        { time: "14:00", title: "Обед", text: "Крупа, белок 120–150 г, половина тарелки овощей." },
+        { time: "17:00", title: "Перекус", text: "Творог или хумус с овощами." },
+        { time: "20:00", title: "Ужин", text: "Белок и овощи, немного сложных углеводов." }
+      ],
+      rules: [
+        "Белок в каждом приёме — 20–30 г за раз.",
+        "Овощи и фрукты — 400–500 г в день.",
+        "Вода 1,5–2 л, не только на тренировке.",
+        "Сладкое не запрещено: один небольшой десерт в день спокойно вписывается."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "gain",
+    name: "Набор массы",
+    goal: "мышцы и сила",
+    accent: "4 силовые + мобильность",
+    summary: "Сплит верх/низ по два раза в неделю: 4 подхода по 8–12 повторений, отдых 90 секунд, прогрессия от недели к неделе. Плюс день мобильности и растяжка.",
+    days: [
+      { id: "mon", title: "Верх A", tag: "Сила", minutes: 42, ex: ["pushup", "row", "pushup_close", "birddog"], note: "4×8–12, отдых 90 с" },
+      { id: "tue", title: "Низ A", tag: "Сила", minutes: 40, ex: ["squat", "bridge_1leg", "lunge", "calfraise"], note: "4×10–12 на ногу" },
+      { id: "wed", title: "Мобильность", tag: "Лёгкий", minutes: 20, ex: ["catcow", "childpose", "downdog"], note: "Спокойно, без нагрузки" },
+      { id: "thu", title: "Верх B", tag: "Сила", minutes: 40, ex: ["dips", "row", "pushup", "side_plank"], note: "4×8–10, корпус в конце" },
+      { id: "fri", title: "Низ B", tag: "Сила", minutes: 40, ex: ["squat_pause", "lunge_knee", "bridge", "goodmorning"], note: "Медленный темп, паузы" },
+      { id: "sat", title: "Растяжка", tag: "Восстановление", minutes: 18, ex: ["fold", "quad_stretch", "childpose"], note: "По 30–45 секунд" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон и прогулка", rest: true }
+    ],
+    nutrition: {
+      title: "Профицит: +300–400 ккал",
+      kcal: "Вес × 35–38 ккал. При 70 кг — примерно 2450–2650 ккал.",
+      macros: [
+        { k: "Белок", v: "1,6–2,2 г/кг" },
+        { k: "Жиры", v: "0,8–1,2 г/кг" },
+        { k: "Углеводы", v: "4–6 г/кг" }
+      ],
+      meals: [
+        { time: "7:30", title: "Завтрак", text: "Омлет из 3 яиц, цельнозерновой тост, банан." },
+        { time: "10:30", title: "Второй завтрак", text: "Творог с мёдом и орехами." },
+        { time: "13:30", title: "Обед", text: "Рис или гречка, мясо или рыба 150 г, овощи." },
+        { time: "16:30", title: "До тренировки", text: "Бутерброд с курицей или смузи с бананом." },
+        { time: "19:30", title: "Ужин", text: "Картофель или паста, белок, овощи." },
+        { time: "22:00", title: "Перед сном", text: "Стакан кефира или 150 г творога." }
+      ],
+      rules: [
+        "Прогресс +0,25–0,5 кг в неделю. Быстрее — это жир, а не мышцы.",
+        "Каждую неделю добавляйте повторение или подход — без прогрессии роста не будет.",
+        "Сон 7–9 часов: мышцы растут во сне, а не в зале.",
+        "Набор не про фастфуд: сладкое и жирное не заменяют белок и крупы."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "loss",
+    name: "Похудение",
+    goal: "снизить вес, сохранив мышцы",
+    accent: "5 тренировок + дефицит",
+    summary: "Две круговые, интервалы, силовой блок и растяжка. Силовая часть сохраняет мышцы при дефиците калорий, интервалы и ходьба добавляют расход.",
+    days: [
+      { id: "mon", title: "Круговая", tag: "Круг", minutes: 30, ex: ["squat", "pushup_knee", "climber", "crunch"], note: "3 круга, отдых 60 с" },
+      { id: "tue", title: "Интервалы", tag: "Кардио", minutes: 25, ex: ["climber", "bearhold", "plank", "calfraise"], note: "30 с работы / 30 с отдыха" },
+      { id: "wed", title: "Растяжка", tag: "Лёгкий", minutes: 18, ex: ["downdog", "childpose", "quad_stretch"], note: "Дыхание и подвижность" },
+      { id: "thu", title: "Сила тела", tag: "Сила", minutes: 32, ex: ["lunge", "row", "pushup", "bridge"], note: "3×10–12, без спешки" },
+      { id: "fri", title: "Круг 2", tag: "Круг", minutes: 28, ex: ["vup", "hollow", "stepup", "squat_pause"], note: "3 круга, темп ровный" },
+      { id: "sat", title: "Лёгкий день", tag: "Восстановление", minutes: 15, ex: ["fold", "seated_fold"], note: "Прогулка 30–40 минут" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон, вода, прогулка", rest: true }
+    ],
+    nutrition: {
+      title: "Дефицит: −15–20 %",
+      kcal: "Вес × 26–30 ккал. При 70 кг — примерно 1800–2100 ккал.",
+      macros: [
+        { k: "Белок", v: "1,6–2 г/кг" },
+        { k: "Жиры", v: "0,7–0,9 г/кг" },
+        { k: "Углеводы", v: "2–3,5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Омлет с овощами и цельнозерновой тост." },
+        { time: "11:00", title: "Перекус", text: "Ягоды или яблоко, кофе без сахара." },
+        { time: "14:00", title: "Обед", text: "Белок 150 г, половина тарелки овощей, 4–5 ложек крупы." },
+        { time: "17:00", title: "Перекус", text: "Кефир или творог — чтобы не было голода к ужину." },
+        { time: "20:00", title: "Ужин", text: "Рыба или курица с овощами, без добавки." }
+      ],
+      rules: [
+        "Минус 0,25–0,5 кг в неделю — здоровый темп. Плато 2–3 недели — норма.",
+        "Белок в каждый приём: он сохраняет мышцы при дефиците.",
+        "Овощи и клетчатка 25–30 г в день — сытость без лишних калорий.",
+        "Не опускайтесь ниже 1500 ккал (женщины) и 1800 (мужчины) без наблюдения врача.",
+        "Ходьба 7–9 тысяч шагов в день работает лучше, чем ещё одна тренировка."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "gear",
+    name: "Гантели и резинка",
+    goal: "сила с инвентарём",
+    accent: "4 тренировки с весом",
+    summary: "Программа для тех, у кого есть пара гантелей и резинка. Два силовых дня на всё тело, день верха и круговой блок с резинкой — 60–90 секунд отдыха между подходами.",
+    days: [
+      { id: "mon", title: "Всё тело", tag: "Сила", minutes: 36, ex: ["squat", "dumbbell_press", "dumbbell_row_1arm", "plank"], note: "3×10, отдых 90 с" },
+      { id: "tue", title: "Низ и спина", tag: "Сила", minutes: 38, ex: ["dumbbell_rdl", "lunge", "bridge", "band_row"], note: "3×10–12 на ногу" },
+      { id: "wed", title: "Мобильность", tag: "Лёгкий", minutes: 20, ex: ["catcow", "hipflexor", "downdog"], note: "Спокойно, без веса" },
+      { id: "thu", title: "Верх тела", tag: "Сила", minutes: 36, ex: ["dumbbell_floor_press", "dumbbell_curl", "band_front", "side_plank"], note: "3×10–12, корпус в конце" },
+      { id: "fri", title: "Круг с резинкой", tag: "Круг", minutes: 32, ex: ["band_row", "band_front", "squat", "wall_sit"], note: "3 круга, отдых 60 с" },
+      { id: "sat", title: "Растяжка", tag: "Восстановление", minutes: 16, ex: ["fold", "quad_stretch"], note: "По 30–45 секунд" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка и сон", rest: true }
+    ],
+    nutrition: {
+      title: "Поддержание с акцентом на белок",
+      kcal: "Вес × 31–33 ккал. При 70 кг — примерно 2200 ккал.",
+      macros: [
+        { k: "Белок", v: "1,6–2 г/кг" },
+        { k: "Жиры", v: "0,8–1 г/кг" },
+        { k: "Углеводы", v: "3–4,5 г/кг" }
+      ],
+      meals: [
+        { time: "7:30", title: "Завтрак", text: "Омлет из 2–3 яиц, цельнозерновой тост, овощи." },
+        { time: "11:00", title: "Перекус", text: "Творог или кефир с ягодами." },
+        { time: "14:00", title: "Обед", text: "Крупа, мясо или рыба 150 г, овощи." },
+        { time: "17:00", title: "До тренировки", text: "Банан и горсть орехов за час до занятия." },
+        { time: "20:00", title: "Ужин", text: "Белок с овощами, немного риса или картофеля." }
+      ],
+      rules: [
+        "Раз в 1–2 недели добавляйте вес гантелей или повторение — иначе силы не растут.",
+        "Отдых между подходами 60–90 секунд, между упражнениями — 2 минуты.",
+        "Белок 20–30 г в каждый приём, особенно после тренировки.",
+        "Не тренируйте одну группу два дня подряд: мышцы растут в восстановлении."
+      ],
+      note: SAFETY_NOTE
+    }
+  }
+];
+
+var currentProgramId = "base";
+
+/* ENGINE */
+var NS = "http://www.w3.org/2000/svg";
+var DIM = { T: 58, UA: 30, FA: 28, TH: 42, SH: 40, HEAD: 12 };
+var reduced = false;
+try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { reduced = false; }
+
+function svgEl(name, attrs) {
+  var el = document.createElementNS(NS, name);
+  if (attrs) for (var k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+function rad(d) { return d * Math.PI / 180; }
+function r1(n) { return Math.round(n * 10) / 10; }
+
+function ik(root, target, l1, l2, mode) {
+  var dx = target[0] - root[0], dy = target[1] - root[1];
+  var d = Math.hypot(dx, dy);
+  var max = l1 + l2 - 0.01, min = Math.abs(l1 - l2) + 0.01;
+  d = Math.max(min, Math.min(max, d));
+  var base = Math.atan2(dy, dx);
+  var c = (l1 * l1 + d * d - l2 * l2) / (2 * l1 * d);
+  var a = Math.acos(Math.max(-1, Math.min(1, c)));
+  var p1 = [root[0] + l1 * Math.cos(base + a), root[1] + l1 * Math.sin(base + a)];
+  var p2 = [root[0] + l1 * Math.cos(base - a), root[1] + l1 * Math.sin(base - a)];
+  var j;
+  if (mode === "front") j = p1[0] > p2[0] ? p1 : p2;
+  else if (mode === "back") j = p1[0] < p2[0] ? p1 : p2;
+  else if (mode === "up") j = p1[1] < p2[1] ? p1 : p2;
+  else j = p1[1] > p2[1] ? p1 : p2;
+  return [j, [root[0] + d * Math.cos(base), root[1] + d * Math.sin(base)]];
+}
+
+function angleArm(sh, a) {
+  var a1 = rad(a.a), a2 = rad(a.a + a.b);
+  var e = [sh[0] + DIM.UA * Math.sin(a1), sh[1] + DIM.UA * Math.cos(a1)];
+  var w = [e[0] + DIM.FA * Math.sin(a2), e[1] + DIM.FA * Math.cos(a2)];
+  return [e, w];
+}
+
+function computePose(s) {
+  var t = rad(s.torso);
+  var hip = s.hip;
+  var sh = [hip[0] + DIM.T * Math.sin(t), hip[1] - DIM.T * Math.cos(t)];
+  var dir = [Math.sin(t), -Math.cos(t)];
+  var head = [sh[0] + dir[0] * (DIM.HEAD + 8), sh[1] + dir[1] * (DIM.HEAD + 8)];
+  var legN = ik(hip, s.feet[0], DIM.TH, DIM.SH, s.kneeDir || "front");
+  var legF = ik(hip, s.feet[1], DIM.TH, DIM.SH, s.kneeDir || "front");
+  var armN, armF;
+  if (s.hands) {
+    armN = ik(sh, s.hands[0], DIM.UA, DIM.FA, s.elbowDir || "back");
+    armF = ik(sh, s.hands[1], DIM.UA, DIM.FA, s.elbowDir || "back");
+  } else {
+    armN = angleArm(sh, s.arms);
+    armF = angleArm(sh, s.farArms);
+  }
+  return { hip: hip, sh: sh, head: head, legN: legN, legF: legF, armN: armN, armF: armF };
+}
+
+function mix(a, b, u) {
+  function L(x, y) { return x + (y - x) * u; }
+  function P(p, q) { return [L(p[0], q[0]), L(p[1], q[1])]; }
+  return {
+    hip: P(a.hip, b.hip),
+    torso: L(a.torso, b.torso),
+    arms: { a: L(a.arms.a, b.arms.a), b: L(a.arms.b, b.arms.b) },
+    farArms: { a: L(a.farArms.a, b.farArms.a), b: L(a.farArms.b, b.farArms.b) },
+    feet: [P(a.feet[0], b.feet[0]), P(a.feet[1], b.feet[1])],
+    hands: (a.hands && b.hands) ? [P(a.hands[0], b.hands[0]), P(a.hands[1], b.hands[1])] : null,
+    kneeDir: b.kneeDir || "front",
+    elbowDir: b.elbowDir || "back"
+  };
+}
+
+function prepare(ex) {
+  if (ex._segs) return ex;
+  var segs = [], i;
+  for (i = 1; i < ex.frames.length; i++) {
+    segs.push({ a: ex.frames[i - 1].p, b: ex.frames[i].p, d: ex.frames[i].t || 0, h: ex.frames[i].h || 0 });
+  }
+  var last = ex.frames[ex.frames.length - 1].p, first = ex.frames[0].p;
+  segs.push({ a: last, b: first, d: ex.back || 1, h: ex.frames[0].h || 0 });
+  var total = 0;
+  for (i = 0; i < segs.length; i++) total += segs[i].d + segs[i].h;
+  ex._segs = segs;
+  ex._total = total;
+  return ex;
+}
+
+function ease(u) { return u * u * (3 - 2 * u); }
+
+function samplePose(ex, phase) {
+  prepare(ex);
+  var total = ex._total;
+  var time = ((phase % 1) + 1) % 1 * total;
+  var segs = ex._segs, seg = segs[segs.length - 1], local = seg.d;
+  for (var i = 0; i < segs.length; i++) {
+    var s = segs[i], dur = s.d + s.h;
+    if (time <= dur) { seg = s; local = Math.min(time, s.d); break; }
+    time -= dur;
+  }
+  var u = seg.d > 0 ? ease(Math.max(0, Math.min(1, local / seg.d))) : 1;
+  return mix(seg.a, seg.b, u);
+}
+
+function Figure(svg, ex) {
+  svg.innerHTML = "";
+  this.svg = svg;
+  this.ex = ex || null;
+  this.p = {
+    farLeg: svgEl("path", { "class": "fig-limb far" }),
+    farArm: svgEl("path", { "class": "fig-limb far" }),
+    torso: svgEl("path", { "class": "fig-torso" }),
+    neck: svgEl("path", { "class": "fig-neck" }),
+    head: svgEl("circle", { "class": "fig-head", r: DIM.HEAD }),
+    nearLeg: svgEl("path", { "class": "fig-limb near" }),
+    nearArm: svgEl("path", { "class": "fig-limb near" })
+  };
+  svg.appendChild(svgEl("line", { "class": "fig-ground", x1: 24, y1: 296, x2: 198, y2: 296 }));
+  if (ex && ex.prop) {
+    var pr = ex.prop;
+    svg.appendChild(svgEl("rect", { "class": "fig-prop", x: pr.x, y: pr.y, width: pr.w, height: pr.h, rx: 7 }));
+  }
+  this.band = null;
+  if (ex && ex.equip === "band") {
+    this.band = svgEl("path", { "class": "fig-band" });
+    svg.appendChild(this.band);
+  }
+  for (var k in this.p) svg.appendChild(this.p[k]);
+  this.dumbbells = [];
+  if (ex && ex.equip === "dumbbell") {
+    for (var i = 0; i < 2; i++) {
+      var g = svgEl("g", { "class": "fig-dumbbell" });
+      g.appendChild(svgEl("line", { x1: -7, y1: 0, x2: 7, y2: 0, "class": "db-handle" }));
+      g.appendChild(svgEl("circle", { cx: -7.5, cy: 0, r: 3.4, "class": "db-weight" }));
+      g.appendChild(svgEl("circle", { cx: 7.5, cy: 0, r: 3.4, "class": "db-weight" }));
+      svg.appendChild(g);
+      this.dumbbells.push(g);
+    }
+  }
+}
+Figure.prototype.draw = function (c) {
+  var p = this.p;
+  function limb(root, pair) {
+    return "M" + r1(root[0]) + " " + r1(root[1]) + "L" + r1(pair[0][0]) + " " + r1(pair[0][1]) + "L" + r1(pair[1][0]) + " " + r1(pair[1][1]);
+  }
+  function edge(pt, px, py, w) { return r1(pt[0] + px * w) + " " + r1(pt[1] + py * w); }
+  var dx = c.sh[0] - c.hip[0], dy = c.sh[1] - c.hip[1];
+  var L = Math.hypot(dx, dy) || 1;
+  var ux = dx / L, uy = dy / L, px = -uy, py = ux;
+  var waist = [c.hip[0] + ux * L * 0.48, c.hip[1] + uy * L * 0.48];
+  p.torso.setAttribute("d",
+    "M" + edge(c.sh, px, py, 11) + "L" + edge(waist, px, py, 8) + "L" + edge(c.hip, px, py, 9.5) +
+    "L" + edge(c.hip, px, py, -9.5) + "L" + edge(waist, px, py, -8) + "L" + edge(c.sh, px, py, -11) + "Z");
+  p.neck.setAttribute("d", "M" + r1(c.sh[0]) + " " + r1(c.sh[1]) + "L" + r1(c.head[0]) + " " + r1(c.head[1]));
+  p.head.setAttribute("cx", r1(c.head[0]));
+  p.head.setAttribute("cy", r1(c.head[1]));
+  p.farLeg.setAttribute("d", limb(c.hip, c.legF));
+  p.farArm.setAttribute("d", limb(c.sh, c.armF));
+  p.nearLeg.setAttribute("d", limb(c.hip, c.legN));
+  p.nearArm.setAttribute("d", limb(c.sh, c.armN));
+  if (this.dumbbells.length === 2) {
+    var arms = [c.armF, c.armN];
+    for (var i = 0; i < 2; i++) {
+      var elbow = arms[i][0], wrist = arms[i][1];
+      var ang = Math.atan2(wrist[1] - elbow[1], wrist[0] - elbow[0]) * 180 / Math.PI + 90;
+      this.dumbbells[i].setAttribute("transform", "translate(" + r1(wrist[0]) + " " + r1(wrist[1]) + ") rotate(" + r1(ang) + ")");
+    }
+  }
+  if (this.band && this.ex && this.ex.bandAnchor) {
+    var a = this.ex.bandAnchor, w = c.armN[1];
+    this.band.setAttribute("d", "M" + a[0] + " " + a[1] + "Q" + r1((a[0] + w[0]) / 2 + 6) + " " + r1((a[1] + w[1]) / 2) + " " + r1(w[0]) + " " + r1(w[1]));
+  }
+};
+
+function fmtTime(t) {
+  var v = Math.max(0, Math.round(t));
+  var m = Math.floor(v / 60), s = v % 60;
+  return m + ":" + (s < 10 ? "0" : "") + s;
+}
+
+var PLAYERS = [];
+var lastTs = 0;
+
+function Player(host, ex, opts) {
+  opts = opts || {};
+  prepare(ex);
+  this.host = host;
+  this.ex = ex;
+  this.phase = opts.phase || 0;
+  this.playing = false;
+  this.total = ex._total;
+  host.classList.add("player");
+  host.innerHTML =
+    '<div class="player__stage">' +
+      '<svg class="fig" viewBox="' + (ex.view || "0 108 220 200") + '" aria-hidden="true"></svg>' +
+      '<span class="player__badge">цикл ' + (Math.round(this.total * 10) / 10).toString().replace(".", ",") + ' с</span>' +
+    '</div>' +
+    '<div class="player__bar">' +
+      '<button class="player__toggle" type="button" aria-label="Пауза"><span aria-hidden="true">❚❚</span></button>' +
+      '<div class="player__track" role="slider" tabindex="0" aria-label="Позиция в цикле" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">' +
+        '<span class="player__rail"><span class="player__fill"></span></span>' +
+      '</div>' +
+      '<span class="player__time">0:00 / ' + fmtTime(this.total) + '</span>' +
+    '</div>';
+  this.svg = host.querySelector(".fig");
+  this.fig = new Figure(this.svg, ex);
+  this.toggle = host.querySelector(".player__toggle");
+  this.track = host.querySelector(".player__track");
+  this.fill = host.querySelector(".player__fill");
+  this.time = host.querySelector(".player__time");
+  var self = this;
+  this.toggle.addEventListener("click", function () { self.setPlaying(!self.playing); });
+  this.track.addEventListener("pointerdown", function (e) {
+    self.track.setPointerCapture(e.pointerId);
+    self.seekFromEvent(e);
+    self.dragging = true;
+  });
+  this.track.addEventListener("pointermove", function (e) { if (self.dragging) self.seekFromEvent(e); });
+  this.track.addEventListener("pointerup", function () { self.dragging = false; });
+  this.track.addEventListener("pointercancel", function () { self.dragging = false; });
+  this.track.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      self.phase = (self.phase + (e.key === "ArrowRight" ? 0.05 : -0.05) + 1) % 1;
+      self.render();
+    }
+  });
+  PLAYERS.push(this);
+  this.render();
+  this.setPlaying(opts.autoplay !== false && !reduced);
+}
+Player.prototype.seekFromEvent = function (e) {
+  var r = this.track.getBoundingClientRect();
+  if (!r.width) return;
+  this.phase = Math.min(0.9999, Math.max(0, (e.clientX - r.left) / r.width));
+  this.render();
+};
+Player.prototype.setPlaying = function (on) {
+  this.playing = !!on;
+  this.toggle.setAttribute("aria-label", this.playing ? "Пауза" : "Играть");
+  this.toggle.innerHTML = '<span aria-hidden="true">' + (this.playing ? "❚❚" : "▶") + '</span>';
+};
+Player.prototype.step = function (dt) {
+  if (!this.playing) return;
+  this.phase = (this.phase + dt / this.total) % 1;
+  this.render();
+};
+Player.prototype.render = function () {
+  this.fig.draw(computePose(samplePose(this.ex, this.phase)));
+  var pct = this.phase * 100;
+  this.fill.style.width = pct.toFixed(2) + "%";
+  this.track.setAttribute("aria-valuenow", Math.round(pct));
+  this.time.textContent = fmtTime(this.phase * this.total) + " / " + fmtTime(this.total);
+};
+Player.prototype.destroy = function () {
+  var i = PLAYERS.indexOf(this);
+  if (i > -1) PLAYERS.splice(i, 1);
+  this.host.innerHTML = "";
+};
+
+function tick(ts) {
+  if (!lastTs) lastTs = ts;
+  var dt = Math.min(0.08, (ts - lastTs) / 1000);
+  lastTs = ts;
+  for (var i = 0; i < PLAYERS.length; i++) PLAYERS[i].step(dt);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function thumb(svg, ex, phase) {
+  var f = new Figure(svg, ex);
+  f.draw(computePose(samplePose(ex, phase)));
+}
+
+/* UI */
+var byId = function (id) { return document.getElementById(id); };
+var EXMAP = {};
+for (var ei = 0; ei < EXERCISES.length; ei++) EXMAP[EXERCISES[ei].id] = EXERCISES[ei];
+
+var STORE = "rose-line-done-v2";
+var OLD_STORE = "rose-line-done-v1";
+var PROG_STORE = "rose-line-program";
+var done = new Set();
+try {
+  var rawStored = localStorage.getItem(STORE);
+  if (rawStored) {
+    JSON.parse(rawStored).forEach(function (k) { done.add(k); });
+  } else {
+    var oldRaw = localStorage.getItem(OLD_STORE);
+    if (oldRaw) JSON.parse(oldRaw).forEach(function (iso) { done.add("base|" + iso); });
+  }
+} catch (e) { done = new Set(); }
+try {
+  var savedProg = localStorage.getItem(PROG_STORE);
+  if (savedProg) currentProgramId = savedProg;
+} catch (e) {}
+if (!programById(currentProgramId)) currentProgramId = "base";
+function saveDone() { try { localStorage.setItem(STORE, JSON.stringify(Array.from(done))); } catch (e) {} }
+function saveProgram(id) {
+  currentProgramId = id;
+  try { localStorage.setItem(PROG_STORE, id); } catch (e) {}
+}
+
+function programById(id) {
+  for (var i = 0; i < PROGRAMS.length; i++) if (PROGRAMS[i].id === id) return PROGRAMS[i];
+  return PROGRAMS[0];
+}
+function currentProgram() { return programById(currentProgramId); }
+function dayFor(date, progId) { return programById(progId || currentProgramId).days[(date.getDay() + 6) % 7]; }
+function doneKey(progId, iso) { return progId + "|" + iso; }
+function dateOfIso(iso) { return new Date(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)); }
+
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function plural(n, one, few, many) {
+  var m = Math.abs(n) % 100, d = m % 10;
+  if (m > 10 && m < 20) return many;
+  if (d > 1 && d < 5) return few;
+  if (d === 1) return one;
+  return many;
+}
+function isoDay(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+function mondayOf(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; }
+function addDays(d, n) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() + n); return x; }
+var WD = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+var TODAY = isoDay(new Date());
+
+function minutesForKey(key) {
+  var parts = key.split("|");
+  var prog = programById(parts[0]);
+  return dayFor(dateOfIso(parts[1]), prog.id).minutes;
+}
+function hasAnyProgram(iso) {
+  for (var i = 0; i < PROGRAMS.length; i++) if (done.has(doneKey(PROGRAMS[i].id, iso))) return true;
+  return false;
+}
+function streakLen() {
+  var d = new Date(), n = 0;
+  if (!hasAnyProgram(isoDay(d))) d = addDays(d, -1);
+  while (hasAnyProgram(isoDay(d))) { n++; d = addDays(d, -1); }
+  return n;
+}
+function weekWindow(offset) {
+  var mon = addDays(mondayOf(new Date()), offset * 7);
+  var days = [];
+  for (var i = 0; i < 7; i++) days.push(addDays(mon, i));
+  return days;
+}
+
+/* cards */
+function cardMarkup(ex) {
+  return '<article class="xcard"><a class="xcard__link" href="#exercise/' + ex.id + '">' +
+    '<div class="xcard__stage"><svg class="fig" viewBox="' + (ex.view || "0 108 220 200") + '" data-thumb="' + ex.id + '" aria-hidden="true"></svg></div>' +
+    '<div class="xcard__body"><span class="zone">' + ZONES[ex.zone] + '</span>' +
+    '<h3>' + ex.name + '</h3>' +
+    '<p class="xcard__meta">' + ex.sets + ' × ' + ex.reps + ' · ' + ex.minutes + ' мин · ' + ex.level + '</p>' +
+    '</div></a>' +
+    '<div class="xcard__foot">' +
+    '<button class="timer-btn" type="button" data-timer="' + ex.id + '">Таймер · ' + ex.timer + ' с</button>' +
+    '<a class="xcard__cta" href="#exercise/' + ex.id + '">Подробнее</a>' +
+    '</div></article>';
+}
+function paintThumbs(root) {
+  var svgs = root.querySelectorAll("svg[data-thumb]");
+  for (var i = 0; i < svgs.length; i++) {
+    var ex = EXMAP[svgs[i].getAttribute("data-thumb")];
+    if (ex) thumb(svgs[i], ex, ex.cover || 0.4);
+  }
+}
+
+/* overview */
+function renderOverview() {
+  var days = weekWindow(0), total = 0, cnt = 0, mins = 0, prog = currentProgram();
+  for (var i = 0; i < days.length; i++) {
+    var p = prog.days[i];
+    if (!p.rest) { total++; }
+    if (done.has(doneKey(prog.id, isoDay(days[i])))) { cnt++; mins += p.minutes; }
+  }
+  byId("overviewStats").innerHTML =
+    '<div class="stat"><span class="stat__num">' + EXERCISES.length + '</span><span class="stat__cap">упражнений с демонстрацией</span></div>' +
+    '<div class="stat"><span class="stat__num">' + cnt + '/' + total + '</span><span class="stat__cap">тренировок отмечено на этой неделе</span></div>' +
+    '<div class="stat"><span class="stat__num">' + mins + '</span><span class="stat__cap">минут закрыто за неделю</span></div>' +
+    '<div class="stat"><span class="stat__num">' + prog.name + '</span><span class="stat__cap">активная программа — «' + prog.goal + '»</span></div>';
+
+  var featured = ["squat", "plank", "bridge"];
+  var html = "";
+  for (var j = 0; j < featured.length; j++) html += cardMarkup(EXMAP[featured[j]]);
+  byId("featuredGrid").innerHTML = html;
+  paintThumbs(byId("featuredGrid"));
+}
+
+/* workouts list */
+var activeFilter = "all";
+function renderWorkouts() {
+  var zones = [{ k: "all", label: "Все" }];
+  for (var z in ZONES) zones.push({ k: z, label: ZONES[z] });
+  var chips = "", i;
+  for (i = 0; i < zones.length; i++) {
+    chips += '<button class="chip" type="button" data-filter="' + zones[i].k + '" aria-pressed="' + (activeFilter === zones[i].k) + '">' + zones[i].label + '</button>';
+  }
+  byId("filters").innerHTML = chips;
+
+  var list = EXERCISES.filter(function (e) { return activeFilter === "all" || e.zone === activeFilter; });
+  byId("workoutCount").textContent = list.length + " " + plural(list.length, "упражнение", "упражнения", "упражнений");
+  byId("workoutGrid").innerHTML = list.map(cardMarkup).join("");
+  paintThumbs(byId("workoutGrid"));
+}
+
+/* schedule */
+var weekOffset = 0;
+function weekLabelText(days) {
+  var a = days[0], b = days[6];
+  var t = a.getDate() + "–" + b.getDate() + " " + MONTHS[b.getMonth()];
+  if (a.getMonth() !== b.getMonth()) t = a.getDate() + " " + MONTHS[a.getMonth()] + " — " + b.getDate() + " " + MONTHS[b.getMonth()];
+  return t + " " + b.getFullYear();
+}
+function renderProgramSwitch() {
+  var hosts = document.querySelectorAll("[data-program-switch]");
+  var html = "";
+  for (var i = 0; i < PROGRAMS.length; i++) {
+    var p = PROGRAMS[i];
+    html += '<button class="pchip" type="button" data-program="' + p.id + '" aria-pressed="' + (p.id === currentProgramId) + '">' +
+      '<b>' + p.name + '</b><span>' + p.accent + '</span></button>';
+  }
+  for (var h = 0; h < hosts.length; h++) hosts[h].innerHTML = html;
+}
+
+function renderPrograms() {
+  var host = byId("programDetail");
+  if (!host) return;
+  var p = currentProgram(), totalMin = 0, count = 0, i;
+  for (i = 0; i < p.days.length; i++) {
+    if (!p.days[i].rest) { totalMin += p.days[i].minutes; count++; }
+  }
+  var dayRows = "";
+  for (i = 0; i < p.days.length; i++) {
+    var d = p.days[i];
+    var names = [];
+    for (var j = 0; j < d.ex.length; j++) names.push(EXMAP[d.ex[j]].name);
+    dayRows += '<div class="pday' + (d.rest ? " pday--rest" : "") + '">' +
+      '<span class="pday__wd" style="color:var(--muted);font-size:12px">' + WD[i] + '</span>' +
+      '<b>' + d.title + '</b>' +
+      '<em>' + (d.rest ? "отдых" : d.minutes + " мин") + '</em>' +
+      '<span>' + (names.length ? names.join(' · ') : d.note) + '</span>' +
+      '</div>';
+  }
+  var macros = "";
+  for (i = 0; i < p.nutrition.macros.length; i++) {
+    macros += '<div class="macro-row"><span>' + p.nutrition.macros[i].k + '</span><em>' + p.nutrition.macros[i].v + '</em></div>';
+  }
+  var meals = "";
+  for (i = 0; i < p.nutrition.meals.length; i++) {
+    var m = p.nutrition.meals[i];
+    meals += '<div class="meal"><time>' + m.time + '</time><div><b>' + m.title + '</b></div><span>' + m.text + '</span></div>';
+  }
+  var rules = "";
+  for (i = 0; i < p.nutrition.rules.length; i++) rules += '<li>' + p.nutrition.rules[i] + '</li>';
+
+  host.innerHTML =
+    '<div class="prog-card">' +
+      '<h2>' + p.name + ' — ' + p.goal + '</h2>' +
+      '<div class="prog-hero">' +
+        '<p>' + p.summary + '</p>' +
+        '<dl class="prog-facts" style="margin:0">' +
+          '<div><dt>Тренировок в неделю</dt><dd>' + count + '</dd></div>' +
+          '<div><dt>Минут в неделю</dt><dd>' + totalMin + '</dd></div>' +
+          '<div><dt>Дней отдыха</dt><dd>' + (7 - count) + '</dd></div>' +
+        '</dl>' +
+      '</div>' +
+      '<h2 style="margin-top:22px">Неделя</h2>' + dayRows +
+      '<div style="margin-top:16px"><a class="btn btn--primary btn--sm" href="#schedule">Открыть график</a></div>' +
+    '</div>' +
+    '<div class="prog-card">' +
+      '<h2>Питание · ' + p.nutrition.title + '</h2>' +
+      '<p style="margin:0 0 14px;font-size:14.5px;color:#6E515C">' + p.nutrition.kcal + '</p>' +
+      '<div class="prog-hero">' +
+        '<div>' + macros +
+          '<p style="margin:12px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55">Порции подбираются по весу и активности. Ориентир по белку — ладонь с горкой в каждый приём, овощи — половина тарелки.</p>' +
+        '</div>' +
+        '<div>' + meals + '</div>' +
+      '</div>' +
+      '<h2 style="margin-top:22px">Правила</h2><ul class="rules">' + rules + '</ul>' +
+      '<p class="note" style="margin-top:18px">' + p.nutrition.note + '</p>' +
+    '</div>';
+}
+
+function renderSchedule() {
+  var days = weekWindow(weekOffset), prog = currentProgram();
+  byId("weekLabel").textContent = weekLabelText(days);
+  byId("prevWeek").disabled = false;
+  byId("nextWeek").disabled = weekOffset >= 0;
+  renderProgramSwitch();
+
+  var totalMins = 0, doneMins = 0, cnt = 0, totalCnt = 0, html = "";
+  for (var i = 0; i < 7; i++) {
+    var date = days[i], plan = prog.days[i], iso = isoDay(date), key = doneKey(prog.id, iso);
+    var isToday = iso === TODAY, future = iso > TODAY, isDone = done.has(key);
+    if (!plan.rest) { totalCnt++; totalMins += plan.minutes; }
+    if (isDone) { cnt++; doneMins += plan.minutes; }
+
+    var exHTML = "";
+    for (var j = 0; j < plan.ex.length; j++) {
+      exHTML += '<button class="mini" type="button" data-ex="' + plan.ex[j] + '">' + EXMAP[plan.ex[j]].name + '</button>';
+    }
+    var cls = "day" + (isToday ? " day--today" : "") + (isDone ? " day--done" : "") + (future ? " day--future" : "");
+    var btn = plan.rest
+      ? '<span class="day__meta">день восстановления</span>'
+      : '<button class="mark" type="button" data-key="' + key + '"' + (future ? " disabled" : "") + '>' + (isDone ? "✓ Готово" : "Отметить") + '</button>';
+
+    html += '<div class="' + cls + '">' +
+      '<span class="day__wd">' + WD[i] + (isToday ? " · сегодня" : "") + '</span>' +
+      '<span class="day__date">' + date.getDate() + '</span>' +
+      '<span class="day__title">' + plan.title + '</span>' +
+      '<span class="day__meta">' + (plan.rest ? "0 мин · " + plan.tag : plan.minutes + " мин · " + plan.tag) + '</span>' +
+      (exHTML ? '<div class="day__ex">' + exHTML + '</div>' : '<span class="day__meta">' + plan.note + '</span>') +
+      '<div class="day__foot">' + btn + '</div>' +
+      '</div>';
+  }
+  byId("weekGrid").innerHTML = html;
+
+  var pct = totalCnt ? Math.round(cnt / totalCnt * 100) : 0;
+  byId("weekSummary").innerHTML =
+    '<div class="ws__top"><span>«' + prog.name + '» · отмечено <b>' + cnt + ' из ' + totalCnt + '</b> тренировок</span>' +
+    '<span>' + doneMins + ' из ' + totalMins + ' минут недели</span></div>' +
+    '<div class="ws__bar"><i style="width:' + pct + '%"></i></div>';
+}
+
+/* progress */
+function renderProgress() {
+  var keys = Array.from(done).sort(function (a, b) {
+    var da = a.split("|")[1], db = b.split("|")[1];
+    return da < db ? -1 : da > db ? 1 : 0;
+  });
+  var totalMin = 0, i;
+  for (i = 0; i < keys.length; i++) totalMin += minutesForKey(keys[i]);
+
+  var days = weekWindow(0), prog = currentProgram(), wkCnt = 0, wkTotal = 0;
+  for (var k = 0; k < days.length; k++) {
+    var p = prog.days[k];
+    if (!p.rest) wkTotal++;
+    if (done.has(doneKey(prog.id, isoDay(days[k])))) wkCnt++;
+  }
+
+  byId("progressStats").innerHTML =
+    '<div class="stat"><span class="stat__num">' + keys.length + '</span><span class="stat__cap">тренировок отмечено всего</span></div>' +
+    '<div class="stat"><span class="stat__num">' + totalMin + '</span><span class="stat__cap">минут суммарно</span></div>' +
+    '<div class="stat"><span class="stat__num">' + streakLen() + '</span><span class="stat__cap">дней подряд</span></div>' +
+    '<div class="stat"><span class="stat__num">' + wkCnt + '/' + wkTotal + '</span><span class="stat__cap">на этой неделе · «' + prog.name + '»</span></div>';
+
+  /* last 7 days */
+  var chart = "", maxVal = 1, vals = [], labels = [];
+  for (var d = 6; d >= 0; d--) {
+    var day = addDays(new Date(), -d), piv = prog.days[(day.getDay() + 6) % 7], iv = isoDay(day);
+    var v = done.has(doneKey(prog.id, iv)) ? piv.minutes : 0;
+    vals.push(v); labels.push(WD[(day.getDay() + 6) % 7]);
+    if (v > maxVal) maxVal = v;
+  }
+  for (var b = 0; b < vals.length; b++) {
+    var h = Math.round(vals[b] / maxVal * 100);
+    chart += '<div class="bar"><span class="bar__val">' + (vals[b] ? vals[b] : "—") + '</span>' +
+      '<div class="bar__track"><i class="bar__col' + (vals[b] ? " has" : "") + '" style="height:' + (vals[b] ? Math.max(4, h) : 3) + '%"></i></div>' +
+      '<span class="bar__lab">' + labels[b] + '</span></div>';
+  }
+  byId("weekChart").innerHTML = chart;
+
+  /* zones */
+  var zc = {}, ztot = 0;
+  for (var q = 0; q < keys.length; q++) {
+    var parts = keys[q].split("|");
+    var pl = dayFor(dateOfIso(parts[1]), parts[0]);
+    var seen = {};
+    for (var w = 0; w < pl.ex.length; w++) {
+      var z = EXMAP[pl.ex[w]].zone;
+      if (seen[z]) continue;
+      seen[z] = 1;
+      zc[z] = (zc[z] || 0) + 1;
+      ztot++;
+    }
+  }
+  var zhtml = "", zmax = 1;
+  for (var zk in zc) if (zc[zk] > zmax) zmax = zc[zk];
+  for (var zk2 in ZONES) {
+    var val = zc[zk2] || 0;
+    zhtml += '<div class="zone-row"><span>' + ZONES[zk2] + '</span><em>' + (ztot ? Math.round(val / ztot * 100) : 0) + '%</em>' +
+      '<i><b style="width:' + Math.round(val / zmax * 100) + '%"></b></i></div>';
+  }
+  byId("zoneBars").innerHTML = ztot ? zhtml : '<p class="empty">Пока пусто: отметьте первую тренировку в графике — здесь появится распределение нагрузки.</p>';
+
+  /* log */
+  var log = "";
+  var recent = keys.slice().reverse().slice(0, 8);
+  for (var r = 0; r < recent.length; r++) {
+    var kp = recent[r].split("|");
+    var dt = dateOfIso(kp[1]);
+    var pd = dayFor(dt, kp[0]);
+    var prg = programById(kp[0]);
+    log += '<li><span style="color:var(--muted);font-size:13px">' + dt.getDate() + " " + MONTHS[dt.getMonth()] + ', ' + WD[(dt.getDay() + 6) % 7] + '</span>' +
+      '<b style="font-weight:600">' + pd.title + '</b><span>' + prg.name + ' · ' + pd.minutes + ' мин</span></li>';
+  }
+  byId("logList").innerHTML = recent.length ? log : '<li><span class="empty">Ещё нет закрытых дней. График ждёт первую отметку.</span></li>';
+}
+
+/* detail */
+var detailPlayer = null;
+function renderDetail(ex) {
+  var facts = '<dl class="facts">' +
+    '<div class="fact"><dt>Подходы</dt><dd>' + ex.sets + '</dd></div>' +
+    '<div class="fact"><dt>Повторения</dt><dd>' + ex.reps + '</dd></div>' +
+    '<div class="fact"><dt>Отдых</dt><dd>' + ex.rest + '</dd></div>' +
+    '<div class="fact"><dt>Инвентарь</dt><dd>' + ex.equipment + '</dd></div></dl>';
+  var steps = '<ol class="steps-2">' + ex.steps.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>";
+  var wrong = '<ul class="wrong">' + ex.mistakes.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul>";
+  byId("detailBody").innerHTML =
+    '<span class="zone">' + ZONES[ex.zone] + ' · ' + ex.tag + ' · ' + ex.level + '</span>' +
+    '<h1>' + ex.name + '</h1>' +
+    '<p class="detail__lead">' + ex.summary + '</p>' +
+    facts +
+    '<div class="detail__timer"><button class="btn btn--primary btn--sm" type="button" data-timer="' + ex.id + '">Таймер подхода · ' + ex.timer + ' с</button></div>' +
+    '<h2>Как выполнять</h2>' + steps +
+    '<h2>Частые ошибки</h2>' + wrong +
+    '<h2>Дыхание</h2><p class="breath">' + ex.breathing + '</p>';
+
+  if (detailPlayer) detailPlayer.destroy();
+  detailPlayer = new Player(byId("detailPlayer"), ex, { autoplay: true });
+}
+
+/* timer */
+var T = { ex: null, dur: 45, left: 45, running: false, endAt: 0, id: null, warned: -1 };
+var audioCtx = null;
+var lastFocus = null;
+
+function getAudio() {
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  if (!audioCtx) { try { audioCtx = new AC(); } catch (e) { return null; } }
+  if (audioCtx.state === "suspended") { try { audioCtx.resume(); } catch (e) {} }
+  return audioCtx;
+}
+function beep(freq, delay, dur, vol) {
+  var ac = getAudio();
+  if (!ac) return;
+  try {
+    var t0 = ac.currentTime + delay;
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.type = "sine";
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g);
+    g.connect(ac.destination);
+    o.start(t0);
+    o.stop(t0 + dur + 0.06);
+  } catch (e) {}
+}
+function chime() {
+  beep(880, 0, 0.2, 0.18);
+  beep(1174.7, 0.27, 0.2, 0.18);
+  beep(1568, 0.54, 0.45, 0.2);
+}
+
+var tEl = {
+  overlay: byId("timerOverlay"),
+  card: byId("timerCard"),
+  zone: byId("timerZone"),
+  title: byId("timerTitle"),
+  time: byId("timerTime"),
+  hint: byId("timerHint"),
+  start: byId("timerStart"),
+  ring: byId("ringFg")
+};
+var RING = 2 * Math.PI * 52;
+tEl.ring.setAttribute("stroke-dasharray", RING.toFixed(2));
+tEl.ring.setAttribute("stroke-dashoffset", "0");
+
+function fmtTimer(s) {
+  var v = Math.max(0, Math.ceil(s));
+  var m = Math.floor(v / 60), r = v % 60;
+  return m + ":" + (r < 10 ? "0" : "") + r;
+}
+function paintTimer() {
+  tEl.time.textContent = fmtTimer(T.left);
+  var p = T.dur ? Math.max(0, Math.min(1, T.left / T.dur)) : 0;
+  tEl.ring.setAttribute("stroke-dashoffset", (RING * (1 - p)).toFixed(2));
+  tEl.start.textContent = T.running ? "Пауза" : (T.left <= 0 ? "Ещё раз" : (T.left < T.dur ? "Продолжить" : "Старт"));
+  tEl.card.classList.toggle("timer-card--done", T.left <= 0 && !T.running);
+}
+function timerStop() {
+  if (T.id) { clearInterval(T.id); T.id = null; }
+  T.running = false;
+}
+function timerTick() {
+  var left = (T.endAt - Date.now()) / 1000;
+  if (left <= 0) {
+    timerStop();
+    T.left = 0;
+    paintTimer();
+    tEl.hint.textContent = "Готово — отдыхайте";
+    chime();
+    return;
+  }
+  var sec = Math.ceil(left);
+  if (sec <= 3 && T.warned !== sec) { T.warned = sec; beep(660, 0, 0.09, 0.08); }
+  T.left = left;
+  paintTimer();
+}
+function timerToggle() {
+  if (T.running) {
+    T.left = Math.max(0, (T.endAt - Date.now()) / 1000);
+    timerStop();
+    tEl.hint.textContent = "Пауза";
+    paintTimer();
+    return;
+  }
+  if (T.left <= 0) { T.left = T.dur; }
+  getAudio();
+  T.running = true;
+  T.endAt = Date.now() + T.left * 1000;
+  T.warned = -1;
+  tEl.hint.textContent = "Идёт отсчёт";
+  T.id = setInterval(timerTick, 120);
+  paintTimer();
+}
+function adjustTimer(d) {
+  var nd = Math.max(5, Math.min(900, T.dur + d));
+  var delta = nd - T.dur;
+  T.dur = nd;
+  T.left = Math.max(0, T.left + delta);
+  if (T.running) T.endAt += delta * 1000;
+  paintTimer();
+}
+function resetTimer() {
+  timerStop();
+  T.dur = T.ex ? T.ex.timer : 45;
+  T.left = T.dur;
+  T.warned = -1;
+  tEl.hint.textContent = "Сигнал прозвучит по окончании";
+  paintTimer();
+}
+function openTimer(ex) {
+  timerStop();
+  T.ex = ex;
+  T.dur = ex.timer;
+  T.left = ex.timer;
+  T.warned = -1;
+  tEl.zone.textContent = ZONES[ex.zone] + " · " + ex.level;
+  tEl.title.textContent = ex.name;
+  tEl.hint.textContent = "Сигнал прозвучит по окончании";
+  tEl.overlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  paintTimer();
+  lastFocus = document.activeElement;
+  tEl.start.focus();
+}
+function closeTimer() {
+  resetTimer();
+  T.left = T.dur;
+  paintTimer();
+  tEl.overlay.hidden = true;
+  document.body.style.overflow = "";
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+
+document.addEventListener("click", function (e) {
+  var b = e.target.closest("[data-timer]");
+  if (b) { var ex = EXMAP[b.getAttribute("data-timer")]; if (ex) openTimer(ex); }
+});
+byId("timerStart").addEventListener("click", timerToggle);
+byId("timerMinus").addEventListener("click", function () { adjustTimer(-15); });
+byId("timerPlus").addEventListener("click", function () { adjustTimer(15); });
+byId("timerReset").addEventListener("click", resetTimer);
+byId("timerClose").addEventListener("click", closeTimer);
+byId("timerOverlay").addEventListener("pointerdown", function (e) {
+  if (e.target === byId("timerOverlay")) closeTimer();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && !byId("timerOverlay").hidden) closeTimer();
+});
+
+/* videos */
+var videoDb = null, videoItems = [], deleteArmed = null, currentUrl = null;
+var PLAY_ICON = '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#FFFFFF" opacity=".85"/><path d="M19 15.5 34 24 19 32.5z" fill="#CB5C7D"/></svg>';
+
+function escHtml(s) {
+  return String(s).replace(/[&<>"]/g, function (c) {
+    return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c];
+  });
+}
+function fmtSize(b) {
+  if (!b) return "0 МБ";
+  var mb = b / 1048576;
+  if (mb >= 1024) return (mb / 1024).toFixed(1).replace(".", ",") + " ГБ";
+  if (mb < 10) return mb.toFixed(1).replace(".", ",") + " МБ";
+  return Math.round(mb) + " МБ";
+}
+function fmtDay(ts) {
+  var d = new Date(ts);
+  return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+}
+function openVideoDB() {
+  return new Promise(function (res, rej) {
+    if (videoDb) { res(videoDb); return; }
+    if (!window.indexedDB) { rej(new Error("no-idb")); return; }
+    var req = indexedDB.open("rose-line-videos", 1);
+    req.onupgradeneeded = function () {
+      if (!req.result.objectStoreNames.contains("videos")) req.result.createObjectStore("videos", { keyPath: "id" });
+    };
+    req.onsuccess = function () { videoDb = req.result; res(videoDb); };
+    req.onerror = function () { rej(req.error || new Error("idb")); };
+  });
+}
+function videoStore(mode) {
+  return openVideoDB().then(function (db) { return db.transaction("videos", mode).objectStore("videos"); });
+}
+function getAllVideos() {
+  return videoStore("readonly").then(function (st) {
+    return new Promise(function (res, rej) {
+      var r = st.getAll();
+      r.onsuccess = function () { res(r.result || []); };
+      r.onerror = function () { rej(r.error); };
+    });
+  });
+}
+function putVideo(rec) {
+  return videoStore("readwrite").then(function (st) {
+    return new Promise(function (res, rej) {
+      var r = st.put(rec);
+      r.onsuccess = function () { res(); };
+      r.onerror = function () { rej(r.error); };
+    });
+  });
+}
+function removeVideo(id) {
+  return videoStore("readwrite").then(function (st) {
+    return new Promise(function (res, rej) {
+      var r = st.delete(id);
+      r.onsuccess = function () { res(); };
+      r.onerror = function () { rej(r.error); };
+    });
+  });
+}
+
+function updateStorageInfo() {
+  var size = 0;
+  for (var i = 0; i < videoItems.length; i++) size += videoItems[i].size || 0;
+  var txt = videoItems.length
+    ? "Сохранено: " + videoItems.length + " · " + fmtSize(size)
+    : "Видео пока нет";
+  var el = byId("storageInfo");
+  if (el) el.textContent = txt;
+  if (navigator.storage && navigator.storage.estimate) {
+    navigator.storage.estimate().then(function (est) {
+      if (!est || !est.quota || !el) return;
+      el.textContent = txt + " · свободно около " + fmtSize(est.quota - (est.usage || 0));
+    }).catch(function () {});
+  }
+}
+
+function renderVideos() {
+  var host = byId("videoList");
+  if (!host) return;
+  if (!videoItems.length) {
+    host.innerHTML = '<p class="vempty">Пока нет ни одного видео. Нажмите «Добавить видео» — записи останутся на этом устройстве и будут открываться без интернета.</p>';
+  } else {
+    var html = "";
+    for (var i = 0; i < videoItems.length; i++) {
+      var v = videoItems[i];
+      var armed = deleteArmed === v.id;
+      html += '<article class="vcard">' +
+        '<button class="vcard__tile" type="button" data-play="' + v.id + '" aria-label="Смотреть: ' + escHtml(v.name) + '">' + PLAY_ICON + '</button>' +
+        '<div class="vcard__body">' +
+        '<div class="vcard__name">' + escHtml(v.name) + '</div>' +
+        '<div class="vcard__meta">' + fmtSize(v.size) + ' · ' + fmtDay(v.added) + '</div>' +
+        '<div class="vcard__row">' +
+        '<button class="vbtn" type="button" data-play="' + v.id + '">Смотреть</button>' +
+        '<button class="vbtn vbtn--del" type="button" data-del="' + v.id + '">' + (armed ? "Точно?" : "Удалить") + '</button>' +
+        '</div></div></article>';
+    }
+    host.innerHTML = html;
+  }
+  updateStorageInfo();
+}
+
+function addVideoFiles(fileList) {
+  var files = [], i;
+  for (i = 0; i < fileList.length; i++) {
+    var f = fileList[i];
+    if (!f) continue;
+    var isVideo = (f.type && f.type.indexOf("video") === 0) || /\.(mp4|mov|m4v|webm|ogv)$/i.test(f.name || "");
+    if (isVideo) files.push(f);
+  }
+  var info = byId("storageInfo");
+  if (!files.length) {
+    if (info) info.textContent = "Это не видеофайл. Подойдут MP4, MOV, WebM.";
+    return;
+  }
+  var jobs = [];
+  for (i = 0; i < files.length; i++) {
+    jobs.push(putVideo({
+      id: "v" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      name: files[i].name || "Видео",
+      size: files[i].size || 0,
+      type: files[i].type || "video/mp4",
+      added: Date.now(),
+      blob: files[i]
+    }));
+  }
+  Promise.all(jobs).then(function () {
+    return getAllVideos();
+  }).then(function (list) {
+    videoItems = list.sort(function (a, b) { return b.added - a.added; });
+    renderVideos();
+  }).catch(function () {
+    if (info) info.textContent = "Не удалось сохранить видео: браузер не разрешил локальное хранилище или не хватило места.";
+  });
+}
+
+function playVideoById(id) {
+  var v = null, i;
+  for (i = 0; i < videoItems.length; i++) if (videoItems[i].id === id) v = videoItems[i];
+  if (!v) return;
+  var pl = byId("videoPlayer");
+  if (currentUrl) URL.revokeObjectURL(currentUrl);
+  currentUrl = URL.createObjectURL(v.blob);
+  byId("videoTitle").textContent = v.name;
+  pl.src = currentUrl;
+  byId("videoOverlay").hidden = false;
+  document.body.style.overflow = "hidden";
+  if (pl.play) { var pr = pl.play(); if (pr && pr.catch) pr.catch(function () {}); }
+}
+function closeVideo() {
+  var pl = byId("videoPlayer");
+  if (pl) {
+    if (pl.pause) pl.pause();
+    pl.removeAttribute("src");
+    if (pl.load) pl.load();
+  }
+  if (currentUrl) { URL.revokeObjectURL(currentUrl); currentUrl = null; }
+  byId("videoOverlay").hidden = true;
+  document.body.style.overflow = "";
+}
+function deleteVideoById(id) {
+  removeVideo(id).then(function () {
+    videoItems = videoItems.filter(function (v) { return v.id !== id; });
+    deleteArmed = null;
+    renderVideos();
+  }).catch(function () {});
+}
+
+function loadVideos() {
+  getAllVideos().then(function (list) {
+    videoItems = list.sort(function (a, b) { return b.added - a.added; });
+    renderVideos();
+  }).catch(function () {
+    var host = byId("videoList");
+    if (host) host.innerHTML = '<p class="vempty">Браузер не разрешил локальное хранилище — видео добавить не получится. Попробуйте открыть приложение в Safari или Chrome.</p>';
+  });
+}
+
+if (byId("pickVideos")) {
+  byId("pickVideos").addEventListener("click", function () { byId("videoInput").click(); });
+  byId("videoInput").addEventListener("change", function (e) {
+    addVideoFiles(e.target.files);
+    e.target.value = "";
+  });
+  var dz = byId("dropzone");
+  ["dragenter", "dragover"].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add("drop--over"); });
+  });
+  ["dragleave", "drop"].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove("drop--over"); });
+  });
+  dz.addEventListener("drop", function (e) {
+    if (e.dataTransfer && e.dataTransfer.files.length) addVideoFiles(e.dataTransfer.files);
+  });
+  document.addEventListener("dragover", function (e) { e.preventDefault(); });
+  document.addEventListener("drop", function (e) { if (!e.target.closest("#dropzone")) e.preventDefault(); });
+
+  byId("videoList").addEventListener("click", function (e) {
+    var del = e.target.closest("[data-del]");
+    if (del) {
+      var id = del.getAttribute("data-del");
+      if (deleteArmed === id) { deleteVideoById(id); }
+      else {
+        deleteArmed = id;
+        renderVideos();
+        setTimeout(function () { if (deleteArmed === id) { deleteArmed = null; renderVideos(); } }, 4000);
+      }
+      return;
+    }
+    var play = e.target.closest("[data-play]");
+    if (play) playVideoById(play.getAttribute("data-play"));
+  });
+  byId("videoClose").addEventListener("click", closeVideo);
+  byId("videoOverlay").addEventListener("pointerdown", function (e) {
+    if (e.target === byId("videoOverlay")) closeVideo();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !byId("videoOverlay").hidden) closeVideo();
+  });
+}
+
+/* routing */
+var VIEWS = ["overview", "workouts", "programs", "videos", "schedule", "progress"];
+function setTabs(name) {
+  var tabs = document.querySelectorAll(".tab");
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].setAttribute("aria-selected", tabs[i].getAttribute("data-route") === name ? "true" : "false");
+  }
+}
+function showView(name) {
+  for (var i = 0; i < VIEWS.length; i++) byId("view-" + VIEWS[i]).hidden = VIEWS[i] !== name;
+  byId("view-detail").hidden = true;
+  if (detailPlayer) { detailPlayer.destroy(); detailPlayer = null; }
+  setTabs(name);
+  if (typeof heroPlayer !== "undefined" && heroPlayer) heroPlayer.setPlaying(name === "overview");
+  if (name === "videos") renderVideos();
+  if (name === "programs") renderPrograms();
+  renderOverview();
+  renderSchedule();
+  renderProgress();
+  window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+}
+function showDetail(ex) {
+  for (var i = 0; i < VIEWS.length; i++) byId("view-" + VIEWS[i]).hidden = true;
+  byId("view-detail").hidden = false;
+  setTabs("workouts");
+  if (typeof heroPlayer !== "undefined" && heroPlayer) heroPlayer.setPlaying(false);
+  renderDetail(ex);
+  window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+}
+function route() {
+  var h = (location.hash || "").replace(/^#/, "");
+  var parts = h.split("/");
+  if (parts[0] === "exercise" && EXMAP[parts[1]]) { showDetail(EXMAP[parts[1]]); return; }
+  showView(VIEWS.indexOf(parts[0]) > -1 ? parts[0] : "overview");
+}
+window.addEventListener("hashchange", route);
+
+document.querySelector(".tabs").addEventListener("click", function (e) {
+  var t = e.target.closest(".tab");
+  if (!t) return;
+  location.hash = t.getAttribute("data-route");
+});
+
+byId("filters").addEventListener("click", function (e) {
+  var c = e.target.closest(".chip");
+  if (!c) return;
+  activeFilter = c.getAttribute("data-filter");
+  renderWorkouts();
+});
+
+byId("weekGrid").addEventListener("click", function (e) {
+  var exBtn = e.target.closest(".mini");
+  if (exBtn) { location.hash = "exercise/" + exBtn.getAttribute("data-ex"); return; }
+  var mark = e.target.closest(".mark");
+  if (!mark || mark.disabled) return;
+  var key = mark.getAttribute("data-key");
+  if (done.has(key)) done.delete(key); else done.add(key);
+  saveDone();
+  renderSchedule();
+  renderProgress();
+  renderOverview();
+});
+
+document.addEventListener("click", function (e) {
+  var b = e.target.closest("[data-program]");
+  if (!b) return;
+  var id = b.getAttribute("data-program");
+  if (!programById(id)) return;
+  saveProgram(id);
+  weekOffset = 0;
+  renderSchedule();
+  renderProgress();
+  renderOverview();
+  renderPrograms();
+});
+
+byId("prevWeek").addEventListener("click", function () { weekOffset--; renderSchedule(); });
+byId("nextWeek").addEventListener("click", function () { if (weekOffset < 0) { weekOffset++; renderSchedule(); } });
+
+var resetBtn = byId("resetBtn");
+resetBtn.addEventListener("click", function () {
+  if (resetBtn.dataset.armed === "1") {
+    done.clear();
+    saveDone();
+    resetBtn.dataset.armed = "";
+    resetBtn.textContent = "Очистить историю";
+    renderOverview(); renderSchedule(); renderProgress();
+  } else {
+    resetBtn.dataset.armed = "1";
+    resetBtn.textContent = "Точно очистить? Нажмите ещё раз";
+  }
+});
+
+renderOverview();
+renderWorkouts();
+renderPrograms();
+renderSchedule();
+renderProgress();
+var heroPlayer = new Player(byId("heroPlayer"), EXMAP["squat"], { autoplay: true });
+loadVideos();
+route();
+</script>
+<!--pwa:sw-->
+<script>
+(function () {
+  function standalone() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+  var bar = document.getElementById("installBar");
+  var text = document.getElementById("installText");
+  var go = document.getElementById("installGo");
+  var close = document.getElementById("installClose");
+  var KEY = "rose-line-install-hint";
+  var dismissed = false;
+  try { dismissed = localStorage.getItem(KEY) === "1"; } catch (e) {}
+
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var deferred = null;
+
+  if (!standalone() && !dismissed) {
+    if (isIOS) {
+      text.innerHTML = "<b>Установить на iPhone:</b> «Поделиться» → «На экран „Домой“». Значок появится среди приложений, интернет не нужен.";
+      bar.hidden = false;
+    } else {
+      window.addEventListener("beforeinstallprompt", function (e) {
+        e.preventDefault();
+        deferred = e;
+        text.innerHTML = "<b>Установить приложение:</b> тренировки под рукой, работают без интернета.";
+        go.hidden = false;
+        bar.hidden = false;
+      });
+    }
+  }
+
+  go.addEventListener("click", function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; bar.hidden = true; });
+  });
+  close.addEventListener("click", function () {
+    bar.hidden = true;
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+  });
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
+})();
+</script>
+<!--/pwa:sw-->
+</body>
+</html>
