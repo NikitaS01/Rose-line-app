@@ -105,9 +105,6 @@ h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(3
 .fig-neck{stroke:#D87694;stroke-width:9;stroke-linecap:round}
 .fig-head{fill:#D87694}
 .fig-prop{fill:#F1D6E2;stroke:#E4BCD0;stroke-width:1.4}
-.fig-dumbbell .db-handle{stroke:#8C4A60;stroke-width:2.8;stroke-linecap:round}
-.fig-dumbbell .db-weight{fill:#8C4A60}
-.fig-band{fill:none;stroke:#C9557A;stroke-width:2.4;stroke-linecap:round;opacity:.8}
 
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:clamp(20px,3vw,34px) 0 0}
@@ -373,6 +370,10 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .foot-ver b{font-weight:600;color:#6E515C}
 .ver-btn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .ver-btn:hover{color:#8E2F4C}
+.offline-state{font-size:12.5px;color:var(--muted)}
+.offline-state.is-ready{color:#3F7A55}
+.offline-state.is-warn{color:#A0692B}
+.offline-state[hidden]{display:none}
 
 @media (max-width:960px){
   .hero{grid-template-columns:1fr}
@@ -639,6 +640,8 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
   <div class="shell">
     <span>Розовая линия — домашняя программа из <b id="footCount">—</b> движений.</span>
     <span class="foot-ver">Версия <b id="appVersion">—</b> · <span id="appBuild">—</span>
+      <span id="offlineState" class="offline-state" hidden>офлайн: проверяю…</span>
+      <button class="ver-btn" id="offlineBtn" type="button" hidden>подготовить офлайн</button>
       <button class="ver-btn" id="verBtn" type="button">проверить обновление</button>
     </span>
   </div>
@@ -1783,233 +1786,6 @@ var EXERCISES = [
     back: 1.2
   },
   {
-    id: "dumbbell_press",
-    name: "Жим гантелей стоя",
-    zone: "arms",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "10",
-    rest: "60 с",
-    equipment: "Гантели",
-    tag: "Сила",
-    equip: "dumbbell",
-    view: "0 92 220 216",
-    cover: 0.5,
-    summary: "Гантели поднимаются над головой, локти идут вдоль корпуса. Работают плечи и трицепс, корпус держит ребро над тазом и не прогибается.",
-    steps: [
-      "Встаньте прямо, гантели на уровне плеч, ладони вперёд.",
-      "Напрягите живот и ягодицы, чтобы не прогибать поясницу.",
-      "На выдохе выжмите гантели вверх, почти выпрямляя руки.",
-      "На вдохе медленно вернитесь к плечам."
-    ],
-    mistakes: [
-      "Прогиб в пояснице и подъём рёбер.",
-      "Локти разъезжаются в стороны.",
-      "Рывок вверх за счёт инерции."
-    ],
-    breathing: "Вверх — выдох, вниз — вдох.",
-    frames: [
-      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 20, b: 130 }, farArms: { a: 24, b: 126 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
-      { t: 1.3, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 150, b: 20 }, farArms: { a: 146, b: 24 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
-    ],
-    back: 1.25
-  },
-  {
-    id: "dumbbell_row_1arm",
-    name: "Тяга гантели в наклоне",
-    zone: "back",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "12 на руку",
-    rest: "50 с",
-    equipment: "Гантель",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.6,
-    summary: "Одна рука тянет гантель к поясу, вторая свободно висит. Спина остаётся прямой, лопатка сводится к позвоночнику — работает середина спины.",
-    steps: [
-      "Наклонитесь вперёд, спина прямая, колени мягкие.",
-      "Возьмите гантель в одну руку, вторая свободно висит.",
-      "На выдохе подтяните локоть к поясу, лопатку — к центру.",
-      "На вдохе медленно опустите гантель, не округляя спину."
-    ],
-    mistakes: [
-      "Спина округляется, тянет поясницу.",
-      "Корпус разворачивается вместе с рукой.",
-      "Плечо поднимается к уху."
-    ],
-    breathing: "Тяга — выдох, опускание — вдох.",
-    frames: [
-      { t: 0, h: 0.25, p: { hip: [96, 236], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[104, 292], [88, 292]], hands: [[140, 250], [152, 272]], elbowDir: "back", kneeDir: "front" } },
-      { t: 1.1, h: 0.3, p: { hip: [96, 236], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[104, 292], [88, 292]], hands: [[154, 276], [152, 272]], elbowDir: "back", kneeDir: "front" } }
-    ],
-    back: 1.1
-  },
-  {
-    id: "dumbbell_rdl",
-    name: "Румынская тяга",
-    zone: "legs",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "10",
-    rest: "60 с",
-    equipment: "Гантели",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.66,
-    summary: "Наклон с гантелями при почти прямых ногах: таз уходит назад, гантели скользят вдоль бедра. Тянет заднюю поверхность бедра и учит держать спину.",
-    steps: [
-      "Встаньте прямо, гантели перед бёдрами, колени мягкие.",
-      "Отведите таз назад и наклонитесь, спина прямая.",
-      "Опускайтесь, пока гантели не дойдут до середины голени.",
-      "Вернитесь, толкаясь тазом вперёд."
-    ],
-    mistakes: [
-      "Округление спины внизу.",
-      "Гантели уходят далеко от ног.",
-      "Колени сгибаются, движение превращается в присед."
-    ],
-    breathing: "Наклон — вдох, подъём — выдох.",
-    frames: [
-      { t: 0, p: { hip: [100, 215], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 4, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
-      { t: 1.4, h: 0.35, p: { hip: [92, 228], torso: 76, arms: { a: 0, b: 0 }, farArms: { a: 4, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
-    ],
-    back: 1.35
-  },
-  {
-    id: "dumbbell_curl",
-    name: "Сгибание на бицепс",
-    zone: "arms",
-    level: "Лёгкий",
-    minutes: 4,
-    sets: 3,
-    reps: "12",
-    rest: "45 с",
-    equipment: "Гантели",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.55,
-    summary: "Классическое движение на бицепс: локти прижаты к корпусу, гантели поднимаются к плечам. Спина не помогает, работает только рука.",
-    steps: [
-      "Встаньте прямо, гантели в опущенных руках, ладони вперёд.",
-      "Прижмите локти к бокам и зафиксируйте их.",
-      "На выдохе поднимите гантели к плечам.",
-      "На вдохе медленно опустите, не разгибая руки рывком."
-    ],
-    mistakes: [
-      "Локти уезжают вперёд и вверх.",
-      "Корпус раскачивается в такт движению.",
-      "Гантели падают вниз без контроля."
-    ],
-    breathing: "Подъём — выдох, опускание — вдох.",
-    frames: [
-      { t: 0, h: 0.2, p: { hip: [100, 211], torso: 6, arms: { a: 8, b: 0 }, farArms: { a: 12, b: 0 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
-      { t: 1.2, h: 0.2, p: { hip: [100, 211], torso: 6, arms: { a: 20, b: 130 }, farArms: { a: 24, b: 126 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } }
-    ],
-    back: 1.2
-  },
-  {
-    id: "dumbbell_floor_press",
-    name: "Жим гантелей лёжа",
-    zone: "arms",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "10",
-    rest: "60 с",
-    equipment: "Гантели, коврик",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.5,
-    summary: "Жим с пола: локти опускаются до пола, гантели выжимаются вверх. Работают грудь, трицепс и плечи, а пол безопасно ограничивает амплитуду.",
-    steps: [
-      "Лягте на спину, гантели у плеч, локти под углом 45°.",
-      "Стопы на полу, поясница прижата.",
-      "На выдохе выжмите гантели вверх над грудью.",
-      "На вдохе опустите, пока локти почти не коснутся пола."
-    ],
-    mistakes: [
-      "Локти уходят строго в стороны на 90°.",
-      "Прогиб в пояснице и подъём таза.",
-      "Гантели стукаются друг о друга."
-    ],
-    breathing: "Вверх — выдох, вниз — вдох.",
-    frames: [
-      { t: 0, h: 0.25, p: { hip: [130, 278], torso: -93, arms: { a: 130, b: 50 }, farArms: { a: 126, b: 54 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } },
-      { t: 1.2, h: 0.25, p: { hip: [130, 278], torso: -93, arms: { a: 170, b: 10 }, farArms: { a: 166, b: 14 }, feet: [[170, 290], [160, 292]], kneeDir: "up" } }
-    ],
-    back: 1.2
-  },
-  {
-    id: "band_row",
-    name: "Тяга резинки к поясу",
-    zone: "back",
-    level: "Лёгкий",
-    minutes: 5,
-    sets: 3,
-    reps: "15",
-    rest: "40 с",
-    equipment: "Резинка",
-    tag: "Сила",
-    equip: "band",
-    bandAnchor: [104, 291],
-    cover: 0.55,
-    summary: "Резинка под стопами, руки тянут её к поясу. Мягкая и безопасная нагрузка на спину: работают лопатки, а не поясница.",
-    steps: [
-      "Встаньте на середину резинки, стопы на ширине таза.",
-      "Возьмите концы в руки, выпрямите спину.",
-      "На выдохе подтяните локти к поясу и сведите лопатки.",
-      "На вдохе медленно верните руки вперёд."
-    ],
-    mistakes: [
-      "Корпус отклоняется назад, чтобы помочь руками.",
-      "Плечи поднимаются к ушам.",
-      "Резинка слетает со стоп — держите её середину."
-    ],
-    breathing: "Тяга — выдох, возврат — вдох.",
-    frames: [
-      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[150, 190], [158, 194]], elbowDir: "back", kneeDir: "front" } },
-      { t: 1.1, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[118, 190], [126, 194]], elbowDir: "back", kneeDir: "front" } }
-    ],
-    back: 1.1
-  },
-  {
-    id: "band_front",
-    name: "Подъём рук с резинкой",
-    zone: "arms",
-    level: "Лёгкий",
-    minutes: 5,
-    sets: 3,
-    reps: "12",
-    rest: "40 с",
-    equipment: "Резинка",
-    tag: "Сила",
-    equip: "band",
-    bandAnchor: [104, 291],
-    cover: 0.55,
-    summary: "Руки поднимаются вперёд до уровня плеч, резинка сопротивляется. Мягкая нагрузка на передние пучки плеч и корпус.",
-    steps: [
-      "Встаньте на резинку, концы в опущенных руках.",
-      "Спина прямая, живот подтянут.",
-      "На выдохе поднимите руки вперёд до уровня плеч.",
-      "На вдохе медленно опустите, не теряя натяжения."
-    ],
-    mistakes: [
-      "Рывок и раскачивание корпусом.",
-      "Руки поднимаются выше плеч.",
-      "Плечи ползут к ушам."
-    ],
-    breathing: "Подъём — выдох, опускание — вдох.",
-    frames: [
-      { t: 0, h: 0.25, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[112, 214], [122, 218]], elbowDir: "front", kneeDir: "front" } },
-      { t: 1.2, h: 0.3, p: { hip: [100, 211], torso: 6, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[105, 292], [95, 292]], hands: [[164, 158], [172, 162]], elbowDir: "front", kneeDir: "front" } }
-    ],
-    back: 1.2
-  },
-  {
     id: "wall_pushup",
     name: "Отжимания от стены",
     zone: "arms",
@@ -2230,70 +2006,6 @@ var EXERCISES = [
     back: 1.1
   },
   {
-    id: "goblet",
-    name: "Приседание с гантелью у груди",
-    zone: "legs",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "12",
-    rest: "60 с",
-    equipment: "Гантель",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.32,
-    summary: "Гантель у груди смещает вес вперёд и помогает держать спину прямой. Одно из самых удобных приседаний для дома.",
-    steps: [
-      "Возьмите гантель обеими руками и прижмите к груди.",
-      "Стопы на ширине плеч, носки чуть наружу.",
-      "На вдохе садитесь между пяток, локти внутри коленей.",
-      "На выдохе встаньте, не отпуская гантель."
-    ],
-    mistakes: [
-      "Локти уходят внутрь и давят на колени.",
-      "Пятки отрываются от пола.",
-      "Спина округляется внизу."
-    ],
-    breathing: "Вниз — вдох, вверх — выдох.",
-    frames: [
-      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[118, 173], [124, 176]], elbowDir: "down", kneeDir: "front" } },
-      { t: 1.4, h: 0.35, p: { hip: [84, 255], torso: 32, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[106, 292], [94, 292]], hands: [[130, 228], [136, 231]], elbowDir: "down", kneeDir: "front" } }
-    ],
-    back: 1.35
-  },
-  {
-    id: "db_lunge",
-    name: "Выпад с гантелями",
-    zone: "legs",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "10 на ногу",
-    rest: "50 с",
-    equipment: "Гантели",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.55,
-    summary: "Выпад назад с гантелями в опущенных руках. Дополнительный вес усиливает нагрузку на ягодицы и бёдра, корпус работает на равновесие.",
-    steps: [
-      "Встаньте прямо, гантели в опущенных руках.",
-      "Шагните назад и опуститесь в выпад.",
-      "Корпус держите вертикально, вес — на передней стопе.",
-      "Вернитесь в стойку, не наклоняясь вперёд."
-    ],
-    mistakes: [
-      "Корпус заваливается вперёд.",
-      "Переднее колено уходит за носок.",
-      "Гантели раскачиваются и тянут плечи вниз."
-    ],
-    breathing: "Вниз — вдох, вверх — выдох.",
-    frames: [
-      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
-      { t: 1.3, h: 0.4, p: { hip: [98, 247], torso: 24, arms: { a: 6, b: 4 }, farArms: { a: 10, b: 2 }, feet: [[120, 292], [52, 292]], kneeDir: "front" } }
-    ],
-    back: 1.3
-  },
-  {
     id: "pushup_wide",
     name: "Широкие отжимания",
     zone: "arms",
@@ -2323,38 +2035,6 @@ var EXERCISES = [
       { t: 1.2, h: 0.25, p: { hip: [128, 266], torso: -78, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [178, 292]], hands: [[54, 290], [64, 290]], elbowDir: "back", kneeDir: "front" } }
     ],
     back: 1.15
-  },
-  {
-    id: "db_row2",
-    name: "Тяга двух гантелей",
-    zone: "back",
-    level: "Средне",
-    minutes: 6,
-    sets: 3,
-    reps: "12",
-    rest: "50 с",
-    equipment: "Гантели",
-    tag: "Сила",
-    equip: "dumbbell",
-    cover: 0.6,
-    summary: "Тяга двумя руками в наклоне: симметричная нагрузка на спину и заднюю дельту. Спина прямая, лопатки сводятся одновременно.",
-    steps: [
-      "Возьмите гантели, наклонитесь с прямой спиной.",
-      "Колени мягкие, таз отведён назад, шея продолжает спину.",
-      "На выдохе подтяните оба локтя к поясу.",
-      "На вдохе медленно опустите гантели."
-    ],
-    mistakes: [
-      "Спина округляется, тянет поясницу.",
-      "Рывок корпусом вместо работы лопаток.",
-      "Плечи уходят к ушам."
-    ],
-    breathing: "Тяга — выдох, опускание — вдох.",
-    frames: [
-      { t: 0, h: 0.2, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[152, 274], [162, 276]], elbowDir: "back", kneeDir: "front" } },
-      { t: 1.1, h: 0.3, p: { hip: [104, 240], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[112, 292], [96, 292]], hands: [[140, 242], [150, 246]], elbowDir: "back", kneeDir: "front" } }
-    ],
-    back: 1.1
   },
   {
     id: "wall_calf",
@@ -2449,6 +2129,255 @@ var EXERCISES = [
       { t: 1.4, h: 0.8, p: { hip: [110, 254], torso: 64, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[150, 288], [50, 286]], hands: [[168, 280], [176, 282]], elbowDir: "back", kneeDir: "front" } }
     ],
     back: 1.4
+  },
+  {
+    id: "jump_squat",
+    name: "Приседание с прыжком",
+    zone: "legs",
+    level: "Продвинутый",
+    minutes: 5,
+    sets: 3,
+    reps: "10",
+    rest: "50 с",
+    equipment: "Коврик",
+    tag: "Кардио",
+    cover: 0.45,
+    summary: "Приседание с выпрыгиванием: ноги работают как пружина. Поднимает пульс и добавляет мощности, но требует мягкой посадки на всю стопу.",
+    steps: [
+      "Встаньте, стопы на ширине плеч.",
+      "Опуститесь в приседание и заведите руки назад.",
+      "Выпрыгните вверх, вытягивая руки.",
+      "Приземлитесь мягко на всю стопу и сразу уйдите в следующее приседание."
+    ],
+    mistakes: [
+      "Жёсткое приземление на прямые ноги.",
+      "Колени заваливаются внутрь.",
+      "Прыжок вместо приседания — не хватает амплитуды."
+    ],
+    breathing: "Вниз — вдох, прыжок — резкий выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 10, b: 6 }, farArms: { a: 14, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.1, h: 0.2, p: { hip: [84, 255], torso: 32, arms: { a: 62, b: 12 }, farArms: { a: 70, b: 8 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 0.5, h: 0.15, p: { hip: [100, 196], torso: 4, arms: { a: 140, b: 10 }, farArms: { a: 146, b: 6 }, feet: [[100, 268], [92, 266]], kneeDir: "front" } }
+    ],
+    back: 0.9
+  },
+  {
+    id: "squat_hold",
+    name: "Статическое приседание",
+    zone: "legs",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "30 с",
+    rest: "40 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.35,
+    summary: "Удержание в полуприседе: ноги горят уже к двадцатой секунде. Тренирует выносливость мышц и учит держать спину без движения.",
+    steps: [
+      "Опуститесь в приседание до параллели бёдер с полом.",
+      "Руки соедините перед грудью.",
+      "Держите спину прямой, вес — на всей стопе.",
+      "Стойте 20–40 секунд и встаньте."
+    ],
+    mistakes: [
+      "Пятки отрываются от пола.",
+      "Колени сводятся внутрь.",
+      "Задержка дыхания."
+    ],
+    breathing: "Дышите ровно и неглубоко, не задерживайте воздух.",
+    frames: [
+      { t: 0, h: 0.5, p: { hip: [86, 250], torso: 30, arms: { a: 20, b: 60 }, farArms: { a: 24, b: 56 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } },
+      { t: 1.4, h: 0.5, p: { hip: [86, 252], torso: 30, arms: { a: 20, b: 60 }, farArms: { a: 24, b: 56 }, feet: [[106, 292], [94, 292]], kneeDir: "front" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "split_squat",
+    name: "Статический выпад",
+    zone: "legs",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "30 с",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.5,
+    summary: "Удержание в выпаде: передняя нога держит вес, задняя — равновесие. Хорошо готовит колени и ягодицы к динамике.",
+    steps: [
+      "Встаньте в выпад: передняя стопа на полу, задняя на носке.",
+      "Опуститесь до прямого угла в переднем колене.",
+      "Корпус держите вертикально, руки на поясе.",
+      "Держите 30 секунд и меняйте ногу."
+    ],
+    mistakes: [
+      "Переднее колено уходит за носок.",
+      "Корпус заваливается в сторону.",
+      "Задержка дыхания."
+    ],
+    breathing: "Дышите ровно, на выдохе чуть опускайтесь ниже.",
+    frames: [
+      { t: 0, h: 0.5, p: { hip: [100, 244], torso: 12, arms: { a: 30, b: 40 }, farArms: { a: 36, b: 36 }, feet: [[122, 292], [64, 292]], kneeDir: "front" } },
+      { t: 1.4, h: 0.5, p: { hip: [100, 248], torso: 12, arms: { a: 30, b: 40 }, farArms: { a: 36, b: 36 }, feet: [[122, 292], [64, 292]], kneeDir: "front" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "swimmer",
+    name: "Пловец",
+    zone: "back",
+    level: "Лёгкий",
+    minutes: 4,
+    sets: 3,
+    reps: "12",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Сила",
+    cover: 0.55,
+    summary: "Лёжа на животе поочерёдно поднимаются противоположные рука и нога. Мягко укрепляет спину и ягодицы, не нагружая поясницу рывком.",
+    steps: [
+      "Лягте на живот, руки вытянуты вперёд, лоб на коврике.",
+      "Поднимите правую руку и левую ногу.",
+      "Опустите и поменяйте сторону.",
+      "Двигайтесь плавно, как пловец."
+    ],
+    mistakes: [
+      "Слишком высокий подъём с прогибом в шее.",
+      "Рывок вместо плавного движения.",
+      "Задержка дыхания."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.15, p: { hip: [120, 280], torso: -85, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[196, 278], [188, 282]], hands: [[24, 266], [100, 280]], elbowDir: "back", kneeDir: "back" } },
+      { t: 0.9, h: 0.15, p: { hip: [120, 280], torso: -85, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[196, 278], [188, 282]], hands: [[100, 272], [24, 270]], elbowDir: "back", kneeDir: "back" } }
+    ],
+    back: 0.9
+  },
+  {
+    id: "balance",
+    name: "Стойка на одной ноге",
+    zone: "legs",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Без инвентаря",
+    tag: "Баланс",
+    cover: 0.55,
+    summary: "Простая проверка равновесия: стоим на одной ноге, второе колено поднято. Укрепляет стопы и голеностоп, помогает не спотыкаться.",
+    steps: [
+      "Встаньте прямо, руки в стороны.",
+      "Поднимите одно колено до уровня таза.",
+      "Смотрите в одну точку перед собой.",
+      "Держите 20–30 секунд и меняйте ногу."
+    ],
+    mistakes: [
+      "Опора на стену всё время — попробуйте без неё.",
+      "Колено поднимается за счёт наклона корпуса.",
+      "Задержка дыхания."
+    ],
+    breathing: "Дышите спокойно и ровно.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [100, 211], torso: 6, arms: { a: 10, b: 0 }, farArms: { a: 14, b: 0 }, feet: [[104, 292], [96, 292]], kneeDir: "front" } },
+      { t: 1.0, h: 0.6, p: { hip: [100, 211], torso: 4, arms: { a: 60, b: 10 }, farArms: { a: 66, b: 6 }, feet: [[118, 240], [96, 292]], kneeDir: "front" } }
+    ],
+    back: 1.0
+  },
+  {
+    id: "fold_one",
+    name: "Наклон к одной ноге",
+    zone: "flex",
+    level: "Лёгкий",
+    minutes: 3,
+    sets: 2,
+    reps: "30 с",
+    rest: "—",
+    equipment: "Коврик",
+    tag: "Гибкость",
+    cover: 0.6,
+    summary: "Сидя наклоняемся к вытянутой ноге, вторая согнута. Растягивает заднюю поверхность бедра по одной стороне — там, где обычно жёстче.",
+    steps: [
+      "Сядьте, одна нога вытянута, вторая согнута коленом в сторону.",
+      "Наклонитесь корпусом к вытянутой ноге.",
+      "Спина остаётся длинной, тянитесь грудью, а не головой.",
+      "Держите 30 секунд и меняйте сторону."
+    ],
+    mistakes: [
+      "Спина округляется.",
+      "Рывок в наклоне.",
+      "Согнутая нога мешает — отодвиньте её."
+    ],
+    breathing: "На выдохе наклоняйтесь чуть глубже.",
+    frames: [
+      { t: 0, h: 0.4, p: { hip: [96, 278], torso: 70, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[180, 284], [150, 250]], hands: [[178, 282], [168, 284]], elbowDir: "back", kneeDir: "up" } },
+      { t: 1.4, h: 0.8, p: { hip: [96, 278], torso: 80, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[180, 284], [150, 250]], hands: [[184, 288], [174, 290]], elbowDir: "back", kneeDir: "up" } }
+    ],
+    back: 1.4
+  },
+  {
+    id: "lunge_front",
+    name: "Выпад вперёд",
+    zone: "legs",
+    level: "Средне",
+    minutes: 6,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "50 с",
+    equipment: "Без инвентаря",
+    tag: "Сила",
+    cover: 0.55,
+    summary: "Классический выпад шагом вперёд. Больше нагрузки на переднюю ногу и колено, чем в выпаде назад, поэтому следите за амплитудой.",
+    steps: [
+      "Встаньте прямо, руки на поясе.",
+      "Шагните вперёд и опустите заднее колено.",
+      "Переднее колено над стопой, корпус чуть вперёд.",
+      "Оттолкнитесь передней ногой и вернитесь."
+    ],
+    mistakes: [
+      "Колено уходит за носок.",
+      "Короткий шаг — колено бьётся о пол.",
+      "Потеря равновесия из-за наклона корпуса."
+    ],
+    breathing: "Вниз — вдох, возврат — выдох.",
+    frames: [
+      { t: 0, p: { hip: [100, 211], torso: 8, arms: { a: 8, b: 6 }, farArms: { a: 12, b: 4 }, feet: [[105, 292], [95, 292]], kneeDir: "front" } },
+      { t: 1.3, h: 0.4, p: { hip: [104, 247], torso: 20, arms: { a: 40, b: 20 }, farArms: { a: 46, b: 16 }, feet: [[140, 292], [76, 292]], kneeDir: "front" } }
+    ],
+    back: 1.3
+  },
+  {
+    id: "plank_leg",
+    name: "Планка с подъёмом ноги",
+    zone: "core",
+    level: "Средне",
+    minutes: 4,
+    sets: 3,
+    reps: "10 на ногу",
+    rest: "30 с",
+    equipment: "Коврик",
+    tag: "Кор",
+    cover: 0.5,
+    summary: "Планка на предплечьях, одна нога поднимается. Таз не должен разворачиваться — тогда работает не только кор, но и ягодицы.",
+    steps: [
+      "Встаньте в планку на предплечьях.",
+      "Напрягите живот, тело — прямая линия.",
+      "Поднимите одну ногу на 10–15 см.",
+      "Опустите и повторите другой ногой."
+    ],
+    mistakes: [
+      "Таз разворачивается вслед за ногой.",
+      "Поясница прогибается.",
+      "Нога поднимается слишком высоко."
+    ],
+    breathing: "Подъём — выдох, опускание — вдох.",
+    frames: [
+      { t: 0, h: 0.2, p: { hip: [108, 278], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [176, 292]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } },
+      { t: 0.9, h: 0.3, p: { hip: [108, 278], torso: -45, arms: { a: 0, b: 0 }, farArms: { a: 0, b: 0 }, feet: [[186, 292], [196, 262]], hands: [[80, 290], [90, 290]], elbowDir: "back", kneeDir: "front" } }
+    ],
+    back: 0.9
   }
 ];
 
@@ -2458,14 +2387,15 @@ var TIMER_SECONDS = {
   squat_pause: 60, lunge_knee: 50, bridge_1leg: 40, dips: 45, pushup_knee: 40, pushup_close: 45,
   side_plank: 30, reverse_crunch: 40, deadbug: 40, hollow: 20, vup: 40, cobra: 30, childpose: 45,
   quad_stretch: 30, seated_fold: 45, goodmorning: 45, calfraise: 30, bearhold: 30, stepup: 45,
-  dumbbell_press: 45, dumbbell_row_1arm: 45, dumbbell_rdl: 45, dumbbell_curl: 40, dumbbell_floor_press: 45,
-  band_row: 40, band_front: 40, wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30,
-  situp: 45, plank_tap: 40, donkey: 40, goblet: 45, db_lunge: 50, pushup_wide: 45, db_row2: 45,
-  wall_calf: 30, march: 40, pigeon: 40
+  wall_pushup: 40, wall_sit: 30, bulgarian: 45, hipflexor: 30,
+  situp: 45, plank_tap: 40, donkey: 40, pushup_wide: 45,
+  wall_calf: 30, march: 40, pigeon: 40,
+  jump_squat: 45, squat_hold: 40, split_squat: 30, swimmer: 40, balance: 30, fold_one: 30,
+  lunge_front: 50, plank_leg: 40
 };
 EXERCISES.forEach(function (e) { e.timer = TIMER_SECONDS[e.id] || 45; });
 
-var APP_VERSION = "1.3.0";
+var APP_VERSION = "1.4.0";
 var APP_BUILD = "15.11.2026";
 
 var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
@@ -2589,47 +2519,7 @@ var PROGRAMS = [
       ],
       note: SAFETY_NOTE
     }
-  },
-  {
-    id: "gear",
-    name: "Гантели и резинка",
-    goal: "сила с инвентарём",
-    accent: "4 тренировки с весом",
-    summary: "Программа для тех, у кого есть пара гантелей и резинка. Два силовых дня на всё тело, день верха и круговой блок с резинкой — 60–90 секунд отдыха между подходами.",
-    days: [
-      { id: "mon", title: "Всё тело", tag: "Сила", minutes: 36, ex: ["goblet", "dumbbell_press", "db_row2", "plank"], note: "3×10, отдых 90 с" },
-      { id: "tue", title: "Низ и спина", tag: "Сила", minutes: 38, ex: ["dumbbell_rdl", "db_lunge", "bridge_1leg", "band_row"], note: "3×10–12 на ногу" },
-      { id: "wed", title: "Мобильность", tag: "Лёгкий", minutes: 20, ex: ["catcow", "hipflexor", "downdog"], note: "Спокойно, без веса" },
-      { id: "thu", title: "Верх тела", tag: "Сила", minutes: 36, ex: ["dumbbell_floor_press", "dumbbell_curl", "band_front", "side_plank"], note: "3×10–12, корпус в конце" },
-      { id: "fri", title: "Круг с резинкой", tag: "Круг", minutes: 32, ex: ["band_row", "band_front", "squat", "wall_sit"], note: "3 круга, отдых 60 с" },
-      { id: "sat", title: "Растяжка", tag: "Восстановление", minutes: 16, ex: ["fold", "quad_stretch"], note: "По 30–45 секунд" },
-      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка и сон", rest: true }
-    ],
-    nutrition: {
-      title: "Поддержание с акцентом на белок",
-      kcal: "Вес × 31–33 ккал. При 70 кг — примерно 2200 ккал.",
-      macros: [
-        { k: "Белок", v: "1,6–2 г/кг" },
-        { k: "Жиры", v: "0,8–1 г/кг" },
-        { k: "Углеводы", v: "3–4,5 г/кг" }
-      ],
-      meals: [
-        { time: "7:30", title: "Завтрак", text: "Омлет из 2–3 яиц, цельнозерновой тост, овощи." },
-        { time: "11:00", title: "Перекус", text: "Творог или кефир с ягодами." },
-        { time: "14:00", title: "Обед", text: "Крупа, мясо или рыба 150 г, овощи." },
-        { time: "17:00", title: "До тренировки", text: "Банан и горсть орехов за час до занятия." },
-        { time: "20:00", title: "Ужин", text: "Белок с овощами, немного риса или картофеля." }
-      ],
-      rules: [
-        "Раз в 1–2 недели добавляйте вес гантелей или повторение — иначе силы не растут.",
-        "Отдых между подходами 60–90 секунд, между упражнениями — 2 минуты.",
-        "Белок 20–30 г в каждый приём, особенно после тренировки.",
-        "Не тренируйте одну группу два дня подряд: мышцы растут в восстановлении."
-      ],
-      note: SAFETY_NOTE
-    }
-  },
-  {
+  },  {
     id: "fit",
     name: "Фитнес",
     goal: "общий тонус и выносливость",
@@ -2703,6 +2593,119 @@ var PROGRAMS = [
         "Белок в каждый приём, чтобы поддерживать мышцы.",
         "Овощи и зелень каждый день — 400–500 г.",
         "Каждые 45 минут за компьютером — вставать и разминать шею."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "tone",
+    name: "Сила и тонус",
+    goal: "мышечный тонус без инвентаря",
+    accent: "4 силовых дня",
+    summary: "Сплит верх/низ плюс день всего тела и кор. Подходы по 10–12 повторений, отдых 60 секунд — тонус без работы на износ.",
+    days: [
+      { id: "mon", title: "Верх тела", tag: "Сила", minutes: 30, ex: ["pushup", "row", "pushup_close", "plank"], note: "3×10–12" },
+      { id: "tue", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка и растяжка", rest: true },
+      { id: "wed", title: "Низ тела", tag: "Сила", minutes: 32, ex: ["squat", "bridge_1leg", "lunge_front", "calfraise"], note: "3×10 на ногу" },
+      { id: "thu", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон и вода", rest: true },
+      { id: "fri", title: "Всё тело", tag: "Сила", minutes: 34, ex: ["squat_pause", "pushup", "superman", "plank_leg"], note: "3×10, темп ровный" },
+      { id: "sat", title: "Кор", tag: "Кор", minutes: 22, ex: ["boat", "legraise", "side_plank", "hollow"], note: "3 подхода" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Полное восстановление", rest: true }
+    ],
+    nutrition: {
+      title: "Поддержание и белок",
+      kcal: "Вес × 31–33 ккал. При 70 кг — около 2200 ккал.",
+      macros: [
+        { k: "Белок", v: "1,6–2 г/кг" },
+        { k: "Жиры", v: "0,8–1 г/кг" },
+        { k: "Углеводы", v: "3–4,5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Омлет, тост, овощи." },
+        { time: "13:00", title: "Обед", text: "Крупа, белок 150 г, овощи." },
+        { time: "17:00", title: "Перекус", text: "Творог или кефир с ягодами." },
+        { time: "20:00", title: "Ужин", text: "Белок и овощи, немного углеводов." }
+      ],
+      rules: [
+        "Белок 20–30 г в каждый приём.",
+        "Прогрессия: добавляйте повторение раз в неделю.",
+        "Отдых между подходами 60 секунд.",
+        "Сон 7–8 часов — без него тонус не растёт."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "cardio",
+    name: "Кардио дома",
+    goal: "выносливость и расход",
+    accent: "4 дня кардио",
+    summary: "Интервалы, кардио-микс и круговая без прыжков и бега. Поднимает выносливость и расход калорий, не нагружая колени ударной нагрузкой.",
+    days: [
+      { id: "mon", title: "Интервалы", tag: "Кардио", minutes: 26, ex: ["march", "climber", "jump_squat", "bearhold"], note: "40 с работы / 20 с отдыха" },
+      { id: "tue", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка 20–30 минут", rest: true },
+      { id: "wed", title: "Кардио-микс", tag: "Кардио", minutes: 24, ex: ["march", "calfraise", "climber", "plank_tap"], note: "3 круга" },
+      { id: "thu", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон и вода", rest: true },
+      { id: "fri", title: "Круговая", tag: "Круг", minutes: 28, ex: ["squat", "pushup", "lunge_front", "crunch"], note: "3 круга, отдых 60 с" },
+      { id: "sat", title: "Лёгкий день", tag: "Восстановление", minutes: 15, ex: ["fold", "seated_fold"], note: "Прогулка 30–40 минут" },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Полное восстановление", rest: true }
+    ],
+    nutrition: {
+      title: "Дефицит без голода",
+      kcal: "Вес × 27–29 ккал. При 70 кг — около 1900–2000 ккал.",
+      macros: [
+        { k: "Белок", v: "1,7–2 г/кг" },
+        { k: "Жиры", v: "0,7–0,9 г/кг" },
+        { k: "Углеводы", v: "2,5–3,5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Омлет с овощами, тост." },
+        { time: "13:00", title: "Обед", text: "Белок 150 г, овощи, 4 ложки крупы." },
+        { time: "17:00", title: "Перекус", text: "Кефир или яблоко." },
+        { time: "20:00", title: "Ужин", text: "Рыба или курица с овощами." }
+      ],
+      rules: [
+        "Белок в каждый приём — сохраняет мышцы.",
+        "Овощи — половина тарелки в обед и ужин.",
+        "Воду пейте до тренировки, а не только после.",
+        "Минус 0,25–0,5 кг в неделю — норма."
+      ],
+      note: SAFETY_NOTE
+    }
+  },
+  {
+    id: "morning",
+    name: "Утро за 15 минут",
+    goal: "короткая зарядка",
+    accent: "5 дней по 12–15 минут",
+    summary: "Короткие комплексы на каждый рабочий день: разбудить тело, размять спину, включить ноги и кор. Если нет часа — начните с этих 15 минут.",
+    days: [
+      { id: "mon", title: "Мягкий старт", tag: "Лёгкий", minutes: 14, ex: ["catcow", "squat", "pushup", "fold"], note: "2 круга без спешки" },
+      { id: "tue", title: "Кор и осанка", tag: "Кор", minutes: 13, ex: ["birddog", "plank", "superman"], note: "3 подхода" },
+      { id: "wed", title: "Ноги", tag: "Сила", minutes: 14, ex: ["squat", "bridge", "calfraise"], note: "2 круга" },
+      { id: "thu", title: "Мобильность", tag: "Мобильность", minutes: 12, ex: ["catcow", "downdog", "childpose"], note: "Дыхание и мягкость" },
+      { id: "fri", title: "Энергия", tag: "Кардио", minutes: 15, ex: ["march", "squat", "pushup_knee", "climber"], note: "3 круга" },
+      { id: "sat", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Прогулка", rest: true },
+      { id: "sun", title: "Отдых", tag: "Отдых", minutes: 0, ex: [], note: "Сон", rest: true }
+    ],
+    nutrition: {
+      title: "Простой день",
+      kcal: "Вес × 30 ккал. При 70 кг — около 2100 ккал.",
+      macros: [
+        { k: "Белок", v: "1,5–1,8 г/кг" },
+        { k: "Жиры", v: "0,8–1 г/кг" },
+        { k: "Углеводы", v: "3–4,5 г/кг" }
+      ],
+      meals: [
+        { time: "8:00", title: "Завтрак", text: "Овсянка с ягодами и орехами." },
+        { time: "13:00", title: "Обед", text: "Крупа, белок, овощи." },
+        { time: "19:00", title: "Ужин", text: "Белок и овощи." }
+      ],
+      rules: [
+        "Завтрак — до кофе, если тренируетесь утром.",
+        "Вода 1,5–2 л в день.",
+        "Белок в каждом приёме.",
+        "Сон 7–8 часов важнее утренней зарядки."
       ],
       note: SAFETY_NOTE
     }
@@ -2834,22 +2837,8 @@ function Figure(svg, ex) {
     svg.appendChild(svgEl("rect", { "class": "fig-prop", x: pr.x, y: pr.y, width: pr.w, height: pr.h, rx: 7 }));
   }
   this.band = null;
-  if (ex && ex.equip === "band") {
-    this.band = svgEl("path", { "class": "fig-band" });
-    svg.appendChild(this.band);
-  }
-  for (var k in this.p) svg.appendChild(this.p[k]);
   this.dumbbells = [];
-  if (ex && ex.equip === "dumbbell") {
-    for (var i = 0; i < 2; i++) {
-      var g = svgEl("g", { "class": "fig-dumbbell" });
-      g.appendChild(svgEl("line", { x1: -7, y1: 0, x2: 7, y2: 0, "class": "db-handle" }));
-      g.appendChild(svgEl("circle", { cx: -7.5, cy: 0, r: 3.4, "class": "db-weight" }));
-      g.appendChild(svgEl("circle", { cx: 7.5, cy: 0, r: 3.4, "class": "db-weight" }));
-      svg.appendChild(g);
-      this.dumbbells.push(g);
-    }
-  }
+  for (var k in this.p) svg.appendChild(this.p[k]);
 }
 Figure.prototype.draw = function (c) {
   var p = this.p;
@@ -2871,18 +2860,6 @@ Figure.prototype.draw = function (c) {
   p.farArm.setAttribute("d", limb(c.sh, c.armF));
   p.nearLeg.setAttribute("d", limb(c.hip, c.legN));
   p.nearArm.setAttribute("d", limb(c.sh, c.armN));
-  if (this.dumbbells.length === 2) {
-    var arms = [c.armF, c.armN];
-    for (var i = 0; i < 2; i++) {
-      var elbow = arms[i][0], wrist = arms[i][1];
-      var ang = Math.atan2(wrist[1] - elbow[1], wrist[0] - elbow[0]) * 180 / Math.PI + 90;
-      this.dumbbells[i].setAttribute("transform", "translate(" + r1(wrist[0]) + " " + r1(wrist[1]) + ") rotate(" + r1(ang) + ")");
-    }
-  }
-  if (this.band && this.ex && this.ex.bandAnchor) {
-    var a = this.ex.bandAnchor, w = c.armN[1];
-    this.band.setAttribute("d", "M" + a[0] + " " + a[1] + "Q" + r1((a[0] + w[0]) / 2 + 6) + " " + r1((a[1] + w[1]) / 2) + " " + r1(w[0]) + " " + r1(w[1]));
-  }
 };
 
 function fmtTime(t) {
@@ -3197,7 +3174,7 @@ function renderPrograms() {
   for (i = 0; i < p.days.length; i++) {
     var d = p.days[i];
     var names = [];
-    for (var j = 0; j < d.ex.length; j++) names.push(EXMAP[d.ex[j]].name);
+    for (var j = 0; j < d.ex.length; j++) { if (EXMAP[d.ex[j]]) names.push(EXMAP[d.ex[j]].name); }
     dayRows += '<div class="pday' + (d.rest ? " pday--rest" : "") + '">' +
       '<span class="pday__wd" style="color:var(--muted);font-size:12px">' + WD[i] + '</span>' +
       '<b>' + d.title + '</b>' +
@@ -3447,7 +3424,7 @@ function renderSchedule() {
 
     var exHTML = "";
     for (var j = 0; j < plan.ex.length; j++) {
-      exHTML += '<button class="mini" type="button" data-ex="' + plan.ex[j] + '">' + EXMAP[plan.ex[j]].name + '</button>';
+      exHTML += '<button class="mini" type="button" data-ex="' + plan.ex[j] + '">' + (EXMAP[plan.ex[j]] ? EXMAP[plan.ex[j]].name : plan.ex[j]) + '</button>';
     }
     var cls = "day" + (isToday ? " day--today" : "") + (isDone ? " day--done" : "") + (future ? " day--future" : "");
     var btn = plan.rest
@@ -3566,7 +3543,9 @@ function renderProgress() {
     var pl = dayFor(dateOfIso(parts[1]), parts[0]);
     var seen = {};
     for (var w = 0; w < pl.ex.length; w++) {
-      var z = EXMAP[pl.ex[w]].zone;
+      var exo = EXMAP[pl.ex[w]];
+      if (!exo) continue;
+      var z = exo.zone;
       if (seen[z]) continue;
       seen[z] = 1;
       zc[z] = (zc[z] || 0) + 1;
@@ -4162,6 +4141,58 @@ window.addEventListener("online", function () { netDismissed = false; updateNetB
 window.addEventListener("offline", function () { netDismissed = false; updateNetBar(); });
 byId("netContinue").addEventListener("click", function () { netDismissed = true; updateNetBar(); });
 updateNetBar();
+
+var APP_CACHE = "rose-line-v5";
+var APP_FILES = ["./", "./index.html", "./manifest.webmanifest",
+  "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
+var supportSW = "serviceWorker" in navigator;
+var offlineEl = byId("offlineState");
+var offlineBtn = byId("offlineBtn");
+
+async function cacheReady() {
+  try {
+    var cache = await caches.open(APP_CACHE);
+    return !!(await cache.match("./index.html"));
+  } catch (e) {
+    return false;
+  }
+}
+async function updateOfflineState() {
+  if (!offlineEl) return;
+  var ready = await cacheReady();
+  offlineEl.hidden = false;
+  offlineEl.textContent = ready ? "офлайн: готов" : (supportSW ? "офлайн: не готов" : "офлайн: нет поддержки");
+  offlineEl.className = "offline-state " + (ready ? "is-ready" : "is-warn");
+}
+async function prepareOffline() {
+  if (!offlineEl) return;
+  offlineEl.hidden = false;
+  offlineEl.textContent = "офлайн: сохраняю…";
+  offlineEl.className = "offline-state is-warn";
+  try {
+    if (supportSW) {
+      try {
+        var reg = await navigator.serviceWorker.getRegistration();
+        if (!reg) reg = await navigator.serviceWorker.register("sw.js", { updateViaCache: "none" });
+        else if (reg.update) await reg.update();
+        await navigator.serviceWorker.ready;
+      } catch (e) {}
+    }
+    var cache = await caches.open(APP_CACHE);
+    for (var i = 0; i < APP_FILES.length; i++) {
+      try { await cache.add(new Request(APP_FILES[i], { cache: "reload" })); } catch (e) {}
+    }
+    if (navigator.storage && navigator.storage.persist) {
+      try { await navigator.storage.persist(); } catch (e) {}
+    }
+  } catch (e) {}
+  updateOfflineState();
+}
+if (supportSW && offlineBtn) {
+  offlineBtn.hidden = false;
+  offlineBtn.addEventListener("click", prepareOffline);
+  updateOfflineState();
+}
 loadVideos();
 route();
 </script>

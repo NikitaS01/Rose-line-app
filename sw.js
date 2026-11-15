@@ -1,4 +1,4 @@
-const CACHE = "rose-line-v4";
+const CACHE = "rose-line-v5";
 const ASSETS = [
   "./",
   "./index.html",
@@ -102,7 +102,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       (async () => {
         try {
-          const res = await fetch(req, { cache: "no-store" });
+          const res = await fetch(req);
           if (res && res.ok) {
             const copy = res.clone();
             caches.open(CACHE).then((cache) => cache.put("./index.html", copy)).catch(() => {});
