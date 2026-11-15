@@ -459,6 +459,50 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
 </style>
 </head>
 <body>
+<script>
+(function () {
+  function show(msg) {
+    if (window.__bootOK) return;
+    var box = document.getElementById("bootFail");
+    if (!box) return;
+    var info = document.getElementById("bootInfo");
+    if (info) info.textContent = msg;
+    box.hidden = false;
+  }
+  window.addEventListener("error", function (e) {
+    show("Ошибка: " + ((e && e.message) || "неизвестная"));
+  });
+  window.addEventListener("unhandledrejection", function () {
+    show("Скрипт приложения не завершил запуск.");
+  });
+  setTimeout(function () { if (!window.__bootOK) show("Запуск не завершился за 6 секунд."); }, 6000);
+})();
+</script>
+<div id="bootFail" class="bootfail" hidden>
+  <div class="bootfail__card">
+    <span class="bootfail__badge">диагностика</span>
+    <h2>Приложение не запустилось</h2>
+    <p>Откройте его один раз с интернетом — файлы сохранятся, и дальше оно будет работать без сети.</p>
+    <code id="bootInfo"></code>
+    <button type="button" onclick="location.reload()">Повторить</button>
+  </div>
+</div>
+<style>
+.bootfail{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:24px;
+  background:radial-gradient(120% 55% at 78% -12%,#FFE4EE 0%,rgba(255,248,250,0) 62%),#FFF8FA;
+  font:16px/1.55 "Segoe UI",system-ui,-apple-system,Arial,sans-serif;color:#3E2A33}
+.bootfail[hidden]{display:none}
+.bootfail__card{width:min(400px,100%);background:#fff;border:1px solid #F2D8E1;border-radius:22px;
+  padding:22px;text-align:center;box-shadow:0 30px 60px -40px rgba(150,60,90,.45)}
+.bootfail__badge{display:inline-block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:#9C4A66;background:#FFEAF1;border:1px solid #F8D7E3;padding:5px 10px;border-radius:99px}
+.bootfail__card h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:22px;margin:14px 0 8px}
+.bootfail__card p{color:#6E515C;font-size:14px;margin:0 0 10px}
+.bootfail__card code{display:block;font-size:12px;color:#8A6C77;background:#FFF3F7;border-radius:10px;
+  padding:8px 10px;word-break:break-word;min-height:18px}
+.bootfail__card button{margin-top:14px;width:100%;border:0;border-radius:13px;background:#CB5C7D;color:#fff;
+  font:inherit;font-size:15px;font-weight:600;padding:12px;cursor:pointer}
+</style>
 
 <header class="site-head">
   <div class="shell">
@@ -2481,7 +2525,7 @@ function restFor(ex) {
 }
 EXERCISES.forEach(function (e) { e.timer = timerFor(e); e.restSec = restFor(e); });
 
-var APP_VERSION = "1.5";
+var APP_VERSION = "1.6";
 var APP_BUILD = "15.11.2026";
 
 var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
@@ -4571,6 +4615,7 @@ var heroPlayer = new Player(byId("heroPlayer"), EXMAP["squat"], { autoplay: true
 byId("footCount").textContent = EXERCISES.length;
 byId("appVersion").textContent = APP_VERSION;
 byId("appBuild").textContent = APP_BUILD;
+window.__bootOK = true;
 byId("verBtn").addEventListener("click", function () {
   location.replace(location.pathname + "?r=" + Date.now() + (location.hash || ""));
 });
@@ -4585,7 +4630,7 @@ window.addEventListener("offline", function () { netDismissed = false; updateNet
 byId("netContinue").addEventListener("click", function () { netDismissed = true; updateNetBar(); });
 updateNetBar();
 
-var APP_CACHE = "rose-line-v6";
+var APP_CACHE = "rose-line-v7";
 var APP_FILES = ["./", "./index.html", "./manifest.webmanifest",
   "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png"];
 var supportSW = "serviceWorker" in navigator;
@@ -4632,7 +4677,7 @@ async function askSWPrecache() {
   if (!supportSW) return 0;
   try {
     var reg = await withTimeout(navigator.serviceWorker.getRegistration(), 2500);
-    if (!reg) reg = await withTimeout(navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }), 5000);
+    if (!reg) reg = await withTimeout(navigator.serviceWorker.register("sw.js"), 5000);
     var worker = reg && (reg.active || navigator.serviceWorker.controller);
     if (!worker) return 0;
     return await new Promise(function (resolve) {

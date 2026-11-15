@@ -1,4 +1,4 @@
-const CACHE = "rose-line-v6";
+const CACHE = "rose-line-v7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -68,6 +68,15 @@ self.addEventListener("install", (event) => {
     (async () => {
       const cache = await caches.open(CACHE);
       await Promise.all(ASSETS.map((asset) => cache.add(asset).catch(() => null)));
+      let html = await cache.match("./index.html", { ignoreSearch: true });
+      for (let i = 0; i < 3 && !html; i++) {
+        try {
+          await cache.add("./index.html");
+          html = await cache.match("./index.html", { ignoreSearch: true });
+        } catch (e) {
+          await new Promise((r) => setTimeout(r, 600));
+        }
+      }
       await self.skipWaiting();
     })()
   );
@@ -86,10 +95,35 @@ self.addEventListener("activate", (event) => {
 async function fromCache(key) {
   try {
     const cache = await caches.open(CACHE);
-    return (await cache.match(key)) || (await cache.match("./")) || null;
+    return (await cache.match(key, { ignoreSearch: true }))
+      || (await cache.match("./index.html", { ignoreSearch: true }))
+      || (await cache.match("./", { ignoreSearch: true }))
+      || null;
   } catch (e) {
     return null;
   }
+}
+
+function fetchWithTimeout(req, ms) {
+  return new Promise((resolve) => {
+    let done = false;
+    const timer = setTimeout(() => {
+      if (done) return;
+      done = true;
+      resolve(null);
+    }, ms);
+    fetch(req).then((res) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      resolve(res);
+    }).catch(() => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      resolve(null);
+    });
+  });
 }
 
 self.addEventListener("fetch", (event) => {
@@ -99,20 +133,35 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
 
   if (req.mode === "navigate") {
+    // Принудительная проверка обновления (?r=...) — сначала сеть, но с коротким
+    // ожиданием: в офлайне fetch на iOS висит до собственного таймаута.
+    const bust = url.searchParams.has("r");
+    const network = (async () => {
+      try {
+        const res = await fetchWithTimeout(req, bust ? 5000 : 4000);
+        if (res && res.ok) {
+          const cache = await caches.open(CACHE);
+          await cache.put("./index.html", res.clone());
+          return res;
+        }
+      } catch (e) {}
+      return null;
+    })();
+
     event.respondWith(
       (async () => {
-        try {
-          const res = await fetch(req);
-          if (res && res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE).then((cache) => cache.put("./index.html", copy)).catch(() => {});
-            return res;
-          }
-        } catch (e) {}
+        if (bust) {
+          const fresh = await network;
+          if (fresh) return fresh;
+        }
         const hit = await fromCache("./index.html");
-        return hit || offlineResponse();
+        if (hit) return hit;
+        const fresh = await network;
+        return fresh || offlineResponse();
       })()
     );
+
+    event.waitUntil(network);
     return;
   }
 
@@ -123,16 +172,13 @@ self.addEventListener("fetch", (event) => {
         const hit = await cache.match(req, { ignoreSearch: true });
         if (hit) return hit;
       } catch (e) {}
-      try {
-        const res = await fetch(req);
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
-        }
+      const res = await fetchWithTimeout(req, 4000);
+      if (res && res.ok) {
+        const copy = res.clone();
+        caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
         return res;
-      } catch (e) {
-        return new Response("", { status: 503, statusText: "offline" });
       }
+      return res || new Response("", { status: 503, statusText: "offline" });
     })()
   );
 });
