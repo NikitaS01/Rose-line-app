@@ -156,7 +156,30 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 .count{font-size:13px;color:var(--muted);margin:14px 0 0}
 
 /* schedule */
-.weekctl{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--plum)}
+.weekctl{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--plum);flex-wrap:wrap}
+.cal-btn{border:1px solid var(--line);background:#fff;color:var(--accent);font:inherit;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer}
+.cal-btn:hover{background:var(--soft)}
+.cal-btn[aria-expanded="true"]{background:var(--soft);border-color:#E7A8BE}
+.cal{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px 14px;max-width:430px}
+.cal[hidden]{display:none}
+.cal__head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:14px}
+.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal__wd{font-size:11px;color:var(--muted);text-align:center;padding-bottom:3px}
+.cal__day{aspect-ratio:1;border:1px solid transparent;background:#FFF8FA;border-radius:9px;font:inherit;font-size:12.5px;color:var(--plum);cursor:pointer;display:grid;place-items:center;padding:0}
+.cal__day:hover:not(:disabled){border-color:#E7A8BE}
+.cal__day--out{color:#C9B3BC;background:transparent}
+.cal__day--today{background:#FFE6EF;font-weight:700;color:var(--accent)}
+.cal__day--active{border-color:#E79CB5;background:#FFF0F5}
+.cal__day:disabled{opacity:.45;cursor:default}
+.cal__hint{font-size:11.5px;color:var(--muted);margin:10px 0 0}
+.arch{margin-top:6px}
+.arch__row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #FBE7EE;font-size:13.5px;flex-wrap:wrap}
+.arch__row:last-child{border-bottom:0}
+.arch__date{color:var(--muted);font-size:12.5px;min-width:148px}
+.arch__prog{font-weight:600}
+.arch__count{margin-left:auto;color:var(--muted);font-size:12.5px}
+.arch__open{border:1px solid #F0C7D6;background:#fff;color:var(--accent);font:inherit;font-size:12px;font-weight:600;padding:6px 10px;border-radius:9px;cursor:pointer}
+.arch__open:hover{background:var(--soft)}
 .icon-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);cursor:pointer;font-size:15px;line-height:1;display:grid;place-items:center}
 .icon-btn:hover:not([disabled]){background:var(--soft)}
 .icon-btn[disabled]{opacity:.4;cursor:default}
@@ -318,7 +341,11 @@ h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(21px,2.4vw,27px);ma
 
 /* footer */
 .site-foot{border-top:1px solid var(--line);margin-top:clamp(36px,5vw,64px);padding:22px 0 34px;font-size:12.5px;color:var(--muted)}
-.site-foot .shell{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-foot .shell{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+.foot-ver{display:inline-flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.foot-ver b{font-weight:600;color:#6E515C}
+.ver-btn{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.ver-btn:hover{color:#8E2F4C}
 
 @media (max-width:960px){
   .hero{grid-template-columns:1fr}
@@ -499,11 +526,25 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
           <button class="icon-btn" id="prevWeek" type="button" aria-label="Предыдущая неделя">←</button>
           <span id="weekLabel">—</span>
           <button class="icon-btn" id="nextWeek" type="button" aria-label="Следующая неделя">→</button>
+          <button class="cal-btn" id="calToggle" type="button" aria-expanded="false" aria-controls="calendar">Календарь</button>
         </div>
+      </div>
+      <div class="cal" id="calendar" hidden>
+        <div class="cal__head">
+          <button class="icon-btn" id="calPrev" type="button" aria-label="Предыдущий месяц">←</button>
+          <span id="calLabel">—</span>
+          <button class="icon-btn" id="calNext" type="button" aria-label="Следующий месяц">→</button>
+        </div>
+        <div class="cal__grid" id="calGrid"></div>
+        <p class="cal__hint">Нажмите день — график перейдёт на его неделю</p>
       </div>
       <div class="prog-switch" data-program-switch role="group" aria-label="Программа тренировок"></div>
       <div class="week-summary" id="weekSummary"></div>
       <div class="week" id="weekGrid"></div>
+      <div class="panel" style="margin-top:18px">
+        <h2>Архив недель</h2>
+        <div class="arch" id="weekArchive"></div>
+      </div>
       <p class="note">Будущие дни отметить нельзя — только сегодняшний и прошедшие. <button class="link-btn" id="resetBtn" type="button">Очистить историю</button></p>
     </div>
   </section>
@@ -547,8 +588,10 @@ body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
 
 <footer class="site-foot">
   <div class="shell">
-    <span>Розовая линия — домашняя программа из шестнадцати движений.</span>
-    <span>Демонстрации нарисованы в SVG и работают офлайн.</span>
+    <span>Розовая линия — домашняя программа из <b id="footCount">—</b> движений.</span>
+    <span class="foot-ver">Версия <b id="appVersion">—</b> · <span id="appBuild">—</span>
+      <button class="ver-btn" id="verBtn" type="button">проверить обновление</button>
+    </span>
   </div>
 </footer>
 
@@ -2057,6 +2100,9 @@ var TIMER_SECONDS = {
 };
 EXERCISES.forEach(function (e) { e.timer = TIMER_SECONDS[e.id] || 45; });
 
+var APP_VERSION = "1.0.0";
+var APP_BUILD = "15.11.2026";
+
 var SAFETY_NOTE = "Это общие ориентиры, а не медицинская рекомендация. При беременности, диабете, болезнях почек и ЖКТ, расстройствах пищевого поведения или хронических заболеваниях рацион обсуждают с врачом. Резкое ограничение еды и «голодные дни» — плохая идея: тело теряет мышцы, а вес возвращается.";
 
 var PROGRAMS = [
@@ -2530,7 +2576,54 @@ function programById(id) {
   return PROGRAMS[0];
 }
 function currentProgram() { return programById(currentProgramId); }
-function dayFor(date, progId) { return programById(progId || currentProgramId).days[(date.getDay() + 6) % 7]; }
+
+var ROT_EPOCH = new Date(2020, 0, 6);
+var PLAN_CACHE = {};
+function weekIndexFor(date) {
+  var mon = mondayOf(date);
+  return Math.round((mon.getTime() - ROT_EPOCH.getTime()) / (7 * 24 * 3600 * 1000));
+}
+function allowsGear(prog) { return prog.id === "gear"; }
+function zonePool(zone, gear) {
+  var out = [];
+  for (var i = 0; i < EXERCISES.length; i++) {
+    var e = EXERCISES[i];
+    if (e.zone !== zone) continue;
+    if (!gear && (e.equip === "dumbbell" || e.equip === "band")) continue;
+    out.push(e.id);
+  }
+  return out;
+}
+function rotateWeek(prog, weekIdx) {
+  var shift = ((weekIdx % 3) + 3) % 3;
+  if (!shift) return prog.days;
+  var gear = allowsGear(prog);
+  return prog.days.map(function (day) {
+    if (day.rest) return day;
+    var used = {}, list = [];
+    for (var i = 0; i < day.ex.length; i++) {
+      var id = day.ex[i], e = EXMAP[id], cand = id;
+      if (e) {
+        var pool = zonePool(e.zone, gear);
+        var at = pool.indexOf(id);
+        if (at > -1 && pool.length > 1) cand = pool[(at + shift) % pool.length];
+      }
+      if (!EXMAP[cand] || used[cand]) cand = id;
+      used[cand] = 1;
+      list.push(cand);
+    }
+    return { id: day.id, title: day.title, tag: day.tag, minutes: day.minutes, note: day.note, ex: list };
+  });
+}
+function weekPlan(progId, weekIdx) {
+  var key = progId + "@" + weekIdx;
+  if (!PLAN_CACHE[key]) PLAN_CACHE[key] = rotateWeek(programById(progId), weekIdx);
+  return PLAN_CACHE[key];
+}
+function dayFor(date, progId) {
+  var prog = programById(progId || currentProgramId);
+  return weekPlan(prog.id, weekIndexFor(date))[(date.getDay() + 6) % 7];
+}
 function doneKey(progId, iso) { return progId + "|" + iso; }
 function dateOfIso(iso) { return new Date(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)); }
 
@@ -2631,6 +2724,7 @@ function renderWorkouts() {
 }
 
 /* schedule */
+var WEEK_MIN = -26, WEEK_MAX = 52;
 var weekOffset = 0;
 function weekLabelText(days) {
   var a = days[0], b = days[6];
@@ -2710,14 +2804,15 @@ function renderPrograms() {
 
 function renderSchedule() {
   var days = weekWindow(weekOffset), prog = currentProgram();
+  var plan7 = weekPlan(prog.id, weekIndexFor(days[0]));
   byId("weekLabel").textContent = weekLabelText(days);
-  byId("prevWeek").disabled = false;
-  byId("nextWeek").disabled = weekOffset >= 0;
+  byId("prevWeek").disabled = weekOffset <= WEEK_MIN;
+  byId("nextWeek").disabled = weekOffset >= WEEK_MAX;
   renderProgramSwitch();
 
   var totalMins = 0, doneMins = 0, cnt = 0, totalCnt = 0, html = "";
   for (var i = 0; i < 7; i++) {
-    var date = days[i], plan = prog.days[i], iso = isoDay(date), key = doneKey(prog.id, iso);
+    var date = days[i], plan = plan7[i], iso = isoDay(date), key = doneKey(prog.id, iso);
     var isToday = iso === TODAY, future = iso > TODAY, isDone = done.has(key);
     if (!plan.rest) { totalCnt++; totalMins += plan.minutes; }
     if (isDone) { cnt++; doneMins += plan.minutes; }
@@ -2741,12 +2836,61 @@ function renderSchedule() {
       '</div>';
   }
   byId("weekGrid").innerHTML = html;
+  renderArchive();
 
   var pct = totalCnt ? Math.round(cnt / totalCnt * 100) : 0;
   byId("weekSummary").innerHTML =
     '<div class="ws__top"><span>«' + prog.name + '» · отмечено <b>' + cnt + ' из ' + totalCnt + '</b> тренировок</span>' +
     '<span>' + doneMins + ' из ' + totalMins + ' минут недели</span></div>' +
     '<div class="ws__bar"><i style="width:' + pct + '%"></i></div>';
+}
+
+/* calendar */
+var MONTHS_NOM = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+var calMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+function renderCalendar() {
+  var host = byId("calGrid");
+  if (!host) return;
+  byId("calLabel").textContent = MONTHS_NOM[calMonth.getMonth()] + " " + calMonth.getFullYear();
+  var start = mondayOf(new Date(calMonth.getFullYear(), calMonth.getMonth(), 1));
+  var days = weekWindow(weekOffset);
+  var from = isoDay(days[0]), to = isoDay(days[6]);
+  var base = weekIndexFor(new Date());
+  var html = "", i;
+  for (i = 0; i < 7; i++) html += '<div class="cal__wd">' + WD[i] + "</div>";
+  for (i = 0; i < 42; i++) {
+    var d = addDays(start, i), iso = isoDay(d), off = weekIndexFor(d) - base;
+    var cls = "cal__day";
+    if (d.getMonth() !== calMonth.getMonth()) cls += " cal__day--out";
+    if (iso === TODAY) cls += " cal__day--today";
+    if (iso >= from && iso <= to) cls += " cal__day--active";
+    html += '<button class="' + cls + '" type="button" data-cal="' + iso + '" ' +
+      (off < WEEK_MIN || off > WEEK_MAX ? "disabled " : "") +
+      'aria-label="' + d.getDate() + " " + MONTHS[d.getMonth()] + '">' + d.getDate() + "</button>";
+  }
+  host.innerHTML = html;
+}
+
+function renderArchive() {
+  var host = byId("weekArchive");
+  if (!host) return;
+  var prog = currentProgram(), html = "";
+  for (var o = 1; o <= 8; o++) {
+    var days = weekWindow(-o);
+    var plan7 = weekPlan(prog.id, weekIndexFor(days[0]));
+    var doneCnt = 0, totalCnt = 0;
+    for (var i = 0; i < 7; i++) {
+      if (!plan7[i].rest) totalCnt++;
+      if (done.has(doneKey(prog.id, isoDay(days[i])))) doneCnt++;
+    }
+    var mark = doneCnt ? (doneCnt === totalCnt ? "всё закрыто" : doneCnt + " из " + totalCnt) : "без отметок";
+    html += '<div class="arch__row"><span class="arch__date">' + weekLabelText(days) + "</span>" +
+      '<span class="arch__prog">' + prog.name + "</span>" +
+      '<span class="arch__count">' + mark + "</span>" +
+      '<button class="arch__open" type="button" data-week="' + (-o) + '">Открыть</button></div>';
+  }
+  host.innerHTML = html;
 }
 
 /* progress */
@@ -3300,8 +3444,50 @@ document.addEventListener("click", function (e) {
   renderPrograms();
 });
 
-byId("prevWeek").addEventListener("click", function () { weekOffset--; renderSchedule(); });
-byId("nextWeek").addEventListener("click", function () { if (weekOffset < 0) { weekOffset++; renderSchedule(); } });
+byId("prevWeek").addEventListener("click", function () {
+  if (weekOffset > WEEK_MIN) { weekOffset--; renderSchedule(); if (!byId("calendar").hidden) renderCalendar(); }
+});
+byId("nextWeek").addEventListener("click", function () {
+  if (weekOffset < WEEK_MAX) { weekOffset++; renderSchedule(); if (!byId("calendar").hidden) renderCalendar(); }
+});
+
+byId("calToggle").addEventListener("click", function () {
+  var cal = byId("calendar"), open = cal.hidden;
+  if (open) {
+    var monday = weekWindow(weekOffset)[0];
+    calMonth = new Date(monday.getFullYear(), monday.getMonth(), 1);
+    renderCalendar();
+  }
+  cal.hidden = !open;
+  this.setAttribute("aria-expanded", open ? "true" : "false");
+});
+byId("calPrev").addEventListener("click", function () {
+  calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1);
+  renderCalendar();
+});
+byId("calNext").addEventListener("click", function () {
+  calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1);
+  renderCalendar();
+});
+byId("calGrid").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-cal]");
+  if (!b || b.disabled) return;
+  var d = dateOfIso(b.getAttribute("data-cal"));
+  var diff = Math.round((mondayOf(d).getTime() - mondayOf(new Date()).getTime()) / (7 * 86400000));
+  weekOffset = Math.max(WEEK_MIN, Math.min(WEEK_MAX, diff));
+  renderSchedule();
+  byId("calendar").hidden = true;
+  byId("calToggle").setAttribute("aria-expanded", "false");
+});
+byId("weekArchive").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-week]");
+  if (!b) return;
+  var off = parseInt(b.getAttribute("data-week"), 10);
+  if (isNaN(off)) return;
+  weekOffset = Math.max(WEEK_MIN, Math.min(WEEK_MAX, off));
+  renderSchedule();
+  window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+});
 
 var resetBtn = byId("resetBtn");
 resetBtn.addEventListener("click", function () {
@@ -3323,6 +3509,12 @@ renderPrograms();
 renderSchedule();
 renderProgress();
 var heroPlayer = new Player(byId("heroPlayer"), EXMAP["squat"], { autoplay: true });
+byId("footCount").textContent = EXERCISES.length;
+byId("appVersion").textContent = APP_VERSION;
+byId("appBuild").textContent = APP_BUILD;
+byId("verBtn").addEventListener("click", function () {
+  location.replace(location.pathname + "?r=" + Date.now() + (location.hash || ""));
+});
 loadVideos();
 route();
 </script>
